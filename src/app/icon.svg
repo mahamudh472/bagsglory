@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="bgGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F59E0B" />
+      <stop offset="50%" stop-color="#D97706" />
+      <stop offset="100%" stop-color="#B45309" />
+    </linearGradient>
+  </defs>
+  <!-- Background Rounded Canvas -->
+  <rect width="64" height="64" rx="16" fill="#18181B" />
+  
+  <!-- Sleek Bag Handle Arch -->
+  <path
+    d="M24 24V17C24 12.5817 27.5817 9 32 9C36.4183 9 40 12.5817 40 17V24"
+    stroke="url(#bgGold)"
+    stroke-width="3.5"
+    stroke-linecap="round"
+  />
+  
+  <!-- Minimalist Bag Silhouette & B/G Contour -->
+  <path
+    d="M17 24H47L44.5 51C44.3 53.2 42.5 55 40.3 55H23.7C21.5 55 19.7 53.2 19.5 51L17 24Z"
+    fill="none"
+    stroke="url(#bgGold)"
+    stroke-width="3.5"
+    stroke-linejoin="round"
+  />
+
+  <!-- Subtle Minimal Accent Clasp -->
+  <circle cx="32" cy="27" r="2.5" fill="url(#bgGold)" />
+  <line x1="26" y1="36" x2="38" y2="36" stroke="url(#bgGold)" stroke-width="2.5" stroke-linecap="round" />
+</svg>
