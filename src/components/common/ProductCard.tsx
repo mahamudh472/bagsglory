@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Heart, ShoppingBag, Check } from "lucide-react";
+import { Heart, ShoppingCart, Check } from "lucide-react";
 import { Product } from "@/types";
 import { useStore } from "@/context/StoreContext";
 import { formatPrice } from "@/utils/currency";
@@ -46,7 +46,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, className = "
 
   return (
     <div
-      className={`group relative flex flex-col bg-transparent overflow-hidden transition-all ${className}`}
+      className={`group relative flex flex-col bg-transparent transition-all ${className}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -62,7 +62,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, className = "
           />
         </Link>
 
-        {/* Minimal Sale Indicator: Very light cognac background + cognac text */}
+        {/* Minimal Sale Indicator */}
         {isOnSale && (
           <span className="absolute top-3 left-3 bg-[#A85A20]/10 text-[#A85A20] text-xs font-semibold px-2.5 py-1 rounded-sm uppercase tracking-wider z-10 border border-[#A85A20]/20">
             Sale
@@ -94,37 +94,37 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, className = "
             {isAdded ? (
               <>
                 <Check className="w-3.5 h-3.5" />
-                <span>Added to Bag</span>
+                <span>Added to Cart</span>
               </>
             ) : currentVariant?.stock === 0 ? (
               <span>Out of Stock</span>
             ) : (
               <>
-                <ShoppingBag className="w-3.5 h-3.5 text-[#B8AA98]" />
-                <span>Add to Bag</span>
+                <ShoppingCart className="w-3.5 h-3.5 text-[#B8AA98]" />
+                <span>Add to Cart</span>
               </>
             )}
           </button>
         </div>
       </div>
 
-      {/* 2. Product Metadata */}
-      <div className="pt-3.5 pb-1 flex flex-col flex-1">
+      {/* 2. Product Metadata with Generous Padding & Breathing Room */}
+      <div className="px-1.5 pt-3.5 pb-1 flex flex-col flex-1">
         {/* Category Label */}
-        <span className="text-xs font-semibold uppercase tracking-[0.12em] text-[#A85A20] mb-0.5">
+        <span className="text-xs font-semibold uppercase tracking-[0.12em] text-[#A85A20] mb-1 line-clamp-1">
           {product.categoryName}
         </span>
 
-        {/* Product Title in Cormorant Garamond */}
+        {/* Product Title in Cormorant Garamond (2-line clamp to avoid harsh truncate) */}
         <Link href={`/product/${product.slug}`} className="hover:text-[#A85A20] transition-colors">
-          <h3 className="font-editorial text-xl text-[#181817] leading-snug line-clamp-1 mb-1 font-normal">
+          <h3 className="font-editorial text-lg sm:text-xl text-[#181817] leading-snug line-clamp-2 min-h-[2.6em] mb-1.5 font-normal">
             {product.title}
           </h3>
         </Link>
 
-        {/* Color Swatches if multiple */}
+        {/* Color Swatches with Padding around Rings */}
         {product.variants.length > 1 && (
-          <div className="flex items-center gap-1.5 my-1">
+          <div className="flex items-center gap-2 py-1 px-1 my-0.5">
             {product.variants.map((v, idx) => (
               <button
                 key={v.sku}
@@ -133,9 +133,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, className = "
                   setSelectedVariantIndex(idx);
                 }}
                 title={v.colorName}
-                className={`w-3.5 h-3.5 rounded-full border border-[#181817]/20 transition-all ${
+                className={`w-4 h-4 rounded-full border border-black/20 transition-all ${
                   selectedVariantIndex === idx
-                    ? "ring-1 ring-offset-1 ring-[#181817] scale-110"
+                    ? "ring-2 ring-offset-2 ring-[#181817]"
                     : "opacity-60 hover:opacity-100"
                 }`}
                 style={{ backgroundColor: v.colorHex }}
@@ -145,7 +145,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, className = "
         )}
 
         {/* Price & Stock */}
-        <div className="flex items-center justify-between gap-2 mt-auto pt-1.5">
+        <div className="flex items-center justify-between gap-2 mt-auto pt-2">
           <div className="flex items-baseline gap-2">
             <span className="font-bold text-[#181817] text-base sm:text-lg font-ui">
               {formatPrice(currentPrice)}
@@ -157,7 +157,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, className = "
             )}
           </div>
 
-          <span className="text-xs text-[#2D5A3C] font-medium flex items-center gap-1">
+          <span className="text-xs text-[#2D5A3C] font-medium flex items-center gap-1 shrink-0">
             <span className="w-1.5 h-1.5 rounded-full bg-[#2D5A3C] inline-block" />
             In stock
           </span>

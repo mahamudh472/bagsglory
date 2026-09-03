@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   Search,
-  ShoppingBag,
+  ShoppingCart,
   Heart,
   Menu,
   X,
@@ -126,10 +126,10 @@ export const Header: React.FC = () => {
               <button
                 onClick={() => setIsCartOpen(true)}
                 className="relative flex items-center gap-2 px-3.5 py-2.5 rounded-md bg-[#181817] text-white hover:bg-[#2C2B29] transition-all ml-1 shadow-subtle"
-                aria-label="Bag"
+                aria-label="Cart"
               >
-                <ShoppingBag className="w-4 h-4 text-[#B8AA98]" />
-                <span className="hidden sm:inline text-xs font-semibold uppercase tracking-wider">Bag</span>
+                <ShoppingCart className="w-4 h-4 text-[#B8AA98]" />
+                <span className="hidden sm:inline text-xs font-semibold uppercase tracking-wider">Cart</span>
                 {cartItemCount > 0 && (
                   <span className="w-4 h-4 rounded-full bg-[#A85A20] text-white text-[10px] font-bold flex items-center justify-center">
                     {cartItemCount}

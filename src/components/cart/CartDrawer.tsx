@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect } from "react";
-import { X, Trash2, Plus, Minus, ShoppingBag, ArrowRight, ShieldCheck, Truck } from "lucide-react";
+import { X, Trash2, Plus, Minus, ShoppingCart, ArrowRight, ShieldCheck, Truck } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -57,9 +57,9 @@ export const CartDrawer: React.FC = () => {
           {/* Header */}
           <div className="p-5 border-b border-[#E7E2DA] flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <ShoppingBag className="w-4 h-4 text-[#A85A20]" />
+              <ShoppingCart className="w-4 h-4 text-[#A85A20]" />
               <h2 className="text-sm font-semibold uppercase tracking-wider text-[#181817]">
-                Shopping Bag ({cartItemCount})
+                Shopping Cart ({cartItemCount})
               </h2>
             </div>
             <button
@@ -100,10 +100,10 @@ export const CartDrawer: React.FC = () => {
             {cart.length === 0 ? (
               <div className="py-20 text-center space-y-4">
                 <div className="w-12 h-12 rounded-full bg-[#F8F6F1] border border-[#E7E2DA] text-[#625E58] flex items-center justify-center mx-auto">
-                  <ShoppingBag className="w-5 h-5" />
+                  <ShoppingCart className="w-5 h-5" />
                 </div>
                 <h3 className="font-editorial text-2xl text-[#181817]">
-                  Your shopping bag is empty
+                  Your cart is empty
                 </h3>
                 <p className="text-xs text-[#625E58] max-w-xs mx-auto leading-relaxed">
                   Discover our artisanal leather backpacks, totes, and briefcases.
@@ -231,7 +231,7 @@ export const CartDrawer: React.FC = () => {
                   onClick={() => setIsCartOpen(false)}
                   className="font-semibold underline hover:text-[#181817]"
                 >
-                  View Full Bag
+                  View Full Cart
                 </Link>
               </div>
             </div>
