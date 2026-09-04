@@ -64,13 +64,13 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
   ];
 
   const sidebarContent = (
-    <aside className="w-64 sm:w-72 lg:w-64 bg-[#181817] text-[#E7E2DA] min-h-full h-full flex flex-col justify-between border-r border-[#2C2B29] shrink-0 select-none font-ui">
+    <aside className="w-64 sm:w-72 lg:w-64 bg-white text-slate-800 min-h-full h-full flex flex-col justify-between border-r border-slate-200 shrink-0 select-none font-sans">
       {/* Brand Header */}
       <div>
-        <div className="p-5 sm:p-6 border-b border-[#2C2B29] flex items-center justify-between">
+        <div className="p-5 sm:p-6 border-b border-slate-100 flex items-center justify-between">
           <div>
-            <Logo variant="light" size="sm" />
-            <span className="inline-block mt-2 text-[10px] text-[#0084D4] font-bold tracking-wider uppercase bg-[#0084D4]/15 px-2 py-0.5 rounded border border-[#0084D4]/30">
+            <Logo variant="dark" size="sm" />
+            <span className="inline-block mt-2 text-[10px] text-[#0084D4] font-bold tracking-wider uppercase bg-sky-50 px-2 py-0.5 rounded border border-sky-200">
               Admin Suite
             </span>
           </div>
@@ -79,7 +79,7 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
           {onClose && (
             <button
               onClick={onClose}
-              className="lg:hidden p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-md transition-colors"
+              className="lg:hidden p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-md transition-colors"
               aria-label="Close sidebar"
             >
               <X className="w-5 h-5" />
@@ -107,8 +107,8 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
                 onClick={onClose}
                 className={`flex items-center gap-3 px-3.5 py-3 rounded-lg text-sm font-semibold transition-all ${
                   isActive
-                    ? "bg-slate-800 text-white border-l-2 border-[#0084D4]"
-                    : "text-slate-300 hover:text-white hover:bg-slate-800/60"
+                    ? "bg-sky-50 text-[#0084D4] font-bold border-l-4 border-[#0084D4] shadow-xs"
+                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
                 }`}
               >
                 <Icon className={`w-4 h-4 ${isActive ? "text-[#0084D4]" : "text-slate-400"}`} />
@@ -120,26 +120,26 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
       </div>
 
       {/* Footer Area with Storefront Switcher */}
-      <div className="p-4 border-t border-[#2C2B29] space-y-3 bg-[#181817]">
+      <div className="p-4 border-t border-slate-100 space-y-3 bg-slate-50/50">
         <Link
           href="/"
           target="_blank"
-          className="flex items-center justify-between p-3 rounded-lg bg-slate-800 text-slate-200 hover:text-white hover:bg-slate-700 text-xs font-semibold uppercase tracking-wider transition-colors"
+          className="flex items-center justify-between p-3 rounded-lg bg-white border border-slate-200 text-slate-700 hover:text-[#0084D4] hover:border-[#0084D4] text-xs font-bold uppercase tracking-wider transition-colors shadow-xs"
         >
           <div className="flex items-center gap-2">
             <ExternalLink className="w-4 h-4 text-[#0084D4]" />
-            <span>View Public Store</span>
+            <span>View Storefront</span>
           </div>
-          <span className="text-[10px] text-emerald-400 bg-emerald-950/60 border border-emerald-800 px-1.5 py-0.5 rounded font-bold">Live</span>
+          <span className="text-[10px] text-emerald-700 bg-emerald-50 border border-emerald-200 px-1.5 py-0.5 rounded font-bold">Live</span>
         </Link>
 
         <div className="flex items-center gap-3 px-2 pt-1">
-          <div className="w-8 h-8 rounded-lg bg-[#0084D4]/20 text-[#0084D4] flex items-center justify-center font-bold text-xs border border-[#0084D4]/30 shrink-0">
+          <div className="w-8 h-8 rounded-lg bg-sky-100 text-[#0084D4] flex items-center justify-center font-bold text-xs border border-sky-200 shrink-0">
             AD
           </div>
           <div className="min-w-0 flex-1">
-            <p className="text-xs font-semibold text-white truncate">Administrator</p>
-            <p className="text-[11px] text-slate-400 truncate">admin@bagsglory.com</p>
+            <p className="text-xs font-bold text-slate-800 truncate">Administrator</p>
+            <p className="text-[11px] text-slate-500 truncate">admin@bagsglory.com</p>
           </div>
         </div>
       </div>
@@ -155,16 +155,16 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
 
       {/* 2. Mobile Slide-Over Drawer */}
       {isOpen && (
-        <div className="fixed inset-0 z-[100] lg:hidden overflow-hidden animate-in fade-in duration-200 font-ui">
+        <div className="fixed inset-0 z-[100] lg:hidden overflow-hidden animate-in fade-in duration-200 font-sans">
           {/* Backdrop */}
           <div
-            className="fixed inset-0 bg-[#181817]/75 backdrop-blur-xs transition-opacity"
+            className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs transition-opacity"
             onClick={onClose}
           />
 
           {/* Drawer panel */}
           <div className="fixed inset-y-0 left-0 max-w-full flex z-[101]">
-            <div className="w-screen max-w-xs bg-[#181817] shadow-2xl animate-in slide-in-from-left duration-300">
+            <div className="w-screen max-w-xs bg-white shadow-2xl animate-in slide-in-from-left duration-300">
               {sidebarContent}
             </div>
           </div>

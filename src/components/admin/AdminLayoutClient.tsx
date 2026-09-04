@@ -37,7 +37,7 @@ export const AdminLayoutClient: React.FC<{ children: React.ReactNode }> = ({
         toggleMobileSidebar,
       }}
     >
-      <div className="flex min-h-screen bg-[#F8F6F1] font-ui text-[#181817] pb-16 lg:pb-0">
+      <div className="flex min-h-screen bg-slate-50 font-sans text-slate-900 pb-16 lg:pb-0">
         {/* Desktop & Mobile Responsive Sidebar */}
         <AdminSidebar
           isOpen={isMobileSidebarOpen}

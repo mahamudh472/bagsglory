@@ -309,18 +309,18 @@ export default function ShopPage() {
               </div>
             ) : (
               <div className="py-20 text-center space-y-4 max-w-md mx-auto">
-                <div className="w-12 h-12 rounded-full bg-white border border-[#E7E2DA] text-[#625E58] flex items-center justify-center mx-auto">
-                  <ShoppingBag className="w-5 h-5" />
+                <div className="w-12 h-12 rounded-full bg-white border border-slate-200 text-slate-400 flex items-center justify-center mx-auto shadow-xs">
+                  <ShoppingBag className="w-5 h-5 text-[#0084D4]" />
                 </div>
-                <h3 className="font-editorial text-2xl text-[#181817]">
+                <h3 className="font-heading font-bold text-2xl text-slate-800">
                   No matching bags found
                 </h3>
-                <p className="text-sm text-[#625E58] leading-relaxed">
-                  Try adjusting your price slider or clearing filters to browse our handcrafted catalog.
+                <p className="text-sm text-slate-500 leading-relaxed">
+                  Try adjusting your price slider or clearing filters to browse our catalog.
                 </p>
                 <button
                   onClick={resetFilters}
-                  className="px-6 py-2.5 bg-[#181817] text-white rounded-md text-xs font-semibold uppercase tracking-wider"
+                  className="px-6 py-2.5 bg-[#0084D4] hover:bg-[#0073B6] text-white rounded-lg text-xs font-bold uppercase tracking-wider transition-colors shadow-sm"
                 >
                   Clear All Filters
                 </button>
