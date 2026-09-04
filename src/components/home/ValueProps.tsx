@@ -1,50 +1,50 @@
 "use client";
 
 import React from "react";
-import { Truck, ShieldCheck, RotateCcw, Lock } from "lucide-react";
+import { Globe, Award, Tag, Lock } from "lucide-react";
 
 export const ValueProps: React.FC = () => {
   const items = [
     {
-      icon: Truck,
-      title: "Cash on Delivery",
-      desc: "Doorstep courier delivery nationwide with zero prepayment required.",
+      icon: Globe,
+      title: "Worldwide Shipping",
+      desc: "It should be noted that we offer fast, reliable doorstep shipping across all locations.",
     },
     {
-      icon: ShieldCheck,
-      title: "Lifetime Warranty",
-      desc: "Full coverage on full-grain leather, cast brass hardware, and zippers.",
+      icon: Award,
+      title: "Best Quality",
+      desc: "It should be noted that every item is handcrafted from genuine materials and tested rigorously.",
     },
     {
-      icon: RotateCcw,
-      title: "30-Day Easy Returns",
-      desc: "Hassle-free returns and doorstep exchange if not completely satisfied.",
+      icon: Tag,
+      title: "Best Offers",
+      desc: "It should be noted that we guarantee unbeatable seasonal value and direct factory deals.",
     },
     {
       icon: Lock,
-      title: "100% Protected",
-      desc: "Pay upon physical parcel inspection with guaranteed peace of mind.",
+      title: "Secure Payments",
+      desc: "It should be noted that we offer 100% secure payment gateways and Cash on Delivery protection.",
     },
   ];
 
   return (
-    <section className="py-20 bg-[#F8F6F1] font-ui">
+    <section className="py-16 sm:py-20 bg-white font-sans border-t border-slate-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
           {items.map((item, idx) => {
             const Icon = item.icon;
             return (
               <div
                 key={idx}
-                className="text-center sm:text-left flex flex-col items-center sm:items-start space-y-3"
+                className="text-center flex flex-col items-center space-y-3 group"
               >
-                <div className="w-11 h-11 rounded-md bg-white border border-[#E7E2DA] text-[#A85A20] flex items-center justify-center mb-1 shadow-subtle">
-                  <Icon className="w-5 h-5" />
+                <div className="w-14 h-14 rounded-full bg-slate-50 border border-slate-200 text-[#0084D4] group-hover:bg-[#0084D4] group-hover:text-white group-hover:border-[#0084D4] transition-all duration-300 flex items-center justify-center mb-1 shadow-xs">
+                  <Icon className="w-6 h-6 stroke-[1.8]" />
                 </div>
-                <h3 className="font-semibold text-sm uppercase tracking-[0.12em] text-[#181817]">
+                <h3 className="font-heading font-bold text-base text-[#1E293B] tracking-tight">
                   {item.title}
                 </h3>
-                <p className="text-sm text-[#625E58] leading-relaxed max-w-xs">
+                <p className="text-xs sm:text-sm text-slate-500 leading-relaxed max-w-xs">
                   {item.desc}
                 </p>
               </div>
@@ -55,3 +55,4 @@ export const ValueProps: React.FC = () => {
     </section>
   );
 };
+

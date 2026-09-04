@@ -17,48 +17,46 @@ export const FeaturedGrid: React.FC = () => {
   });
 
   return (
-    <section className="py-24 bg-[#F8F6F1] font-ui border-b border-[#E7E2DA]">
+    <section className="py-16 sm:py-20 bg-white font-sans">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Heading */}
-        <div className="text-center max-w-xl mx-auto mb-14">
-          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[#A85A20] block mb-2">
-            Signature Releases
-          </span>
-          <h2 className="font-editorial text-4xl sm:text-5xl text-[#181817] font-normal tracking-tight">
+        {/* Section Heading (Centered as in bagsglory.com screenshot) */}
+        <div className="text-center max-w-xl mx-auto mb-12">
+          <h2 className="font-heading font-bold text-3xl sm:text-4xl text-[#1E293B] tracking-tight mb-3">
             Featured Products
           </h2>
-          <p className="text-sm sm:text-base text-[#625E58] mt-2.5">
-            Handcrafted leather silhouettes engineered for everyday movement.
+          <div className="w-16 h-1 bg-[#0084D4] mx-auto mb-4" />
+          <p className="text-sm sm:text-base text-slate-500">
+            Explore our most coveted handcrafted bags, luxury totes, and daily essentials.
           </p>
 
-          {/* Clean Minimal Filter Tabs */}
-          <div className="inline-flex items-center gap-2 mt-8 p-1.5 bg-white rounded-md border border-[#E7E2DA]">
+          {/* Filter Tabs */}
+          <div className="inline-flex items-center gap-2 mt-6 p-1 bg-slate-100 rounded-lg">
             <button
               onClick={() => setActiveTab("featured")}
-              className={`px-5 py-2.5 rounded text-sm font-semibold uppercase tracking-wider transition-colors ${
+              className={`px-4 py-2 rounded-md text-xs sm:text-sm font-bold uppercase tracking-wider transition-all ${
                 activeTab === "featured"
-                  ? "bg-[#181817] text-white"
-                  : "text-[#625E58] hover:text-[#181817]"
+                  ? "bg-[#0084D4] text-white shadow-sm"
+                  : "text-slate-600 hover:text-slate-900"
               }`}
             >
               Featured
             </button>
             <button
               onClick={() => setActiveTab("bestseller")}
-              className={`px-5 py-2.5 rounded text-sm font-semibold uppercase tracking-wider transition-colors ${
+              className={`px-4 py-2 rounded-md text-xs sm:text-sm font-bold uppercase tracking-wider transition-all ${
                 activeTab === "bestseller"
-                  ? "bg-[#181817] text-white"
-                  : "text-[#625E58] hover:text-[#181817]"
+                  ? "bg-[#0084D4] text-white shadow-sm"
+                  : "text-slate-600 hover:text-slate-900"
               }`}
             >
               Bestsellers
             </button>
             <button
               onClick={() => setActiveTab("all")}
-              className={`px-5 py-2.5 rounded text-sm font-semibold uppercase tracking-wider transition-colors ${
+              className={`px-4 py-2 rounded-md text-xs sm:text-sm font-bold uppercase tracking-wider transition-all ${
                 activeTab === "all"
-                  ? "bg-[#181817] text-white"
-                  : "text-[#625E58] hover:text-[#181817]"
+                  ? "bg-[#0084D4] text-white shadow-sm"
+                  : "text-slate-600 hover:text-slate-900"
               }`}
             >
               All ({products.length})
@@ -66,20 +64,20 @@ export const FeaturedGrid: React.FC = () => {
           </div>
         </div>
 
-        {/* Product Cards Grid with Open Spacing */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
-          {displayedProducts.slice(0, 8).map((product) => (
+        {/* Product Cards Grid: 2 cols on mobile, 4-5 cols on desktop */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6">
+          {displayedProducts.slice(0, 10).map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </div>
 
-        {/* View All CTA */}
-        <div className="mt-16 text-center">
+        {/* View All Button */}
+        <div className="mt-14 text-center">
           <Link
             href="/shop"
-            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-md border border-[#181817] text-[#181817] hover:bg-[#181817] hover:text-white text-sm font-semibold uppercase tracking-[0.12em] transition-colors"
+            className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#0084D4] hover:bg-[#0073B6] text-white text-xs sm:text-sm font-bold uppercase tracking-wider transition-all duration-200 shadow-md hover:shadow-lg rounded-none"
           >
-            <span>View Full Catalog</span>
+            <span>View All Products</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
@@ -87,3 +85,4 @@ export const FeaturedGrid: React.FC = () => {
     </section>
   );
 };
+

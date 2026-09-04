@@ -45,23 +45,23 @@ export const ProductTabs: React.FC<ProductTabsProps> = ({ product }) => {
     { id: "details", label: "Details" },
     { id: "materials", label: "Materials" },
     { id: "dimensions", label: "Dimensions" },
-    { id: "care", label: "Leather Care" },
+    { id: "care", label: "Product Care" },
     { id: "warranty", label: "Warranty" },
     { id: "reviews", label: `Reviews (${reviewsList.length})` },
   ] as const;
 
   return (
-    <div className="mt-20 pt-10 border-t border-[#E7E2DA] font-ui">
-      {/* Editorial Tab Navigation Header */}
-      <div className="flex border-b border-[#E7E2DA] overflow-x-auto gap-8 sm:gap-10 pb-3 scrollbar-none">
+    <div className="mt-16 pt-10 border-t border-slate-200 font-sans">
+      {/* Tab Navigation Header */}
+      <div className="flex border-b border-slate-200 overflow-x-auto gap-8 sm:gap-10 pb-3 scrollbar-none">
         {tabs.map((tab) => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`text-sm font-semibold uppercase tracking-[0.12em] pb-3 transition-all whitespace-nowrap border-b-2 ${
+            className={`text-sm font-bold uppercase tracking-wider pb-3 transition-all whitespace-nowrap border-b-2 ${
               activeTab === tab.id
-                ? "border-[#181817] text-[#181817]"
-                : "border-transparent text-[#625E58] hover:text-[#181817]"
+                ? "border-[#0084D4] text-[#0084D4]"
+                : "border-transparent text-slate-500 hover:text-slate-900"
             }`}
           >
             {tab.label}
@@ -70,74 +70,74 @@ export const ProductTabs: React.FC<ProductTabsProps> = ({ product }) => {
       </div>
 
       {/* Tab Content Panels */}
-      <div className="pt-10 max-w-4xl">
+      <div className="pt-8 max-w-4xl">
         {/* TAB 1: DETAILS */}
         {activeTab === "details" && (
           <div className="space-y-8 animate-in fade-in duration-200">
             <div>
-              <h3 className="font-editorial text-3xl sm:text-4xl text-[#181817] mb-3 font-normal">
-                Designed for everyday movement.
+              <h3 className="font-heading font-bold text-2xl text-[#1E293B] mb-3">
+                Product Description & Features
               </h3>
-              <p className="text-base sm:text-lg text-[#625E58] leading-relaxed max-w-3xl">
+              <p className="text-base text-slate-600 leading-relaxed max-w-3xl">
                 {product.description || product.shortDescription}
               </p>
             </div>
 
-            {/* Clean Specification Grid */}
-            <div className="pt-8 border-t border-[#E7E2DA] grid grid-cols-2 sm:grid-cols-3 gap-y-7 gap-x-8 text-sm">
+            {/* Specification Grid */}
+            <div className="pt-6 border-t border-slate-100 grid grid-cols-2 sm:grid-cols-3 gap-y-6 gap-x-8 text-sm">
               <div>
-                <span className="block text-xs font-bold uppercase tracking-[0.15em] text-[#8C827A] mb-1.5">
+                <span className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">
                   Material
                 </span>
-                <p className="font-semibold text-base text-[#181817]">{product.specs.material}</p>
+                <p className="font-bold text-sm sm:text-base text-[#1E293B]">{product.specs.material}</p>
               </div>
 
               <div>
-                <span className="block text-xs font-bold uppercase tracking-[0.15em] text-[#8C827A] mb-1.5">
+                <span className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">
                   Capacity
                 </span>
-                <p className="font-semibold text-base text-[#181817]">{product.specs.capacity}</p>
+                <p className="font-bold text-sm sm:text-base text-[#1E293B]">{product.specs.capacity}</p>
               </div>
 
               <div>
-                <span className="block text-xs font-bold uppercase tracking-[0.15em] text-[#8C827A] mb-1.5">
+                <span className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">
                   Dimensions
                 </span>
-                <p className="font-semibold text-base text-[#181817]">{product.specs.dimensions}</p>
+                <p className="font-bold text-sm sm:text-base text-[#1E293B]">{product.specs.dimensions}</p>
               </div>
 
               <div>
-                <span className="block text-xs font-bold uppercase tracking-[0.15em] text-[#8C827A] mb-1.5">
+                <span className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">
                   Weight
                 </span>
-                <p className="font-semibold text-base text-[#181817]">{product.specs.weight}</p>
+                <p className="font-bold text-sm sm:text-base text-[#1E293B]">{product.specs.weight}</p>
               </div>
 
               <div>
-                <span className="block text-xs font-bold uppercase tracking-[0.15em] text-[#8C827A] mb-1.5">
+                <span className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">
                   Laptop Fit
                 </span>
-                <p className="font-semibold text-base text-[#181817]">{product.specs.laptopFit}</p>
+                <p className="font-bold text-sm sm:text-base text-[#1E293B]">{product.specs.laptopFit}</p>
               </div>
 
               <div>
-                <span className="block text-xs font-bold uppercase tracking-[0.15em] text-[#8C827A] mb-1.5">
+                <span className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">
                   Water Resistance
                 </span>
-                <p className="font-semibold text-base text-[#181817]">{product.specs.waterResistance}</p>
+                <p className="font-bold text-sm sm:text-base text-[#1E293B]">{product.specs.waterResistance}</p>
               </div>
             </div>
 
             {/* Key Features List */}
             {product.features && product.features.length > 0 && (
-              <div className="pt-8 border-t border-[#E7E2DA] space-y-3.5">
-                <span className="block text-xs font-bold uppercase tracking-[0.15em] text-[#8C827A]">
+              <div className="pt-6 border-t border-slate-100 space-y-3">
+                <span className="block text-xs font-bold uppercase tracking-wider text-slate-400">
                   Key Features
                 </span>
-                <ul className="space-y-2.5 text-sm sm:text-base text-[#625E58]">
+                <ul className="space-y-2 text-sm text-slate-600">
                   {product.features.map((feature, i) => (
                     <li key={i} className="flex items-baseline gap-2.5">
-                      <span className="text-[#A85A20] font-bold">•</span>
+                      <span className="text-[#0084D4] font-bold">•</span>
                       <span>{feature}</span>
                     </li>
                   ))}
@@ -150,20 +150,20 @@ export const ProductTabs: React.FC<ProductTabsProps> = ({ product }) => {
         {/* TAB 2: MATERIALS */}
         {activeTab === "materials" && (
           <div className="space-y-6 animate-in fade-in duration-200">
-            <h3 className="font-editorial text-3xl sm:text-4xl text-[#181817] font-normal">
-              Full-Grain Italian Vachetta Leather
+            <h3 className="font-heading font-bold text-2xl text-[#1E293B]">
+              Premium Craftsmanship & Materials
             </h3>
-            <p className="text-base text-[#625E58] leading-relaxed">
-              We source only the top layer of animal hide, known as full-grain leather. Unlike corrected or genuine bonded leathers, full-grain retains the complete natural grain, unique character marks, and natural oils of the hide.
+            <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
+              We source only genuine full-grain leather and heavy-duty reinforced fabrics to guarantee unmatched durability, rich natural texture, and enduring aesthetics.
             </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4">
-              <div className="p-6 bg-white rounded-md border border-[#E7E2DA] space-y-2">
-                <h4 className="font-semibold text-sm text-[#181817] uppercase tracking-wider">Natural Patina Evolution</h4>
-                <p className="text-sm text-[#625E58] leading-relaxed">Over months of daily use, sunlight and natural hand oils enrich the leather, developing a deep, glossy patina unique to your journey.</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-2">
+              <div className="p-6 bg-slate-50 border border-slate-200 space-y-2">
+                <h4 className="font-bold text-sm text-[#1E293B] uppercase tracking-wider">Natural Patina Evolution</h4>
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">Over months of daily use, sunlight and natural hand oils enrich the leather, developing a deep, glossy patina unique to your journey.</p>
               </div>
-              <div className="p-6 bg-white rounded-md border border-[#E7E2DA] space-y-2">
-                <h4 className="font-semibold text-sm text-[#181817] uppercase tracking-wider">Cast Antique Brass Hardware</h4>
-                <p className="text-sm text-[#625E58] leading-relaxed">Fitted with solid brass rivets, clasps, and Japanese YKK Excella zippers for silky smooth, lifelong operation.</p>
+              <div className="p-6 bg-slate-50 border border-slate-200 space-y-2">
+                <h4 className="font-bold text-sm text-[#1E293B] uppercase tracking-wider">Reinforced Hardware</h4>
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">Fitted with solid brass rivets, clasps, and heavy-duty smooth zippers for silky smooth, lifelong operation.</p>
               </div>
             </div>
           </div>
@@ -172,25 +172,25 @@ export const ProductTabs: React.FC<ProductTabsProps> = ({ product }) => {
         {/* TAB 3: DIMENSIONS */}
         {activeTab === "dimensions" && (
           <div className="space-y-6 animate-in fade-in duration-200">
-            <h3 className="font-editorial text-3xl sm:text-4xl text-[#181817] font-normal">
+            <h3 className="font-heading font-bold text-2xl text-[#1E293B]">
               Sizing & Fit Specifications
             </h3>
-            <div className="divide-y divide-[#E7E2DA] text-sm">
-              <div className="py-4 flex justify-between">
-                <span className="text-[#625E58]">Exterior Dimensions</span>
-                <span className="font-semibold text-[#181817]">{product.specs.dimensions}</span>
+            <div className="divide-y divide-slate-100 text-sm">
+              <div className="py-3.5 flex justify-between">
+                <span className="text-slate-500">Exterior Dimensions</span>
+                <span className="font-bold text-[#1E293B]">{product.specs.dimensions}</span>
               </div>
-              <div className="py-4 flex justify-between">
-                <span className="text-[#625E58]">Volumetric Storage</span>
-                <span className="font-semibold text-[#181817]">{product.specs.capacity}</span>
+              <div className="py-3.5 flex justify-between">
+                <span className="text-slate-500">Storage Capacity</span>
+                <span className="font-bold text-[#1E293B]">{product.specs.capacity}</span>
               </div>
-              <div className="py-4 flex justify-between">
-                <span className="text-[#625E58]">Net Weight</span>
-                <span className="font-semibold text-[#181817]">{product.specs.weight}</span>
+              <div className="py-3.5 flex justify-between">
+                <span className="text-slate-500">Net Weight</span>
+                <span className="font-bold text-[#1E293B]">{product.specs.weight}</span>
               </div>
-              <div className="py-4 flex justify-between">
-                <span className="text-[#625E58]">Laptop Device Sleeve</span>
-                <span className="font-semibold text-[#181817]">{product.specs.laptopFit}</span>
+              <div className="py-3.5 flex justify-between">
+                <span className="text-slate-500">Laptop Device Fit</span>
+                <span className="font-bold text-[#1E293B]">{product.specs.laptopFit}</span>
               </div>
             </div>
           </div>
@@ -199,24 +199,24 @@ export const ProductTabs: React.FC<ProductTabsProps> = ({ product }) => {
         {/* TAB 4: LEATHER CARE */}
         {activeTab === "care" && (
           <div className="space-y-6 animate-in fade-in duration-200">
-            <h3 className="font-editorial text-3xl sm:text-4xl text-[#181817] font-normal">
-              Preserving Natural Leather
+            <h3 className="font-heading font-bold text-2xl text-[#1E293B]">
+              Preserving Your Bag
             </h3>
-            <p className="text-base text-[#625E58] leading-relaxed">
-              Natural leather breathes and thrives with minimal, deliberate maintenance. Follow these simple guidelines to ensure your bag lasts for generations.
+            <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
+              Genuine materials thrive with simple, mindful care. Follow these quick steps to keep your bag looking pristine.
             </p>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 pt-2 text-sm">
-              <div className="p-5 bg-white rounded-md border border-[#E7E2DA] space-y-2">
-                <h4 className="font-semibold text-sm text-[#181817]">1. Conditioning</h4>
-                <p className="text-xs sm:text-sm text-[#625E58] leading-relaxed">Apply a pea-sized amount of organic beeswax or neutral leather balm every 6 months to replenish natural moisture.</p>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2 text-sm">
+              <div className="p-5 bg-slate-50 border border-slate-200 space-y-2">
+                <h4 className="font-bold text-sm text-[#1E293B]">1. Conditioning</h4>
+                <p className="text-xs text-slate-600 leading-relaxed">Apply a neutral leather cream or wax balm every 6 months to nourish the leather fibers.</p>
               </div>
-              <div className="p-5 bg-white rounded-md border border-[#E7E2DA] space-y-2">
-                <h4 className="font-semibold text-sm text-[#181817]">2. Water Protection</h4>
-                <p className="text-xs sm:text-sm text-[#625E58] leading-relaxed">If exposed to heavy rain, pat dry with a soft cloth and allow to air dry naturally at room temperature.</p>
+              <div className="p-5 bg-slate-50 border border-slate-200 space-y-2">
+                <h4 className="font-bold text-sm text-[#1E293B]">2. Moisture Care</h4>
+                <p className="text-xs text-slate-600 leading-relaxed">If wet, pat dry with a soft cloth and allow to air dry naturally at room temperature away from direct heaters.</p>
               </div>
-              <div className="p-5 bg-white rounded-md border border-[#E7E2DA] space-y-2">
-                <h4 className="font-semibold text-sm text-[#181817]">3. Storage</h4>
-                <p className="text-xs sm:text-sm text-[#625E58] leading-relaxed">Store inside your complimentary 100% breathable cotton dust bag in a well-ventilated space.</p>
+              <div className="p-5 bg-slate-50 border border-slate-200 space-y-2">
+                <h4 className="font-bold text-sm text-[#1E293B]">3. Dust Protection</h4>
+                <p className="text-xs text-slate-600 leading-relaxed">Store inside your complimentary dust bag in a well-ventilated dry area when not in active use.</p>
               </div>
             </div>
           </div>
@@ -225,14 +225,14 @@ export const ProductTabs: React.FC<ProductTabsProps> = ({ product }) => {
         {/* TAB 5: WARRANTY */}
         {activeTab === "warranty" && (
           <div className="space-y-6 animate-in fade-in duration-200">
-            <h3 className="font-editorial text-3xl sm:text-4xl text-[#181817] font-normal">
+            <h3 className="font-heading font-bold text-2xl text-[#1E293B]">
               Lifetime Craftsmanship Warranty
             </h3>
-            <p className="text-base text-[#625E58] leading-relaxed">
-              We stand behind every stitch and rivet. Our {product.specs.warranty} covers any defect in materials, hardware, stitching, or zipper failure during standard intended use.
+            <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
+              We stand behind our products. Our {product.specs.warranty} covers any defect in materials, hardware, stitching, or zipper failure under normal usage.
             </p>
-            <p className="text-sm text-[#625E58] leading-relaxed">
-              If your bag requires atelier servicing, our nationwide repair team will collect and service your item with doorstep courier handling.
+            <p className="text-xs sm:text-sm text-slate-500 leading-relaxed">
+              If your bag requires servicing, our support team will assist you with convenient nationwide doorstep courier handling.
             </p>
           </div>
         )}
@@ -240,65 +240,72 @@ export const ProductTabs: React.FC<ProductTabsProps> = ({ product }) => {
         {/* TAB 6: REVIEWS */}
         {activeTab === "reviews" && (
           <div className="space-y-8 animate-in fade-in duration-200">
-            <div className="flex items-center justify-between pb-6 border-b border-[#E7E2DA]">
+            <div className="flex items-center justify-between pb-6 border-b border-slate-200">
               <div>
-                <h3 className="font-editorial text-3xl sm:text-4xl text-[#181817] font-normal">
+                <h3 className="font-heading font-bold text-2xl text-[#1E293B]">
                   Customer Reviews
                 </h3>
                 <div className="flex items-center gap-2.5 mt-1.5">
                   <RatingStars rating={product.rating} size="md" />
-                  <span className="text-sm font-semibold text-[#181817]">
+                  <span className="text-sm font-bold text-[#1E293B]">
                     {product.rating.toFixed(1)} out of 5 ({reviewsList.length} verified reviews)
                   </span>
                 </div>
               </div>
             </div>
 
-            {/* Review form */}
-            <div className="p-6 bg-white rounded-md border border-[#E7E2DA] space-y-4">
-              <h4 className="font-semibold text-sm uppercase tracking-wider text-[#181817]">
-                Leave a Verified Review
-              </h4>
-              {submittedReview ? (
-                <div className="p-3.5 bg-[#2D5A3C]/10 text-[#2D5A3C] rounded text-sm font-medium flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4" />
-                  Thank you. Your review has been submitted.
-                </div>
-              ) : (
-                <form onSubmit={handleReviewSubmit} className="space-y-3.5">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-                    <input
-                      type="text"
-                      required
-                      placeholder="Your Full Name"
-                      value={authorName}
-                      onChange={(e) => setAuthorName(e.target.value)}
-                      className="text-sm p-3 rounded-md border border-[#E7E2DA] focus:outline-none focus:border-[#181817]"
-                    />
-                    <input
-                      type="text"
-                      placeholder="Review Headline"
-                      value={reviewTitle}
-                      onChange={(e) => setReviewTitle(e.target.value)}
-                      className="text-sm p-3 rounded-md border border-[#E7E2DA] focus:outline-none focus:border-[#181817]"
-                    />
+            {/* Review List */}
+            <div className="space-y-6 divide-y divide-slate-100">
+              {reviewsList.map((rev) => (
+                <div key={rev.id} className="pt-6 first:pt-0 space-y-2">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <span className="font-bold text-sm text-[#1E293B]">{rev.author}</span>
+                      {rev.verifiedPurchase && (
+                        <span className="text-[11px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded font-bold flex items-center gap-1">
+                          <CheckCircle2 className="w-3 h-3" />
+                          Verified Buyer
+                        </span>
+                      )}
+                    </div>
+                    <span className="text-xs text-slate-400">{rev.date}</span>
                   </div>
 
-                  <div className="flex items-center gap-3">
-                    <label className="text-sm text-[#625E58]">Rating:</label>
-                    <div className="flex gap-1.5">
-                      {[1, 2, 3, 4, 5].map((star) => (
+                  <RatingStars rating={rev.rating} size="sm" />
+                  <h4 className="font-bold text-sm text-[#1E293B]">{rev.title}</h4>
+                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">{rev.comment}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* Write a Review Form */}
+            <div className="pt-8 border-t border-slate-200">
+              <h4 className="font-heading font-bold text-lg text-[#1E293B] mb-4">
+                Write a Customer Review
+              </h4>
+
+              {submittedReview ? (
+                <div className="p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm font-semibold flex items-center gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-emerald-600" />
+                  <span>Thank you! Your verified review has been published.</span>
+                </div>
+              ) : (
+                <form onSubmit={handleReviewSubmit} className="space-y-4 max-w-xl">
+                  <div>
+                    <label className="block text-xs font-bold text-[#1E293B] mb-1">
+                      Rating
+                    </label>
+                    <div className="flex gap-1">
+                      {[1, 2, 3, 4, 5].map((s) => (
                         <button
-                          key={star}
+                          key={s}
                           type="button"
-                          onClick={() => setReviewRating(star)}
-                          className="p-0.5"
+                          onClick={() => setReviewRating(s)}
+                          className="p-1 text-[#F59E0B]"
                         >
                           <Star
                             className={`w-5 h-5 ${
-                              star <= reviewRating
-                                ? "fill-[#A85A20] text-[#A85A20]"
-                                : "text-[#E7E2DA]"
+                              s <= reviewRating ? "fill-[#F59E0B]" : "text-slate-300"
                             }`}
                           />
                         </button>
@@ -306,39 +313,57 @@ export const ProductTabs: React.FC<ProductTabsProps> = ({ product }) => {
                     </div>
                   </div>
 
-                  <textarea
-                    required
-                    rows={3}
-                    placeholder="Share your thoughts on the leather quality, finish, and ergonomics..."
-                    value={reviewComment}
-                    onChange={(e) => setReviewComment(e.target.value)}
-                    className="w-full text-sm p-3 rounded-md border border-[#E7E2DA] focus:outline-none focus:border-[#181817]"
-                  />
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-bold text-[#1E293B] mb-1">
+                        Your Name *
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        value={authorName}
+                        onChange={(e) => setAuthorName(e.target.value)}
+                        placeholder="e.g. Shakil Chowdhury"
+                        className="w-full text-xs p-3 border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:border-[#0084D4] rounded-none"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-bold text-[#1E293B] mb-1">
+                        Headline
+                      </label>
+                      <input
+                        type="text"
+                        value={reviewTitle}
+                        onChange={(e) => setReviewTitle(e.target.value)}
+                        placeholder="e.g. Premium quality & fast COD delivery"
+                        className="w-full text-xs p-3 border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:border-[#0084D4] rounded-none"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold text-[#1E293B] mb-1">
+                      Review Comments *
+                    </label>
+                    <textarea
+                      rows={3}
+                      required
+                      value={reviewComment}
+                      onChange={(e) => setReviewComment(e.target.value)}
+                      placeholder="Share your experience with the craftsmanship, packaging, and feel..."
+                      className="w-full text-xs p-3 border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:border-[#0084D4] rounded-none"
+                    />
+                  </div>
 
                   <button
                     type="submit"
-                    className="px-6 py-3 bg-[#181817] hover:bg-[#2C2B29] text-white rounded-md text-sm font-semibold uppercase tracking-wider flex items-center gap-2 transition-colors"
+                    className="px-6 py-3 bg-[#0084D4] hover:bg-[#0073B6] text-white font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-colors shadow-md rounded-none"
                   >
-                    <Send className="w-4 h-4" />
-                    <span>Post Review</span>
+                    <span>Submit Review</span>
+                    <Send className="w-3.5 h-3.5" />
                   </button>
                 </form>
               )}
-            </div>
-
-            {/* Review Cards */}
-            <div className="space-y-4">
-              {reviewsList.map((rev) => (
-                <div key={rev.id} className="p-5 bg-white rounded-md border border-[#E7E2DA] space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="font-semibold text-sm text-[#181817]">{rev.author}</span>
-                    <span className="text-xs text-[#8C827A]">{rev.date}</span>
-                  </div>
-                  <RatingStars rating={rev.rating} size="sm" />
-                  <h5 className="font-semibold text-sm text-[#181817] pt-1">{rev.title}</h5>
-                  <p className="text-sm text-[#625E58] leading-relaxed">{rev.comment}</p>
-                </div>
-              ))}
             </div>
           </div>
         )}

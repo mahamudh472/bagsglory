@@ -11,22 +11,24 @@ import {
   X,
   ShieldCheck,
   ChevronRight,
+  User,
 } from "lucide-react";
 import { Logo } from "@/components/common/Logo";
 import { useStore } from "@/context/StoreContext";
 import { SearchModal } from "@/components/search/SearchModal";
+import { formatPrice } from "@/utils/currency";
 
 export const Header: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  const { cartItemCount, wishlist, setIsCartOpen, categories } = useStore();
+  const { cartItemCount, cartTotal, wishlist, setIsCartOpen, categories } = useStore();
   const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      setScrolled(window.scrollY > 15);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -46,46 +48,48 @@ export const Header: React.FC = () => {
   }
 
   const mainNav = [
-    { label: "Shop", href: "/shop" },
-    { label: "Women", href: "/category/totes" },
-    { label: "Men", href: "/category/briefcases" },
-    { label: "Accessories", href: "/category/slings" },
-    { label: "Track Order", href: "/track-order" },
+    { label: "EVERYTHING", href: "/shop" },
+    { label: "WOMEN", href: "/category/totes" },
+    { label: "MEN", href: "/category/briefcases" },
+    { label: "ACCESSORIES", href: "/category/slings" },
+    { label: "ABOUT", href: "/shop" },
+    { label: "CONTACT US", href: "/track-order" },
   ];
 
   return (
     <>
       <header
-        className={`sticky top-0 z-40 bg-[#FFFFFF] border-b border-[#E7E2DA] font-ui transition-all duration-300 ${
-          scrolled ? "shadow-subtle py-0" : ""
+        className={`sticky top-0 z-40 bg-white border-b border-slate-100 font-sans transition-all duration-300 ${
+          scrolled ? "shadow-sm py-0" : ""
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setMobileMenuOpen(true)}
-              className="lg:hidden p-2 -ml-2 text-[#181817] hover:text-[#A85A20] transition-colors focus:outline-none"
-              aria-label="Open Mobile Menu"
-            >
-              <Menu className="w-6 h-6" />
-            </button>
+            {/* Left: Mobile Menu Button & Site Logo */}
+            <div className="flex items-center gap-4">
+              <button
+                onClick={() => setMobileMenuOpen(true)}
+                className="lg:hidden p-2 -ml-2 text-[#1E293B] hover:text-[#0084D4] transition-colors focus:outline-none"
+                aria-label="Open Mobile Menu"
+              >
+                <Menu className="w-6 h-6" />
+              </button>
 
-            {/* Minimalist Site Logo */}
-            <Logo size="md" />
+              <Logo size="md" />
+            </div>
 
             {/* Desktop Navigation Links */}
-            <nav className="hidden lg:flex items-center gap-9">
+            <nav className="hidden lg:flex items-center gap-7">
               {mainNav.map((item) => {
                 const isActive = pathname === item.href;
                 return (
                   <Link
-                    key={item.href}
+                    key={item.label}
                     href={item.href}
-                    className={`text-[13px] sm:text-sm font-semibold uppercase tracking-[0.1em] transition-colors ${
+                    className={`text-[13px] font-semibold tracking-wide transition-colors ${
                       isActive
-                        ? "text-[#A85A20] font-bold"
-                        : "text-[#181817] hover:text-[#A85A20]"
+                        ? "text-[#0084D4]"
+                        : "text-[#334155] hover:text-[#0084D4]"
                     }`}
                   >
                     {item.label}
@@ -94,70 +98,69 @@ export const Header: React.FC = () => {
               })}
             </nav>
 
-            {/* Search, Wishlist & Cart Actions */}
-            <div className="flex items-center gap-2 sm:gap-3">
+            {/* Right: Search, Wishlist, Account & Cart */}
+            <div className="flex items-center gap-3 sm:gap-4">
               {/* Search Trigger */}
               <button
                 onClick={() => setIsSearchOpen(true)}
-                className="flex items-center gap-2 p-2 text-[#181817] hover:text-[#A85A20] rounded-md transition-colors"
+                className="flex items-center gap-1.5 p-2 text-[#334155] hover:text-[#0084D4] rounded-full hover:bg-slate-50 transition-colors"
                 aria-label="Search"
               >
-                <Search className="w-[18px] h-[18px]" />
-                <span className="hidden xl:inline-flex text-xs text-[#625E58] font-medium tracking-wide">
-                  Search
-                </span>
+                <Search className="w-5 h-5" />
               </button>
 
               {/* Wishlist */}
               <Link
                 href="/wishlist"
-                className="relative p-2 text-[#181817] hover:text-[#A85A20] rounded-md transition-colors"
+                className="relative p-2 text-[#334155] hover:text-[#0084D4] rounded-full hover:bg-slate-50 transition-colors hidden sm:flex"
                 aria-label="Wishlist"
               >
-                <Heart className="w-[18px] h-[18px]" />
+                <Heart className="w-5 h-5" />
                 {wishlist.length > 0 && (
-                  <span className="absolute top-1 right-1 w-4 h-4 rounded-full bg-[#181817] text-white text-[10px] font-bold flex items-center justify-center">
+                  <span className="absolute top-1 right-1 w-4 h-4 rounded-full bg-[#0084D4] text-white text-[10px] font-bold flex items-center justify-center">
                     {wishlist.length}
                   </span>
                 )}
               </Link>
 
-              {/* Cart Trigger */}
+              {/* Cart Trigger with Total Price & Count Badge */}
               <button
                 onClick={() => setIsCartOpen(true)}
-                className="relative flex items-center gap-2 px-3.5 py-2.5 rounded-md bg-[#181817] text-white hover:bg-[#2C2B29] transition-all ml-1 shadow-subtle"
+                className="flex items-center gap-2 px-3 py-2 rounded-lg text-[#1E293B] hover:text-[#0084D4] hover:bg-sky-50/50 transition-all font-semibold text-sm group"
                 aria-label="Cart"
               >
-                <ShoppingCart className="w-4 h-4 text-[#B8AA98]" />
-                <span className="hidden sm:inline text-xs font-semibold uppercase tracking-wider">Cart</span>
-                {cartItemCount > 0 && (
-                  <span className="w-4 h-4 rounded-full bg-[#A85A20] text-white text-[10px] font-bold flex items-center justify-center">
+                <span className="hidden sm:inline-block text-[#0084D4] font-bold text-sm">
+                  {formatPrice(cartTotal)}
+                </span>
+                <div className="relative">
+                  <ShoppingCart className="w-5 h-5 text-[#334155] group-hover:text-[#0084D4] transition-colors" />
+                  <span className="absolute -top-2 -right-2 w-4 h-4 rounded-full bg-[#0084D4] text-white text-[10px] font-bold flex items-center justify-center">
                     {cartItemCount}
                   </span>
-                )}
+                </div>
               </button>
             </div>
           </div>
         </div>
       </header>
 
-      {/* Full-Screen Mobile Drawer Menu (Outside header container for clean stacking) */}
+      {/* Full-Screen Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 z-[100] lg:hidden animate-in fade-in duration-200 font-ui">
+        <div className="fixed inset-0 z-[100] lg:hidden animate-in fade-in duration-200 font-sans">
           {/* Backdrop */}
           <div
-            className="fixed inset-0 bg-[#181817]/70 backdrop-blur-xs transition-opacity"
+            className="fixed inset-0 bg-[#0F172A]/60 backdrop-blur-xs transition-opacity"
             onClick={() => setMobileMenuOpen(false)}
           />
 
           {/* Slide-over Drawer Panel */}
-          <div className="fixed inset-y-0 left-0 w-4/5 max-w-sm bg-[#FFFFFF] shadow-2xl p-6 flex flex-col justify-between overflow-y-auto z-[101]">
+          <div className="fixed inset-y-0 left-0 w-4/5 max-w-sm bg-white shadow-2xl p-6 flex flex-col justify-between overflow-y-auto z-[101]">
             <div className="space-y-6">
-              <div className="flex items-center justify-between border-b border-[#E7E2DA] pb-4">
+              <div className="flex items-center justify-between border-b border-slate-100 pb-4">
                 <Logo size="sm" />
                 <button
                   onClick={() => setMobileMenuOpen(false)}
-                  className="p-2 text-[#625E58] hover:text-[#181817] rounded-md transition-colors"
+                  className="p-2 text-slate-500 hover:text-slate-900 rounded-md transition-colors"
                   aria-label="Close menu"
                 >
                   <X className="w-5 h-5" />
@@ -168,29 +171,29 @@ export const Header: React.FC = () => {
               <div className="space-y-1">
                 {mainNav.map((item) => (
                   <Link
-                    key={item.href}
+                    key={item.label}
                     href={item.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center justify-between px-3 py-3 rounded-md text-sm font-semibold text-[#181817] hover:bg-[#F8F6F1] hover:text-[#A85A20] uppercase tracking-wider transition-colors"
+                    className="flex items-center justify-between px-3 py-3 rounded-md text-sm font-semibold text-[#1E293B] hover:bg-sky-50 hover:text-[#0084D4] tracking-wide transition-colors"
                   >
                     <span>{item.label}</span>
-                    <ChevronRight className="w-4 h-4 text-[#B8AA98]" />
+                    <ChevronRight className="w-4 h-4 text-slate-400" />
                   </Link>
                 ))}
                 <Link
                   href="/wishlist"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center justify-between px-3 py-3 rounded-md text-sm font-semibold text-[#181817] hover:bg-[#F8F6F1] hover:text-[#A85A20] uppercase tracking-wider transition-colors"
+                  className="flex items-center justify-between px-3 py-3 rounded-md text-sm font-semibold text-[#1E293B] hover:bg-sky-50 hover:text-[#0084D4] tracking-wide transition-colors"
                 >
                   <span>Wishlist ({wishlist.length})</span>
-                  <ChevronRight className="w-4 h-4 text-[#B8AA98]" />
+                  <ChevronRight className="w-4 h-4 text-slate-400" />
                 </Link>
               </div>
 
               {/* Category Links */}
-              <div className="border-t border-[#E7E2DA] pt-4">
-                <div className="text-xs font-bold text-[#A85A20] uppercase tracking-[0.15em] px-3 mb-2">
-                  Collections
+              <div className="border-t border-slate-100 pt-4">
+                <div className="text-xs font-bold text-[#0084D4] uppercase tracking-wider px-3 mb-2">
+                  Featured Categories
                 </div>
                 <div className="space-y-1">
                   {categories.map((cat) => (
@@ -198,7 +201,7 @@ export const Header: React.FC = () => {
                       key={cat.id}
                       href={`/category/${cat.slug}`}
                       onClick={() => setMobileMenuOpen(false)}
-                      className="block px-3 py-2.5 text-sm font-medium text-[#625E58] hover:text-[#181817] hover:bg-[#F8F6F1] rounded-md transition-colors"
+                      className="block px-3 py-2 text-sm font-medium text-slate-600 hover:text-[#0084D4] hover:bg-sky-50/50 rounded-md transition-colors"
                     >
                       {cat.name}
                     </Link>
@@ -208,16 +211,16 @@ export const Header: React.FC = () => {
             </div>
 
             {/* Mobile Footer Area */}
-            <div className="border-t border-[#E7E2DA] pt-4 space-y-3 mt-8">
+            <div className="border-t border-slate-100 pt-4 space-y-3 mt-8">
               <Link
                 href="/admin"
                 onClick={() => setMobileMenuOpen(false)}
-                className="w-full py-3 px-4 bg-[#181817] text-white rounded-md text-xs font-semibold uppercase tracking-wider flex items-center justify-center gap-2 hover:bg-[#2C2B29] transition-colors"
+                className="w-full py-3 px-4 bg-[#0084D4] text-white rounded-md text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 hover:bg-[#0073B6] transition-colors"
               >
-                <ShieldCheck className="w-4 h-4 text-[#A85A20]" />
+                <ShieldCheck className="w-4 h-4 text-white" />
                 <span>Admin Suite</span>
               </Link>
-              <p className="text-xs text-[#625E58] text-center">
+              <p className="text-xs text-slate-400 text-center">
                 Cash on Delivery Available Nationwide
               </p>
             </div>
@@ -230,3 +233,4 @@ export const Header: React.FC = () => {
     </>
   );
 };
+

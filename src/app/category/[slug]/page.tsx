@@ -33,29 +33,29 @@ export default function CategoryDetailPage({ params }: CategoryPageProps) {
 
   if (!category) {
     return (
-      <div className="max-w-7xl mx-auto px-4 py-24 text-center font-ui">
-        <h1 className="font-editorial text-3xl text-[#181817] mb-4">
-          Collection Not Found
+      <div className="max-w-7xl mx-auto px-4 py-24 text-center font-sans">
+        <h1 className="font-heading font-bold text-3xl text-[#1E293B] mb-4">
+          Category Not Found
         </h1>
-        <p className="text-sm text-[#625E58] mb-8 max-w-md mx-auto">
-          The requested collection does not exist or has been updated.
+        <p className="text-sm text-slate-500 mb-8 max-w-md mx-auto">
+          The requested category does not exist or has been updated.
         </p>
         <Link
           href="/shop"
-          className="inline-flex items-center gap-2 px-6 py-3 bg-[#181817] text-white rounded-md text-xs font-semibold uppercase tracking-wider hover:bg-[#2C2B29] transition-colors"
+          className="inline-flex items-center gap-2 px-6 py-3 bg-[#0084D4] text-white text-xs font-bold uppercase tracking-wider hover:bg-[#0073B6] transition-colors rounded-none"
         >
           <ArrowLeft className="w-4 h-4" />
-          <span>Browse All Bags</span>
+          <span>Browse All Products</span>
         </Link>
       </div>
     );
   }
 
   return (
-    <div className="bg-[#F8F6F1] min-h-screen pb-20 font-ui">
-      {/* Category Hero Banner */}
-      <div className="relative bg-[#181817] text-white py-16 sm:py-20 overflow-hidden">
-        <div className="absolute inset-0 opacity-20">
+    <div className="bg-white min-h-screen pb-20 font-sans">
+      {/* Category Hero Banner with Blue Tint */}
+      <div className="relative bg-[#1E6288] text-white py-14 sm:py-18 overflow-hidden">
+        <div className="absolute inset-0 opacity-30">
           <Image
             src={category.image}
             alt={category.name}
@@ -63,30 +63,30 @@ export default function CategoryDetailPage({ params }: CategoryPageProps) {
             className="object-cover"
           />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-t from-[#181817] via-[#181817]/70 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#1E6288] via-[#1E6288]/80 to-transparent" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           {/* Breadcrumb */}
-          <nav className="flex items-center gap-2 text-[11px] uppercase tracking-[0.1em] text-[#B8AA98] mb-6">
+          <nav className="flex items-center gap-2 text-xs uppercase tracking-wider text-sky-200 mb-4">
             <Link href="/" className="hover:text-white transition-colors">
               Home
             </Link>
-            <ChevronRight className="w-3 h-3 text-[#625E58]" />
+            <ChevronRight className="w-3.5 h-3.5 text-sky-300" />
             <Link href="/shop" className="hover:text-white transition-colors">
-              Collections
+              Shop
             </Link>
-            <ChevronRight className="w-3 h-3 text-[#625E58]" />
-            <span className="text-white font-semibold">{category.name}</span>
+            <ChevronRight className="w-3.5 h-3.5 text-sky-300" />
+            <span className="text-white font-bold">{category.name}</span>
           </nav>
 
-          <div className="max-w-3xl space-y-3">
-            <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#A85A20] block">
-              {categoryProducts.length} Silhouettes Handcrafted
+          <div className="max-w-3xl space-y-2">
+            <span className="text-xs font-bold uppercase tracking-widest text-sky-300 block">
+              {categoryProducts.length} Products Available
             </span>
-            <h1 className="font-editorial text-3xl sm:text-5xl text-white font-normal">
+            <h1 className="font-heading font-extrabold text-3xl sm:text-5xl text-white">
               {category.name}
             </h1>
-            <p className="text-xs sm:text-sm text-[#E7E2DA]/90 leading-relaxed font-normal max-w-2xl">
+            <p className="text-xs sm:text-sm text-sky-100/90 leading-relaxed font-normal max-w-2xl">
               {category.description}
             </p>
           </div>
@@ -96,50 +96,47 @@ export default function CategoryDetailPage({ params }: CategoryPageProps) {
       {/* Main Grid Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
         {/* Controls Toolbar */}
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 pb-6 mb-8 border-b border-[#E7E2DA]">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 pb-6 mb-8 border-b border-slate-100">
           <div className="flex items-center gap-4">
-            <Link
-              href="/shop"
-              className="text-xs font-semibold text-[#181817] hover:text-[#A85A20] flex items-center gap-1.5 uppercase tracking-wider"
-            >
-              <ArrowLeft className="w-3.5 h-3.5" />
-              <span>All Collections</span>
-            </Link>
-            <span className="text-xs text-[#625E58]">
-              Showing {categoryProducts.length} items
+            <span className="text-sm text-slate-500">
+              Showing <strong className="text-[#1E293B] font-bold">{categoryProducts.length}</strong> items
             </span>
           </div>
 
-          <div className="flex items-center gap-2">
-            <label htmlFor="category-sort" className="text-xs text-[#625E58]">Sort by:</label>
+          <div className="flex items-center gap-3">
+            <label htmlFor="cat-sort" className="text-sm text-slate-500 hidden sm:inline">Sort by:</label>
             <select
-              id="category-sort"
+              id="cat-sort"
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as any)}
-              className="text-xs font-semibold text-[#181817] bg-white border border-[#E7E2DA] rounded-md px-3 py-2 focus:outline-none focus:border-[#181817]"
+              className="text-sm font-semibold text-[#1E293B] bg-slate-50 border border-slate-200 rounded-none px-3.5 py-2 focus:outline-none focus:border-[#0084D4]"
             >
-              <option value="featured">Featured First</option>
+              <option value="featured">Featured</option>
               <option value="price-asc">Price: Low to High</option>
               <option value="price-desc">Price: High to Low</option>
-              <option value="rating">Highest Rated</option>
+              <option value="rating">Highest Rating</option>
             </select>
           </div>
         </div>
 
-        {/* Product Cards */}
+        {/* Category Products Grid */}
         {categoryProducts.length === 0 ? (
-          <div className="py-20 text-center space-y-4 max-w-md mx-auto">
-            <h3 className="font-editorial text-2xl text-[#181817]">No bags found in this collection</h3>
-            <p className="text-xs text-[#625E58]">Explore our other handcrafted leather collections.</p>
+          <div className="bg-slate-50 border border-slate-200 p-12 text-center space-y-4">
+            <h3 className="font-heading font-bold text-xl text-[#1E293B]">
+              No items in this collection
+            </h3>
+            <p className="text-sm text-slate-500 max-w-sm mx-auto">
+              Please check back soon or browse our full store catalog.
+            </p>
             <Link
               href="/shop"
-              className="inline-block px-6 py-2.5 bg-[#181817] text-white rounded-md text-xs font-semibold uppercase tracking-wider"
+              className="inline-block px-6 py-2.5 bg-[#0084D4] text-white rounded-none text-xs font-bold uppercase tracking-wider hover:bg-[#0073B6] transition-colors"
             >
-              View Full Catalog
+              Explore All Bags
             </Link>
           </div>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
             {categoryProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}

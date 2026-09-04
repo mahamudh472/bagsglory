@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Heart, ShoppingCart, Check } from "lucide-react";
+import { Heart, ShoppingCart, Check, Star } from "lucide-react";
 import { Product } from "@/types";
 import { useStore } from "@/context/StoreContext";
 import { formatPrice } from "@/utils/currency";
@@ -46,49 +46,49 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, className = "
 
   return (
     <div
-      className={`group relative flex flex-col bg-transparent transition-all ${className}`}
+      className={`group relative flex flex-col bg-white rounded-lg p-2 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${className}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* 1. Editorial Image Container */}
-      <div className="relative aspect-[4/5] sm:aspect-square w-full bg-[#EFEBE4] rounded-lg overflow-hidden border border-[#E7E2DA]/60">
+      {/* 1. Product Image Container */}
+      <div className="relative aspect-square w-full bg-slate-50 overflow-hidden rounded-md border border-slate-100">
         <Link href={`/product/${product.slug}`} className="block w-full h-full relative">
           <Image
             src={isHovered && secondaryImage !== primaryImage ? secondaryImage : primaryImage}
             alt={product.title}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-            className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-103"
+            className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
           />
         </Link>
 
-        {/* Minimal Sale Indicator */}
+        {/* BagsGlory Signature Blue Circle Sale Badge (as in screenshot) */}
         {isOnSale && (
-          <span className="absolute top-3 left-3 bg-[#A85A20]/10 text-[#A85A20] text-xs font-semibold px-2.5 py-1 rounded-sm uppercase tracking-wider z-10 border border-[#A85A20]/20">
-            Sale
-          </span>
+          <div className="absolute top-2.5 left-2.5 w-9 h-9 rounded-full bg-[#0084D4] text-white text-[11px] font-bold flex items-center justify-center shadow-md z-10">
+            Sale!
+          </div>
         )}
 
-        {/* Minimal Wishlist Button */}
+        {/* Wishlist Button */}
         <button
           onClick={handleWishlistClick}
           aria-label="Wishlist"
-          className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 text-[#625E58] hover:text-[#181817] flex items-center justify-center transition-colors z-10 shadow-subtle"
+          className="absolute top-2.5 right-2.5 w-8 h-8 rounded-full bg-white/95 text-slate-400 hover:text-rose-500 flex items-center justify-center transition-all duration-200 z-10 shadow-sm opacity-0 group-hover:opacity-100 hover:scale-110"
         >
-          <Heart className={`w-4 h-4 ${inWishlist ? "fill-[#A85A20] text-[#A85A20]" : ""}`} />
+          <Heart className={`w-4 h-4 ${inWishlist ? "fill-rose-500 text-rose-500" : ""}`} />
         </button>
 
         {/* Quick Add Button on Hover */}
-        <div className="absolute inset-x-3 bottom-3 translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-200 z-10">
+        <div className="absolute inset-x-2 bottom-2 translate-y-3 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 z-10">
           <button
             onClick={handleQuickAdd}
             disabled={currentVariant?.stock === 0}
-            className={`w-full py-2.5 px-3 rounded-md text-xs font-semibold uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-subtle transition-colors ${
+            className={`w-full py-2.5 px-3 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-lg transition-all duration-200 rounded-sm active:scale-95 ${
               isAdded
-                ? "bg-[#2D5A3C] text-white"
+                ? "bg-emerald-600 text-white"
                 : currentVariant?.stock === 0
-                ? "bg-[#E7E2DA] text-[#625E58] cursor-not-allowed"
-                : "bg-[#181817] text-white hover:bg-[#2C2B29]"
+                ? "bg-slate-200 text-slate-500 cursor-not-allowed"
+                : "bg-[#0084D4] text-white hover:bg-[#0073B6]"
             }`}
           >
             {isAdded ? (
@@ -100,7 +100,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, className = "
               <span>Out of Stock</span>
             ) : (
               <>
-                <ShoppingCart className="w-3.5 h-3.5 text-[#B8AA98]" />
+                <ShoppingCart className="w-3.5 h-3.5" />
                 <span>Add to Cart</span>
               </>
             )}
@@ -108,23 +108,52 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, className = "
         </div>
       </div>
 
-      {/* 2. Product Metadata with Generous Padding & Breathing Room */}
-      <div className="px-1.5 pt-3.5 pb-1 flex flex-col flex-1">
-        {/* Category Label */}
-        <span className="text-xs font-semibold uppercase tracking-[0.12em] text-[#A85A20] mb-1 line-clamp-1">
+      {/* 2. Product Information */}
+      <div className="pt-3 pb-1 flex flex-col flex-1">
+        {/* Category */}
+        <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-1">
           {product.categoryName}
         </span>
 
-        {/* Product Title in Cormorant Garamond (2-line clamp to avoid harsh truncate) */}
-        <Link href={`/product/${product.slug}`} className="hover:text-[#A85A20] transition-colors">
-          <h3 className="font-editorial text-lg sm:text-xl text-[#181817] leading-snug line-clamp-2 min-h-[2.6em] mb-1.5 font-normal">
+        {/* Title */}
+        <Link href={`/product/${product.slug}`} className="hover:text-[#0084D4] transition-colors">
+          <h3 className="font-heading font-semibold text-sm sm:text-base text-[#1E293B] group-hover:text-[#0084D4] leading-snug line-clamp-1 mb-1.5 transition-colors">
             {product.title}
           </h3>
         </Link>
 
-        {/* Color Swatches with Padding around Rings */}
+        {/* Star Rating (Golden Yellow as in screenshot) */}
+        <div className="flex items-center gap-1 mb-2">
+          {[...Array(5)].map((_, i) => (
+            <Star
+              key={i}
+              className={`w-3.5 h-3.5 ${
+                i < Math.floor(product.rating || 5)
+                  ? "fill-[#F59E0B] text-[#F59E0B]"
+                  : "fill-slate-200 text-slate-200"
+              }`}
+            />
+          ))}
+          <span className="text-[11px] text-slate-400 font-medium ml-1">
+            ({product.reviewCount || 12})
+          </span>
+        </div>
+
+        {/* Price */}
+        <div className="flex items-baseline gap-2 mb-2">
+          <span className="font-bold text-[#1E293B] text-sm sm:text-base font-sans">
+            {formatPrice(currentPrice)}
+          </span>
+          {originalPrice && originalPrice > currentPrice && (
+            <span className="text-xs text-slate-400 line-through font-sans">
+              {formatPrice(originalPrice)}
+            </span>
+          )}
+        </div>
+
+        {/* Interactive Color Swatches (as shown in screenshot) */}
         {product.variants.length > 1 && (
-          <div className="flex items-center gap-2 py-1 px-1 my-0.5">
+          <div className="flex items-center gap-1.5 pt-1">
             {product.variants.map((v, idx) => (
               <button
                 key={v.sku}
@@ -133,36 +162,18 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, className = "
                   setSelectedVariantIndex(idx);
                 }}
                 title={v.colorName}
-                className={`w-4 h-4 rounded-full border border-black/20 transition-all ${
+                className={`w-3.5 h-3.5 rounded-full border border-slate-300 transition-all ${
                   selectedVariantIndex === idx
-                    ? "ring-2 ring-offset-2 ring-[#181817]"
-                    : "opacity-60 hover:opacity-100"
+                    ? "ring-2 ring-offset-1 ring-[#0084D4] scale-110"
+                    : "opacity-70 hover:opacity-100"
                 }`}
                 style={{ backgroundColor: v.colorHex }}
               />
             ))}
           </div>
         )}
-
-        {/* Price & Stock */}
-        <div className="flex items-center justify-between gap-2 mt-auto pt-2">
-          <div className="flex items-baseline gap-2">
-            <span className="font-bold text-[#181817] text-base sm:text-lg font-ui">
-              {formatPrice(currentPrice)}
-            </span>
-            {originalPrice && originalPrice > currentPrice && (
-              <span className="text-xs sm:text-sm text-[#625E58] line-through font-ui">
-                {formatPrice(originalPrice)}
-              </span>
-            )}
-          </div>
-
-          <span className="text-xs text-[#2D5A3C] font-medium flex items-center gap-1 shrink-0">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#2D5A3C] inline-block" />
-            In stock
-          </span>
-        </div>
       </div>
     </div>
   );
 };
+

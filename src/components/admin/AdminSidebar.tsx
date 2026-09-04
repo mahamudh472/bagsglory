@@ -70,7 +70,7 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
         <div className="p-5 sm:p-6 border-b border-[#2C2B29] flex items-center justify-between">
           <div>
             <Logo variant="light" size="sm" />
-            <span className="inline-block mt-2 text-[10px] text-[#A85A20] font-semibold tracking-wider uppercase bg-[#A85A20]/15 px-2 py-0.5 rounded border border-[#A85A20]/30">
+            <span className="inline-block mt-2 text-[10px] text-[#0084D4] font-bold tracking-wider uppercase bg-[#0084D4]/15 px-2 py-0.5 rounded border border-[#0084D4]/30">
               Admin Suite
             </span>
           </div>
@@ -79,7 +79,7 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
           {onClose && (
             <button
               onClick={onClose}
-              className="lg:hidden p-2 text-[#8C827A] hover:text-white hover:bg-[#2C2B29] rounded-md transition-colors"
+              className="lg:hidden p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-md transition-colors"
               aria-label="Close sidebar"
             >
               <X className="w-5 h-5" />
@@ -89,7 +89,7 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
 
         {/* Nav Links */}
         <nav className="p-4 space-y-1.5 overflow-y-auto max-h-[calc(100vh-220px)]">
-          <div className="text-[10px] uppercase font-bold text-[#8C827A] px-3 py-2 tracking-[0.15em]">
+          <div className="text-[10px] uppercase font-bold text-slate-400 px-3 py-2 tracking-[0.15em]">
             Store Management
           </div>
 
@@ -105,13 +105,13 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
                 key={item.href}
                 href={item.href}
                 onClick={onClose}
-                className={`flex items-center gap-3 px-3.5 py-3 rounded-md text-sm font-semibold transition-all ${
+                className={`flex items-center gap-3 px-3.5 py-3 rounded-lg text-sm font-semibold transition-all ${
                   isActive
-                    ? "bg-[#2C2B29] text-white border-l-2 border-[#A85A20]"
-                    : "text-[#B8AA98] hover:text-white hover:bg-[#2C2B29]/60"
+                    ? "bg-slate-800 text-white border-l-2 border-[#0084D4]"
+                    : "text-slate-300 hover:text-white hover:bg-slate-800/60"
                 }`}
               >
-                <Icon className={`w-4 h-4 ${isActive ? "text-[#A85A20]" : "text-[#8C827A]"}`} />
+                <Icon className={`w-4 h-4 ${isActive ? "text-[#0084D4]" : "text-slate-400"}`} />
                 <span>{item.label}</span>
               </Link>
             );
@@ -124,22 +124,22 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
         <Link
           href="/"
           target="_blank"
-          className="flex items-center justify-between p-3 rounded-md bg-[#2C2B29] text-[#E7E2DA] hover:text-white hover:bg-[#3E3C39] text-xs font-semibold uppercase tracking-wider transition-colors"
+          className="flex items-center justify-between p-3 rounded-lg bg-slate-800 text-slate-200 hover:text-white hover:bg-slate-700 text-xs font-semibold uppercase tracking-wider transition-colors"
         >
           <div className="flex items-center gap-2">
-            <ExternalLink className="w-4 h-4 text-[#A85A20]" />
+            <ExternalLink className="w-4 h-4 text-[#0084D4]" />
             <span>View Public Store</span>
           </div>
-          <span className="text-[10px] text-[#2D5A3C] bg-[#2D5A3C]/20 px-1.5 py-0.5 rounded font-bold">Live</span>
+          <span className="text-[10px] text-emerald-400 bg-emerald-950/60 border border-emerald-800 px-1.5 py-0.5 rounded font-bold">Live</span>
         </Link>
 
         <div className="flex items-center gap-3 px-2 pt-1">
-          <div className="w-8 h-8 rounded-md bg-[#A85A20]/20 text-[#A85A20] flex items-center justify-center font-bold text-xs border border-[#A85A20]/30 shrink-0">
+          <div className="w-8 h-8 rounded-lg bg-[#0084D4]/20 text-[#0084D4] flex items-center justify-center font-bold text-xs border border-[#0084D4]/30 shrink-0">
             AD
           </div>
           <div className="min-w-0 flex-1">
             <p className="text-xs font-semibold text-white truncate">Administrator</p>
-            <p className="text-[11px] text-[#8C827A] truncate">admin@bagsglory.com</p>
+            <p className="text-[11px] text-slate-400 truncate">admin@bagsglory.com</p>
           </div>
         </div>
       </div>

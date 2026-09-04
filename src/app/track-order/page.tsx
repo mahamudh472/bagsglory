@@ -28,38 +28,38 @@ export default function TrackOrderPage() {
   };
 
   return (
-    <div className="bg-[#F8F6F1] min-h-screen py-12 font-ui">
+    <div className="bg-slate-50 min-h-screen py-12 font-sans">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Page Header */}
         <div className="text-center max-w-xl mx-auto mb-10">
-          <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#A85A20] block mb-2">
-            Nationwide Courier Telemetry
+          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[#0084D4] block mb-2">
+            Courier Tracking
           </span>
-          <h1 className="font-editorial text-3xl sm:text-4xl text-[#181817] font-normal">
-            Track Cash on Delivery Order
+          <h1 className="text-3xl sm:text-4xl font-bold text-slate-800 tracking-tight">
+            Track Your Order
           </h1>
-          <p className="text-xs sm:text-sm text-[#625E58] mt-2 leading-relaxed">
-            Enter your Order ID (e.g. <code className="bg-white border border-[#E7E2DA] px-1.5 py-0.5 rounded font-mono text-[#181817]">BG-2026-8891</code>) to check live courier delivery status.
+          <p className="text-xs sm:text-sm text-slate-600 mt-2 leading-relaxed">
+            Enter your Order ID (e.g. <code className="bg-white border border-slate-200 px-1.5 py-0.5 rounded font-mono text-slate-800">BG-2026-8891</code>) to check live courier delivery status.
           </p>
         </div>
 
         {/* Tracking Search Card */}
-        <div className="bg-white rounded-lg p-6 sm:p-8 border border-[#E7E2DA] shadow-subtle mb-8">
+        <div className="bg-white rounded-xl p-6 sm:p-8 border border-slate-200 shadow-sm mb-8">
           <form onSubmit={handleTrackSubmit} className="space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-12 gap-3">
               <div className="sm:col-span-8">
-                <label className="block text-xs font-semibold uppercase tracking-wider text-[#181817] mb-1.5">
+                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1.5">
                   Order Reference ID *
                 </label>
                 <div className="relative">
-                  <Package className="w-4 h-4 text-[#8C827A] absolute left-3.5 top-3.5" />
+                  <Package className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
                   <input
                     type="text"
                     required
                     value={orderQuery}
                     onChange={(e) => setOrderQuery(e.target.value.toUpperCase())}
                     placeholder="e.g. BG-2026-8891"
-                    className="w-full text-xs font-mono uppercase pl-10 pr-4 py-3 rounded-md border border-[#E7E2DA] bg-[#F8F6F1] focus:bg-white focus:outline-none focus:border-[#181817]"
+                    className="w-full text-xs font-mono uppercase pl-10 pr-4 py-3 rounded-lg border border-slate-300 bg-slate-50 focus:bg-white focus:outline-none focus:border-[#0084D4] focus:ring-1 focus:ring-[#0084D4]"
                   />
                 </div>
               </div>
@@ -67,9 +67,9 @@ export default function TrackOrderPage() {
               <div className="sm:col-span-4 flex items-end">
                 <button
                   type="submit"
-                  className="w-full h-[42px] bg-[#181817] hover:bg-[#2C2B29] text-white rounded-md text-xs font-semibold uppercase tracking-wider flex items-center justify-center gap-2 shadow-subtle transition-colors"
+                  className="w-full h-[42px] bg-[#0084D4] hover:bg-[#0073B6] text-white rounded-lg text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 shadow-sm transition-all"
                 >
-                  <Search className="w-3.5 h-3.5 text-[#B8AA98]" />
+                  <Search className="w-3.5 h-3.5 text-white" />
                   <span>Track Parcel</span>
                 </button>
               </div>
@@ -77,7 +77,7 @@ export default function TrackOrderPage() {
 
             {/* Quick Demo Helper */}
             {orders.length > 0 && (
-              <div className="flex flex-wrap items-center gap-2 pt-2 text-[11px] text-[#625E58]">
+              <div className="flex flex-wrap items-center gap-2 pt-2 text-[11px] text-slate-500">
                 <span>Recent orders:</span>
                 {orders.slice(0, 3).map((o) => (
                   <button
@@ -88,7 +88,7 @@ export default function TrackOrderPage() {
                       setTrackedOrder(o);
                       setHasSearched(true);
                     }}
-                    className="font-mono text-[#A85A20] bg-[#F8F6F1] hover:bg-[#EFEBE4] border border-[#E7E2DA] px-2 py-0.5 rounded text-[11px] transition-colors"
+                    className="font-mono text-[#0084D4] bg-sky-50 hover:bg-sky-100 border border-sky-200 px-2.5 py-0.5 rounded text-[11px] transition-colors"
                   >
                     {o.id}
                   </button>
@@ -102,56 +102,56 @@ export default function TrackOrderPage() {
         {hasSearched && trackedOrder ? (
           <div className="space-y-6 animate-in fade-in duration-300">
             {/* Status Header */}
-            <div className="bg-white rounded-lg p-6 sm:p-8 border border-[#E7E2DA] shadow-subtle flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="bg-white rounded-xl p-6 sm:p-8 border border-slate-200 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div>
-                <span className="text-[10px] font-semibold text-[#A85A20] uppercase tracking-wider">
+                <span className="text-xs font-semibold text-[#0084D4] uppercase tracking-wider">
                   Live Dispatch Status
                 </span>
-                <h2 className="font-editorial text-2xl sm:text-3xl text-[#181817] mt-0.5 font-normal">
+                <h2 className="text-2xl sm:text-3xl font-bold text-slate-800 mt-0.5">
                   {trackedOrder.orderStatus}
                 </h2>
-                <p className="text-xs text-[#625E58] mt-1">
+                <p className="text-xs text-slate-500 mt-1">
                   Placed on {new Date(trackedOrder.createdAt).toLocaleDateString()} for {trackedOrder.customer.fullName}
                 </p>
               </div>
 
               <div className="flex flex-col sm:items-end">
-                <span className="text-xs font-semibold text-[#181817]">Payment Condition</span>
-                <span className="text-xs font-semibold text-[#2D5A3C] bg-[#2D5A3C]/10 px-2.5 py-1 rounded mt-1 border border-[#2D5A3C]/20">
+                <span className="text-xs font-semibold text-slate-700">Payment Condition</span>
+                <span className="text-xs font-semibold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full mt-1 border border-emerald-200">
                   {trackedOrder.paymentStatus}
                 </span>
-                <span className="text-xs text-[#625E58] mt-1 font-mono">
-                  Amount Due: <strong>{formatPrice(trackedOrder.total)}</strong>
+                <span className="text-xs text-slate-600 mt-1 font-mono">
+                  Amount Due: <strong className="text-slate-900">{formatPrice(trackedOrder.total)}</strong>
                 </span>
               </div>
             </div>
 
             {/* Stepper Timeline */}
-            <div className="bg-white rounded-lg p-6 sm:p-8 border border-[#E7E2DA] shadow-subtle space-y-6">
-              <h3 className="font-semibold text-xs uppercase tracking-[0.12em] text-[#181817]">
+            <div className="bg-white rounded-xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6">
+              <h3 className="font-bold text-xs uppercase tracking-wider text-slate-800">
                 Courier Journey
               </h3>
 
-              <div className="space-y-6 relative before:absolute before:left-3 before:top-2 before:bottom-2 before:w-0.5 before:bg-[#E7E2DA]">
+              <div className="space-y-6 relative before:absolute before:left-3 before:top-2 before:bottom-2 before:w-0.5 before:bg-slate-200">
                 {trackedOrder.trackingHistory.map((step, idx) => (
                   <div key={idx} className="relative flex items-start gap-4">
                     <div
-                      className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 z-10 text-[11px] font-semibold ${
+                      className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 z-10 text-[11px] font-bold ${
                         step.completed
-                          ? "bg-[#2D5A3C] text-white"
+                          ? "bg-emerald-600 text-white"
                           : step.current
-                          ? "bg-[#A85A20] text-white ring-4 ring-[#A85A20]/20"
-                          : "bg-[#E7E2DA] text-[#625E58]"
+                          ? "bg-[#0084D4] text-white ring-4 ring-[#0084D4]/20"
+                          : "bg-slate-200 text-slate-500"
                       }`}
                     >
                       {step.completed ? "✓" : idx + 1}
                     </div>
                     <div>
                       <div className="flex items-center gap-2">
-                        <h4 className="font-semibold text-xs text-[#181817]">{step.label}</h4>
-                        <span className="text-[10px] text-[#8C827A]">{step.timestamp}</span>
+                        <h4 className="font-semibold text-xs text-slate-800">{step.label}</h4>
+                        <span className="text-[10px] text-slate-400">{step.timestamp}</span>
                       </div>
-                      <p className="text-[11px] text-[#625E58] mt-0.5 leading-relaxed">
+                      <p className="text-[11px] text-slate-600 mt-0.5 leading-relaxed">
                         {step.description}
                       </p>
                     </div>
@@ -161,14 +161,14 @@ export default function TrackOrderPage() {
             </div>
 
             {/* Package Contents */}
-            <div className="bg-white rounded-lg p-6 sm:p-8 border border-[#E7E2DA] shadow-subtle space-y-4">
-              <h3 className="font-semibold text-xs uppercase tracking-[0.12em] text-[#181817]">
+            <div className="bg-white rounded-xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-4">
+              <h3 className="font-bold text-xs uppercase tracking-wider text-slate-800">
                 Parcel Contents ({trackedOrder.items.length})
               </h3>
-              <div className="divide-y divide-[#E7E2DA]">
+              <div className="divide-y divide-slate-100">
                 {trackedOrder.items.map((item) => (
                   <div key={item.id} className="py-3 first:pt-0 flex items-center gap-3">
-                    <div className="relative w-12 h-14 rounded-md overflow-hidden bg-[#EFEBE4] border border-[#E7E2DA] shrink-0">
+                    <div className="relative w-12 h-14 rounded-lg overflow-hidden bg-slate-50 border border-slate-200 shrink-0">
                       <Image
                         src={item.image}
                         alt={item.title}
@@ -177,14 +177,14 @@ export default function TrackOrderPage() {
                       />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h4 className="font-semibold text-xs text-[#181817] truncate">
+                      <h4 className="font-semibold text-xs text-slate-800 truncate">
                         {item.title}
                       </h4>
-                      <p className="text-[11px] text-[#625E58]">
+                      <p className="text-[11px] text-slate-500">
                         {item.colorName} • {item.sizeOrCapacity} • Qty: {item.quantity}
                       </p>
                     </div>
-                    <div className="text-right font-semibold text-xs text-[#181817]">
+                    <div className="text-right font-bold text-xs text-slate-900">
                       {formatPrice(item.price * item.quantity)}
                     </div>
                   </div>
@@ -193,12 +193,12 @@ export default function TrackOrderPage() {
             </div>
           </div>
         ) : hasSearched && !trackedOrder ? (
-          <div className="bg-white rounded-lg p-12 text-center border border-[#E7E2DA] max-w-md mx-auto space-y-3 shadow-subtle">
-            <AlertCircle className="w-8 h-8 text-[#A85A20] mx-auto" />
-            <h3 className="font-editorial text-2xl text-[#181817]">
+          <div className="bg-white rounded-xl p-12 text-center border border-slate-200 max-w-md mx-auto space-y-3 shadow-sm">
+            <AlertCircle className="w-8 h-8 text-[#0084D4] mx-auto" />
+            <h3 className="text-2xl font-bold text-slate-800">
               No order found for &ldquo;{orderQuery}&rdquo;
             </h3>
-            <p className="text-xs text-[#625E58] leading-relaxed">
+            <p className="text-xs text-slate-600 leading-relaxed">
               Please double check your order reference ID from your order confirmation SMS or receipt.
             </p>
           </div>

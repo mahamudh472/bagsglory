@@ -10,26 +10,26 @@ export const TopAnnouncement: React.FC = () => {
   if (!isVisible) return null;
 
   return (
-    <div className="bg-[#181817] text-[#E7E2DA] text-[11px] sm:text-xs py-2 px-4 tracking-wide transition-all border-b border-[#2C2B29]">
+    <div className="bg-slate-900 text-slate-200 text-[11px] sm:text-xs py-2 px-4 tracking-wide transition-all border-b border-slate-800 font-sans">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
-        <div className="hidden md:block text-[#B8AA98] font-medium tracking-wider text-[11px] uppercase">
-          Nationwide Cash on Delivery
+        <div className="hidden md:block text-slate-400 font-medium tracking-wider text-[11px] uppercase">
+          Free Shipping on All Orders Over ৳3,000
         </div>
 
         <div className="flex-1 md:flex-initial text-center font-medium">
-          <span>Complimentary delivery on orders over ৳3,000</span>
-          <span className="mx-2 text-[#625E58] hidden sm:inline">•</span>
-          <span className="hidden sm:inline">Use code <strong className="text-white font-semibold">GLORY10</strong> for 10% off</span>
+          <span>Nationwide Cash on Delivery Available</span>
+          <span className="mx-2 text-slate-600 hidden sm:inline">•</span>
+          <span className="hidden sm:inline">Use coupon code <strong className="text-white font-semibold">OFF20</strong> for 20% off</span>
         </div>
 
         <div className="flex items-center gap-3">
-          <Link href="/shop" className="text-[#A85A20] hover:text-white transition-colors text-[11px] font-semibold hidden md:inline-block">
-            Shop Collection &rarr;
+          <Link href="/shop" className="text-[#0084D4] hover:text-white transition-colors text-[11px] font-bold hidden md:inline-block">
+            Shop Now &rarr;
           </Link>
           <button
             onClick={() => setIsVisible(false)}
             aria-label="Close banner"
-            className="text-[#625E58] hover:text-[#E7E2DA] transition-colors"
+            className="text-slate-500 hover:text-slate-200 transition-colors"
           >
             <X className="w-3.5 h-3.5" />
           </button>
