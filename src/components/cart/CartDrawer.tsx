@@ -4,12 +4,13 @@ import React, { useEffect } from "react";
 import { X, Trash2, Plus, Minus, ShoppingCart, ArrowRight, ShieldCheck, Truck } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useStore } from "@/context/StoreContext";
 import { CouponBox } from "./CouponBox";
 import { formatPrice } from "@/utils/currency";
 
 export const CartDrawer: React.FC = () => {
+  const pathname = usePathname();
   const {
     cart,
     isCartOpen,
@@ -34,7 +35,8 @@ export const CartDrawer: React.FC = () => {
     }
   }, [isCartOpen]);
 
-  if (!isCartOpen) return null;
+  // Hide cart drawer on all admin pages
+  if (!isCartOpen || pathname.startsWith("/admin")) return null;
 
   const freeShippingProgress = Math.min(100, (cartSubtotal / freeShippingThreshold) * 100);
   const remainingForFreeShipping = Math.max(0, freeShippingThreshold - cartSubtotal);

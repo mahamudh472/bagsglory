@@ -4,17 +4,20 @@ import React, { useState, useEffect, useRef } from "react";
 import { Search, X, ArrowRight, Sparkles, Tag, ShoppingBag } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useStore } from "@/context/StoreContext";
 import { formatPrice } from "@/utils/currency";
 
 export const SearchModal: React.FC = () => {
+  const pathname = usePathname();
   const { isSearchOpen, setIsSearchOpen, products } = useStore();
   const [query, setQuery] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
   useEffect(() => {
+    if (pathname.startsWith("/admin")) return;
+
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === "k") {
         e.preventDefault();
@@ -27,18 +30,18 @@ export const SearchModal: React.FC = () => {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isSearchOpen, setIsSearchOpen]);
+  }, [isSearchOpen, setIsSearchOpen, pathname]);
 
   useEffect(() => {
-    if (isSearchOpen) {
+    if (isSearchOpen && !pathname.startsWith("/admin")) {
       setTimeout(() => inputRef.current?.focus(), 100);
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "unset";
     }
-  }, [isSearchOpen]);
+  }, [isSearchOpen, pathname]);
 
-  if (!isSearchOpen) return null;
+  if (!isSearchOpen || pathname.startsWith("/admin")) return null;
 
   const filteredProducts = query.trim() === ""
     ? []

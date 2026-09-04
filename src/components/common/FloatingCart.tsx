@@ -1,10 +1,12 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { ShoppingBag } from "lucide-react";
 import { useStore } from "@/context/StoreContext";
 
 export const FloatingCart: React.FC = () => {
+  const pathname = usePathname();
   const { cart, setIsCartOpen } = useStore();
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
   const [bumping, setBumping] = useState(false);
@@ -17,6 +19,11 @@ export const FloatingCart: React.FC = () => {
     }, 400);
     return () => clearTimeout(timer);
   }, [totalItems]);
+
+  // Hide floating cart button on all admin pages
+  if (pathname.startsWith("/admin")) {
+    return null;
+  }
 
   return (
     <button
