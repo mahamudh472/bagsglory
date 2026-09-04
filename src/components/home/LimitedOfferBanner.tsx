@@ -20,7 +20,7 @@ export const LimitedOfferBanner: React.FC = () => {
     <section
       className="relative py-20 sm:py-28 bg-fixed bg-cover bg-center text-white overflow-hidden font-sans"
       style={{
-        backgroundImage: `url('https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=85&w=1800')`,
+        backgroundImage: `url('/images/special-edition-banner.jpg')`,
       }}
     >
       {/* Cool Ocean Blue Overlay (Allows the model image to show through as user scrolls) */}

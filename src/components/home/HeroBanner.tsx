@@ -9,7 +9,7 @@ export const HeroBanner: React.FC = () => {
     <section
       className="relative min-h-[520px] sm:min-h-[600px] lg:min-h-[640px] flex items-center bg-fixed bg-cover bg-center overflow-hidden"
       style={{
-        backgroundImage: `url('https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&q=85&w=2000')`,
+        backgroundImage: `url('/images/hero-banner.jpg')`,
       }}
     >
       {/* Blue Gradient Parallax Overlay */}

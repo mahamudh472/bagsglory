@@ -16,24 +16,24 @@ export const CategoryShowcase: React.FC = () => {
 
   const promoCards = [
     {
-      title: "20% Off On Luxury Totes",
-      tagline: "Structured Italian full-grain leather silhouettes for work and daily commute.",
-      image: "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&q=80&w=900",
-      link: "/category/totes",
+      title: "20% Off On Tank Tops",
+      tagline: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac dictum.",
+      image: "/images/women-fashion.jpg",
+      link: "/shop",
       buttonText: "SHOP NOW",
     },
     {
-      title: "Latest Backpacks For You",
-      tagline: "Ergonomic padded design with dedicated 16-inch laptop security compartments.",
-      image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&q=80&w=900",
-      link: "/category/backpacks",
+      title: "Latest Eyewear For You",
+      tagline: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac dictum.",
+      image: "/images/men-fashion.jpg",
+      link: "/shop",
       buttonText: "SHOP NOW",
     },
     {
-      title: "Let's Suit Up: Duffel Bags",
-      tagline: "TSA carry-on compliant weekender duffels with ventilated shoe storage.",
-      image: "https://images.unsplash.com/photo-1528732263440-4dd1a18a4cc2?auto=format&fit=crop&q=80&w=900",
-      link: "/category/duffels",
+      title: "Let's Lorem Suit Up!",
+      tagline: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac dictum.",
+      image: "/images/footwear.jpg",
+      link: "/shop",
       buttonText: "CHECK OUT",
     },
   ];
