@@ -26,10 +26,16 @@ export const metadata: Metadata = {
   keywords: "bagsglory, leather bags, backpacks, travel duffel, weekender bag, luxury tote, briefcases, cash on delivery",
   icons: {
     icon: [
-      { url: "/icon.svg", type: "image/svg+xml" },
-      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon-32x32.png", type: "image/png", sizes: "32x32" },
+      { url: "/favicon-16x16.png", type: "image/png", sizes: "16x16" },
+      { url: "/images/logo-mark/logo-mark.png", type: "image/png" },
     ],
-    apple: "/apple-icon.svg",
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+      { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+    shortcut: "/favicon.ico",
   },
 };
 

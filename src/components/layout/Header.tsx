@@ -75,7 +75,7 @@ export const Header: React.FC = () => {
                 <Menu className="w-6 h-6" />
               </button>
 
-              <Logo size="md" />
+              <Logo size="lg" />
             </div>
 
             {/* Desktop Navigation Links */}
@@ -157,7 +157,7 @@ export const Header: React.FC = () => {
           <div className="fixed inset-y-0 left-0 w-4/5 max-w-sm bg-white shadow-2xl p-6 flex flex-col justify-between overflow-y-auto z-[101]">
             <div className="space-y-6">
               <div className="flex items-center justify-between border-b border-slate-100 pb-4">
-                <Logo size="sm" />
+                <Logo size="md" />
                 <button
                   onClick={() => setMobileMenuOpen(false)}
                   className="p-2 text-slate-500 hover:text-slate-900 rounded-md transition-colors"

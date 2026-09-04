@@ -23,7 +23,17 @@ export const Footer: React.FC = () => {
       </div>
 
       {/* 2. Main 4-Column Footer */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+        {/* Brand Header */}
+        <div className="mb-12 pb-8 border-b border-slate-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+          <div className="space-y-2">
+            <Logo size="lg" />
+            <p className="text-xs sm:text-sm text-slate-500 max-w-md leading-relaxed">
+              Handcrafted luxury backpacks, travel duffels, executive briefcases, and everyday bags with nationwide Cash on Delivery.
+            </p>
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
           {/* Column 1: Quick Links */}
           <div className="space-y-4">
