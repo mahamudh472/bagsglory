@@ -64,8 +64,8 @@ export const FeaturedGrid: React.FC = () => {
           </div>
         </div>
 
-        {/* Product Cards Grid: 2 cols on mobile, 4-5 cols on desktop */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6">
+        {/* Product Cards Grid: 1 col on mobile phone view, 2-3 cols on tablet, 5 cols on desktop */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
           {displayedProducts.slice(0, 10).map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
