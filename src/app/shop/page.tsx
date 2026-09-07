@@ -114,7 +114,7 @@ export default function ShopPage() {
     onSaleOnly;
 
   return (
-    <div className="bg-[#F8F5EF] min-h-screen py-10 font-sans">
+    <div className="bg-[#F8F5EF] min-h-screen py-10 font-sans animate-page-enter">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Page Title & Introduction */}
         <div className="text-center max-w-2xl mx-auto mb-14">

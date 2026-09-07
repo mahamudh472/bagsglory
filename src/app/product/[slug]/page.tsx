@@ -44,7 +44,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
   const currentVariant = product.variants[selectedVariantIndex] || product.variants[0];
 
   return (
-    <div className="bg-[#F8F5EF] min-h-screen py-8 sm:py-12 font-sans">
+    <div className="bg-[#F8F5EF] min-h-screen py-8 sm:py-12 font-sans animate-page-enter">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Breadcrumbs */}
         <nav className="flex items-center gap-2 text-[11px] uppercase tracking-[0.18em] text-[#746C63] mb-8 overflow-x-auto pb-1 scrollbar-none">

@@ -55,7 +55,7 @@ export default function CategoryDetailPage({ params }: CategoryPageProps) {
   }
 
   return (
-    <div className="bg-[#F8F5EF] min-h-screen pb-24 font-sans">
+    <div className="bg-[#F8F5EF] min-h-screen pb-24 font-sans animate-page-enter">
       {/* Category Hero Banner with Obsidian & Gold Tint */}
       <div className="relative bg-[#0D0C0B] text-white py-16 sm:py-24 overflow-hidden border-b border-[#241B14]">
         <div className="absolute inset-0 opacity-25">
