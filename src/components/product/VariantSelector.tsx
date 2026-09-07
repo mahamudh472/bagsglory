@@ -154,7 +154,8 @@ export const VariantSelector: React.FC<VariantSelectorProps> = ({
           <button
             onClick={handleAddToCart}
             disabled={selectedVariant.stock === 0}
-            className={`flex-1 h-12 px-4 text-xs font-semibold uppercase tracking-[0.18em] flex items-center justify-center gap-2 transition-all duration-300 shadow-xs ${
+            aria-label={isAdded ? "Added to Bag" : "Add to Bag"}
+            className={`flex-1 h-12 px-3 sm:px-4 text-xs font-semibold uppercase tracking-[0.18em] flex items-center justify-center gap-2 transition-all duration-300 shadow-xs ${
               isAdded
                 ? "bg-[#10B981] text-white"
                 : selectedVariant.stock === 0
@@ -165,12 +166,12 @@ export const VariantSelector: React.FC<VariantSelectorProps> = ({
             {isAdded ? (
               <>
                 <Check className="w-4 h-4" />
-                <span>Added to Bag</span>
+                <span className="hidden sm:inline">Added to Bag</span>
               </>
             ) : (
               <>
                 <ShoppingBag className="w-4 h-4" />
-                <span>Add to Bag</span>
+                <span className="hidden sm:inline">Add to Bag</span>
               </>
             )}
           </button>
