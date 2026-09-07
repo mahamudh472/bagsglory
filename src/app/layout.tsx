@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Montserrat } from "next/font/google";
+import { Cormorant_Garamond, Manrope } from "next/font/google";
 import "./globals.css";
 import { StoreProvider } from "@/context/StoreContext";
 import { Header } from "@/components/layout/Header";
@@ -8,22 +8,24 @@ import { CartDrawer } from "@/components/cart/CartDrawer";
 import { SearchModal } from "@/components/search/SearchModal";
 import { FloatingCart } from "@/components/common/FloatingCart";
 
-const inter = Inter({
+const cormorant = Cormorant_Garamond({
+  variable: "--font-heading",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
+});
+
+const manrope = Manrope({
   variable: "--font-sans",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700", "800"],
-});
-
-const montserrat = Montserrat({
-  variable: "--font-heading",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "BAGSGLORY — Carry Your Glory! | Handcrafted Bags & Accessories",
-  description: "Carry Your Glory! Discover premium handcrafted backpacks, luxury totes, executive briefcases, and travel duffels with nationwide Cash on Delivery.",
-  keywords: "bagsglory, leather bags, backpacks, travel duffel, weekender bag, luxury tote, briefcases, cash on delivery",
+  title: "BAGSGLORY — Carry Your Glory | Luxury Handcrafted Bags",
+  description: "Carry Your Glory. Discover premium handcrafted luxury handbags, executive briefcases, structured totes, and travel duffels with nationwide Cash on Delivery.",
+  keywords: "bagsglory, luxury bags, handcrafted handbags, leather totes, executive briefcases, travel duffel, cash on delivery",
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
@@ -45,8 +47,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${montserrat.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-white text-[#1E293B] selection:bg-[#0084D4] selection:text-white">
+    <html lang="en" className={`${manrope.variable} ${cormorant.variable} h-full antialiased`}>
+      <body className="min-h-full flex flex-col bg-[#F8F5EF] text-[#171513] selection:bg-[#C9A45C] selection:text-[#0D0C0B]">
         <StoreProvider>
           <Header />
           <CartDrawer />
@@ -59,4 +61,5 @@ export default function RootLayout({
     </html>
   );
 }
+
 

@@ -2,25 +2,29 @@
 
 @layer base {
   :root {
-    --font-heading: var(--font-heading), 'Montserrat', 'Inter', system-ui, sans-serif;
-    --font-sans: var(--font-sans), 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-heading: var(--font-heading), 'Cormorant Garamond', Georgia, serif;
+    --font-sans: var(--font-sans), 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
     
-    --bg-primary: #FFFFFF;
-    --surface-primary: #FFFFFF;
-    --surface-secondary: #F8FAFC;
-    --text-primary: #1E293B;
-    --text-secondary: #64748B;
+    /* Core Luxury Palette */
+    --bg-primary: #F8F5EF;       /* Warm ivory */
+    --bg-secondary: #FFFFFF;     /* Pure surface */
+    --bg-dark: #0D0C0B;          /* Deep obsidian */
+    --bg-espresso: #241B14;      /* Rich espresso */
     
-    /* BagsGlory Signature Blue */
-    --accent: #0084D4;
-    --accent-hover: #0073B6;
-    --accent-light: #E0F2FE;
+    --text-primary: #171513;     /* Primary charcoal */
+    --text-secondary: #746C63;   /* Muted warm taupe */
+    --text-light: #F8F5EF;       /* Warm ivory text */
     
-    --border-light: #E2E8F0;
-    --border-subtle: #F1F5F9;
+    --gold-primary: #C9A45C;     /* Champagne gold */
+    --gold-highlight: #E5C77A;   /* Light gold shimmer */
+    --gold-dark: #9E7B35;        /* Deep gold */
+    
+    --border-warm: #E5DED4;      /* Subtle warm border */
+    --border-dark: #2A231C;      /* Subtle dark border */
+    
     --success: #10B981;
     --error: #EF4444;
-    --star-gold: #F59E0B;
+    --star-gold: #C9A45C;
   }
 }
 
@@ -31,74 +35,101 @@
 html {
   scroll-behavior: smooth;
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
-  background-color: #FFFFFF;
+  background-color: #F8F5EF;
 }
 
 body {
   font-family: var(--font-sans);
-  color: #1E293B;
-  background-color: #FFFFFF;
+  color: #171513;
+  background-color: #F8F5EF;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 .font-heading {
   font-family: var(--font-heading);
-  letter-spacing: -0.01em;
 }
 
-.font-ui,
-.font-sans-ui {
+.font-sans,
+.font-ui {
   font-family: var(--font-sans);
 }
 
-/* Brand Utilities */
-.border-brand {
-  border-color: #E2E8F0;
+/* Luxury Button & Interactive Classes */
+.btn-primary {
+  background-color: #0D0C0B;
+  color: #F8F5EF;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.bg-brand-blue {
-  background-color: #0084D4;
+.btn-primary:hover {
+  background-color: #C9A45C;
+  color: #0D0C0B;
 }
 
-.bg-brand-blue-hover:hover {
-  background-color: #0073B6;
+.btn-secondary {
+  background-color: transparent;
+  color: #171513;
+  border: 1px solid #171513;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.text-brand-blue {
-  color: #0084D4;
+.btn-secondary:hover {
+  background-color: #0D0C0B;
+  color: #F8F5EF;
+  border-color: #0D0C0B;
 }
 
-.text-brand-dark {
-  color: #1E293B;
+.btn-gold {
+  background-color: #C9A45C;
+  color: #0D0C0B;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.text-brand-muted {
-  color: #64748B;
+.btn-gold:hover {
+  background-color: #E5C77A;
+  color: #0D0C0B;
 }
 
-/* Minimal Crisp Shadows */
-.shadow-subtle {
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+/* Subtle luxury card shadows and borders */
+.border-warm {
+  border-color: #E5DED4;
 }
 
-.shadow-card-hover {
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+.shadow-luxury {
+  box-shadow: 0 4px 20px -2px rgba(23, 21, 19, 0.05), 0 2px 6px -1px rgba(23, 21, 19, 0.03);
+}
+
+.shadow-luxury-hover:hover {
+  box-shadow: 0 12px 30px -4px rgba(23, 21, 19, 0.08), 0 4px 12px -2px rgba(23, 21, 19, 0.04);
 }
 
 /* Clean minimal scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 ::-webkit-scrollbar-track {
-  background: #F1F5F9;
+  background: #F8F5EF;
 }
 ::-webkit-scrollbar-thumb {
-  background: #CBD5E1;
-  border-radius: 4px;
+  background: #D9D1C7;
+  border-radius: 2px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #94A3B8;
+  background: #C9A45C;
 }
+
 

@@ -66,21 +66,21 @@ export default function AdminCategoriesPage() {
   };
 
   return (
-    <div className="flex-1 flex flex-col font-sans bg-slate-50 text-slate-800 min-h-screen">
+    <div className="flex-1 flex flex-col font-sans bg-[#F8F5EF] text-[#0D0C0B] min-h-screen">
       <AdminHeader
         title="Collections & Categories"
-        subtitle="Organize bag collections, hero banners, and storefront landing pages"
+        subtitle="Organize handbag collections, hero banners, and storefront landing pages"
       />
 
       <main className="p-4 sm:p-6 lg:p-8 space-y-4 sm:space-y-6 flex-1">
         {/* Toolbar */}
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 p-4 bg-white rounded-xl border border-slate-200 shadow-sm">
-          <span className="text-xs font-bold text-slate-600 uppercase tracking-wider">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 p-4 bg-white border border-[#E5DED4]">
+          <span className="text-xs font-semibold text-[#746C63] uppercase tracking-[0.16em]">
             Total Collections: {categories.length}
           </span>
           <button
             onClick={openAddModal}
-            className="px-4 py-2.5 bg-[#0084D4] hover:bg-[#0073B6] text-white rounded-lg text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-sm"
+            className="px-5 py-2.5 bg-[#0D0C0B] hover:bg-[#C9A45C] hover:text-[#0D0C0B] text-white text-xs font-semibold uppercase tracking-[0.16em] flex items-center justify-center gap-2 transition-all"
           >
             <Plus className="w-4 h-4" />
             <span>Add Collection</span>
@@ -95,47 +95,47 @@ export default function AdminCategoriesPage() {
             return (
               <div
                 key={cat.id}
-                className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col justify-between hover:shadow-md transition-shadow"
+                className="bg-white border border-[#E5DED4] overflow-hidden flex flex-col justify-between hover:border-[#C9A45C] transition-colors"
               >
-                <div className="relative h-44 w-full bg-slate-100">
+                <div className="relative h-48 w-full bg-[#F8F5EF]">
                   <Image
                     src={cat.image}
                     alt={cat.name}
                     fill
                     className="object-cover"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-900/30 to-transparent" />
-                  <div className="absolute bottom-3 left-4 right-4 text-white">
-                    <span className="text-[10px] font-bold text-sky-300 uppercase tracking-wider font-mono">
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0D0C0B]/90 via-[#0D0C0B]/30 to-transparent" />
+                  <div className="absolute bottom-4 left-4 right-4 text-white">
+                    <span className="text-[10px] font-semibold text-[#C9A45C] uppercase tracking-[0.2em] font-mono">
                       Slug: /{cat.slug}
                     </span>
-                    <h3 className="font-heading font-bold text-xl text-white">
+                    <h3 className="font-heading text-2xl text-white">
                       {cat.name}
                     </h3>
                   </div>
                   {cat.badge && (
-                    <span className="absolute top-3 left-3 bg-[#0084D4] text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full shadow-xs">
+                    <span className="absolute top-3 left-3 bg-[#0D0C0B] text-[#C9A45C] border border-[#C9A45C]/40 text-[9px] font-semibold tracking-wider uppercase px-2.5 py-0.5">
                       {cat.badge}
                     </span>
                   )}
                 </div>
 
-                <div className="p-4 sm:p-5 space-y-3 flex-1 flex flex-col justify-between">
+                <div className="p-5 space-y-3 flex-1 flex flex-col justify-between">
                   <div>
-                    <p className="text-xs font-bold text-slate-800">{cat.tagline}</p>
-                    <p className="text-xs text-slate-500 mt-1 line-clamp-2 leading-relaxed">
+                    <p className="text-xs font-semibold text-[#0D0C0B] uppercase tracking-wider">{cat.tagline}</p>
+                    <p className="text-xs text-[#746C63] font-light mt-1 line-clamp-2 leading-relaxed">
                       {cat.description}
                     </p>
                   </div>
 
-                  <div className="flex items-center justify-between pt-3 border-t border-slate-100">
-                    <span className="text-xs font-semibold text-slate-500">
-                      {count} {count === 1 ? "product" : "products"} assigned
+                  <div className="flex items-center justify-between pt-3 border-t border-[#E5DED4]">
+                    <span className="text-xs font-light text-[#746C63]">
+                      {count} {count === 1 ? "creation" : "creations"} assigned
                     </span>
                     <div className="flex items-center gap-1.5">
                       <button
                         onClick={() => openEditModal(cat)}
-                        className="p-1.5 text-slate-400 hover:text-[#0084D4] hover:bg-sky-50 rounded-lg transition-colors"
+                        className="p-1.5 text-[#746C63] hover:text-[#0D0C0B] hover:bg-[#F8F5EF] transition-colors"
                         title="Edit Category"
                       >
                         <Edit2 className="w-4 h-4" />
@@ -146,7 +146,7 @@ export default function AdminCategoriesPage() {
                             deleteCategory(cat.id);
                           }
                         }}
-                        className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors"
+                        className="p-1.5 text-[#746C63] hover:text-rose-700 hover:bg-rose-50 transition-colors"
                         title="Delete Category"
                       >
                         <Trash2 className="w-4 h-4" />
@@ -161,15 +161,15 @@ export default function AdminCategoriesPage() {
 
         {/* Modal */}
         {isModalOpen && (
-          <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 font-sans">
-            <div className="w-full max-w-lg bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden max-h-[92vh] flex flex-col my-auto">
-              <div className="p-4 sm:p-6 border-b border-slate-200 flex items-center justify-between shrink-0 bg-slate-50/80">
-                <h3 className="font-heading font-bold text-xl text-slate-800">
+          <div className="fixed inset-0 z-50 overflow-y-auto bg-[#0D0C0B]/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 font-sans">
+            <div className="w-full max-w-lg bg-white shadow-2xl border border-[#E5DED4] overflow-hidden max-h-[92vh] flex flex-col my-auto">
+              <div className="p-4 sm:p-6 border-b border-[#E5DED4] flex items-center justify-between shrink-0 bg-[#F8F5EF]">
+                <h3 className="font-heading font-normal text-xl text-[#0D0C0B]">
                   {editingCategory ? "Edit Collection" : "Add New Collection"}
                 </h3>
                 <button
                   onClick={() => setIsModalOpen(false)}
-                  className="p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-200/50 rounded-lg transition-colors"
+                  className="p-2 text-[#746C63] hover:text-[#0D0C0B] hover:bg-white transition-colors"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -177,7 +177,7 @@ export default function AdminCategoriesPage() {
 
               <form onSubmit={handleFormSubmit} className="p-4 sm:p-6 space-y-4 overflow-y-auto flex-1">
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">
+                  <label className="block text-xs uppercase tracking-wider font-semibold text-[#0D0C0B] mb-1">
                     Collection Name *
                   </label>
                   <input
@@ -191,13 +191,13 @@ export default function AdminCategoriesPage() {
                       }
                     }}
                     placeholder="e.g. Leather Backpacks"
-                    className="w-full text-xs p-2.5 rounded-lg border border-slate-200 bg-white text-slate-800 focus:outline-none focus:border-[#0084D4] focus:ring-1 focus:ring-[#0084D4]"
+                    className="w-full text-xs p-2.5 border border-[#E5DED4] bg-white text-[#0D0C0B] focus:outline-none focus:border-[#C9A45C]"
                   />
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-xs font-bold text-slate-700 mb-1">
+                    <label className="block text-xs uppercase tracking-wider font-semibold text-[#0D0C0B] mb-1">
                       URL Slug *
                     </label>
                     <input
@@ -206,12 +206,12 @@ export default function AdminCategoriesPage() {
                       value={slug}
                       onChange={(e) => setSlug(e.target.value as BagCategory)}
                       placeholder="e.g. backpacks"
-                      className="w-full text-xs p-2.5 rounded-lg border border-slate-200 font-mono text-slate-700 bg-slate-50 focus:outline-none focus:border-[#0084D4] focus:ring-1 focus:ring-[#0084D4]"
+                      className="w-full text-xs p-2.5 border border-[#E5DED4] font-mono text-[#0D0C0B] bg-[#F8F5EF] focus:outline-none focus:border-[#C9A45C]"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-slate-700 mb-1">
+                    <label className="block text-xs uppercase tracking-wider font-semibold text-[#0D0C0B] mb-1">
                       Promo Badge (Optional)
                     </label>
                     <input
@@ -219,26 +219,26 @@ export default function AdminCategoriesPage() {
                       value={badge}
                       onChange={(e) => setBadge(e.target.value)}
                       placeholder="e.g. Bestseller, Trending"
-                      className="w-full text-xs p-2.5 rounded-lg border border-slate-200 bg-white text-slate-800 focus:outline-none focus:border-[#0084D4] focus:ring-1 focus:ring-[#0084D4]"
+                      className="w-full text-xs p-2.5 border border-[#E5DED4] bg-white text-[#0D0C0B] focus:outline-none focus:border-[#C9A45C]"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">
+                  <label className="block text-xs uppercase tracking-wider font-semibold text-[#0D0C0B] mb-1">
                     Tagline
                   </label>
                   <input
                     type="text"
                     value={tagline}
                     onChange={(e) => setTagline(e.target.value)}
-                    placeholder="e.g. Engineered for daily commute & weekend journeys"
-                    className="w-full text-xs p-2.5 rounded-lg border border-slate-200 bg-white text-slate-800 focus:outline-none focus:border-[#0084D4] focus:ring-1 focus:ring-[#0084D4]"
+                    placeholder="e.g. Handcrafted for elite elegance & enduring journeys"
+                    className="w-full text-xs p-2.5 border border-[#E5DED4] bg-white text-[#0D0C0B] focus:outline-none focus:border-[#C9A45C]"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">
+                  <label className="block text-xs uppercase tracking-wider font-semibold text-[#0D0C0B] mb-1">
                     Hero Cover Image URL
                   </label>
                   <input
@@ -246,34 +246,34 @@ export default function AdminCategoriesPage() {
                     value={image}
                     onChange={(e) => setImage(e.target.value)}
                     placeholder="https://images.unsplash.com/photo-..."
-                    className="w-full text-xs p-2.5 rounded-lg border border-slate-200 font-mono text-slate-800 focus:outline-none focus:border-[#0084D4] focus:ring-1 focus:ring-[#0084D4]"
+                    className="w-full text-xs p-2.5 border border-[#E5DED4] font-mono text-[#0D0C0B] focus:outline-none focus:border-[#C9A45C]"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">
+                  <label className="block text-xs uppercase tracking-wider font-semibold text-[#0D0C0B] mb-1">
                     Description
                   </label>
                   <textarea
                     rows={3}
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
-                    placeholder="Provide details on materials, durability, and features..."
-                    className="w-full text-xs p-2.5 rounded-lg border border-slate-200 bg-white text-slate-800 focus:outline-none focus:border-[#0084D4] focus:ring-1 focus:ring-[#0084D4]"
+                    placeholder="Provide details on materials, artisanal leather grading, and craftsmanship..."
+                    className="w-full text-xs p-2.5 border border-[#E5DED4] bg-white text-[#0D0C0B] focus:outline-none focus:border-[#C9A45C]"
                   />
                 </div>
 
-                <div className="pt-4 border-t border-slate-200 flex items-center justify-end gap-2.5">
+                <div className="pt-4 border-t border-[#E5DED4] flex items-center justify-end gap-2.5">
                   <button
                     type="button"
                     onClick={() => setIsModalOpen(false)}
-                    className="px-4 py-2.5 text-xs font-bold text-slate-600 hover:text-slate-900 rounded-lg transition-colors"
+                    className="px-4 py-2.5 text-xs font-semibold text-[#746C63] hover:text-[#0D0C0B] transition-colors uppercase tracking-wider"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
-                    className="px-6 py-2.5 bg-[#0084D4] hover:bg-[#0073B6] text-white rounded-lg text-xs font-bold uppercase tracking-wider transition-all shadow-sm flex items-center gap-1.5"
+                    className="px-6 py-2.5 bg-[#0D0C0B] hover:bg-[#C9A45C] hover:text-[#0D0C0B] text-white text-xs font-semibold uppercase tracking-[0.16em] transition-all flex items-center gap-1.5"
                   >
                     <Check className="w-4 h-4" />
                     <span>{editingCategory ? "Save Changes" : "Create Collection"}</span>

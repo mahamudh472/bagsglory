@@ -114,50 +114,50 @@ export default function ShopPage() {
     onSaleOnly;
 
   return (
-    <div className="bg-white min-h-screen py-10 font-sans">
+    <div className="bg-[#F8F5EF] min-h-screen py-10 font-sans">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Page Title & Introduction */}
-        <div className="text-center max-w-2xl mx-auto mb-12">
-          <span className="text-xs font-bold uppercase tracking-wider text-[#0084D4] block mb-2">
-            The Complete Collection
+        <div className="text-center max-w-2xl mx-auto mb-14">
+          <span className="text-[10px] font-semibold uppercase tracking-[0.25em] text-[#C9A45C] block mb-2">
+            The Complete Atelier Collection
           </span>
-          <h1 className="font-heading font-extrabold text-3xl sm:text-4xl lg:text-5xl text-[#1E293B] tracking-tight">
+          <h1 className="font-heading font-normal text-4xl sm:text-5xl lg:text-6xl text-[#0D0C0B] tracking-tight">
             Handcrafted Bags & Accessories
           </h1>
-          <div className="w-16 h-1 bg-[#0084D4] mx-auto my-3" />
-          <p className="text-sm sm:text-base text-slate-500 leading-relaxed">
-            Every bag is crafted with premium materials and reinforced hardware, delivered with nationwide Cash on Delivery.
+          <div className="w-12 h-[1px] bg-[#C9A45C] mx-auto my-3.5" />
+          <p className="text-sm sm:text-base text-[#746C63] font-light leading-relaxed">
+            Every piece is forged with uncompromised precision, bespoke hardware, and delivered with nationwide Cash on Delivery.
           </p>
         </div>
 
         {/* Top Control Bar (Sort, View Mode, Filter Toggle) */}
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 pb-6 mb-8 border-b border-slate-100">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 pb-6 mb-8 border-b border-[#E5DED4]">
           <div className="flex items-center gap-3">
             <button
               onClick={() => setIsMobileFilterOpen(true)}
-              className="lg:hidden flex items-center gap-2 px-4 py-2.5 bg-[#0084D4] text-white rounded-none text-xs font-bold uppercase tracking-wider"
+              className="lg:hidden flex items-center gap-2 px-4 py-2.5 bg-[#0D0C0B] text-[#F8F5EF] text-xs font-semibold uppercase tracking-[0.18em]"
             >
-              <SlidersHorizontal className="w-4 h-4" />
+              <SlidersHorizontal className="w-4 h-4 text-[#C9A45C]" />
               <span>Filters {hasActiveFilters && "●"}</span>
             </button>
 
-            <span className="text-sm text-slate-500">
-              Showing <strong className="text-[#1E293B] font-bold">{filteredProducts.length}</strong> items
+            <span className="text-xs sm:text-sm text-[#746C63] font-light tracking-wide">
+              Showing <strong className="text-[#0D0C0B] font-semibold">{filteredProducts.length}</strong> creations
             </span>
           </div>
 
           <div className="flex items-center justify-between sm:justify-end gap-3">
             {/* Sorting Dropdown */}
             <div className="flex items-center gap-2">
-              <label htmlFor="shop-sort" className="text-sm text-slate-500 hidden sm:inline">Sort by:</label>
+              <label htmlFor="shop-sort" className="text-xs uppercase tracking-wider text-[#746C63] hidden sm:inline">Sort by:</label>
               <select
                 id="shop-sort"
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value as any)}
-                className="text-sm font-semibold text-[#1E293B] bg-slate-50 border border-slate-200 rounded-none px-3.5 py-2 focus:outline-none focus:border-[#0084D4]"
+                className="text-xs font-semibold uppercase tracking-wider text-[#0D0C0B] bg-[#FFFFFF] border border-[#E5DED4] px-3.5 py-2.5 focus:outline-none focus:border-[#C9A45C]"
               >
-                <option value="featured">Featured</option>
-                <option value="newest">Newest Arrivals</option>
+                <option value="featured">Curated (Featured)</option>
+                <option value="newest">New Arrivals</option>
                 <option value="price-asc">Price: Low to High</option>
                 <option value="price-desc">Price: High to Low</option>
                 <option value="rating">Highest Rating</option>
@@ -165,12 +165,12 @@ export default function ShopPage() {
             </div>
 
             {/* View Mode Toggle */}
-            <div className="flex items-center border border-slate-200 rounded-none p-0.5 bg-slate-50">
+            <div className="flex items-center border border-[#E5DED4] p-0.5 bg-[#FFFFFF]">
               <button
                 onClick={() => setViewMode("grid")}
                 aria-label="Grid View"
                 className={`p-2 transition-colors ${
-                  viewMode === "grid" ? "bg-[#0084D4] text-white" : "text-slate-500"
+                  viewMode === "grid" ? "bg-[#0D0C0B] text-[#F8F5EF]" : "text-[#746C63] hover:text-[#0D0C0B]"
                 }`}
               >
                 <Grid3X3 className="w-4 h-4" />
@@ -179,7 +179,7 @@ export default function ShopPage() {
                 onClick={() => setViewMode("list")}
                 aria-label="List View"
                 className={`p-2 transition-colors ${
-                  viewMode === "list" ? "bg-[#0084D4] text-white" : "text-slate-500"
+                  viewMode === "list" ? "bg-[#0D0C0B] text-[#F8F5EF]" : "text-[#746C63] hover:text-[#0D0C0B]"
                 }`}
               >
                 <LayoutList className="w-4 h-4" />
@@ -196,34 +196,34 @@ export default function ShopPage() {
             {hasActiveFilters && (
               <button
                 onClick={resetFilters}
-                className="w-full py-2.5 px-3 bg-slate-50 border border-slate-200 text-[#0084D4] hover:bg-sky-50 rounded-none text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-colors"
+                className="w-full py-2.5 px-3 bg-[#FFFFFF] border border-[#E5DED4] text-[#0D0C0B] hover:bg-[#0D0C0B] hover:text-[#F8F5EF] text-xs font-semibold uppercase tracking-[0.18em] flex items-center justify-center gap-2 transition-colors"
               >
-                <RotateCcw className="w-3.5 h-3.5" />
+                <RotateCcw className="w-3.5 h-3.5 text-[#C9A45C]" />
                 <span>Reset All Filters</span>
               </button>
             )}
 
             {/* 1. Category Filter */}
             <div className="space-y-3">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-[#1E293B]">
-                Categories
+              <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-[#0D0C0B]">
+                Collections
               </h3>
               <div className="space-y-2.5">
                 {categories.map((cat) => (
                   <label
                     key={cat.id}
-                    className="flex items-center justify-between text-sm text-slate-600 hover:text-[#0084D4] cursor-pointer py-0.5"
+                    className="flex items-center justify-between text-xs text-[#746C63] hover:text-[#0D0C0B] cursor-pointer py-0.5 tracking-wide"
                   >
                     <span className="flex items-center gap-2.5">
                       <input
                         type="checkbox"
                         checked={selectedCategories.includes(cat.slug)}
                         onChange={() => toggleCategory(cat.slug)}
-                        className="rounded border-slate-300 text-[#0084D4] focus:ring-0"
+                        className="rounded border-[#E5DED4] text-[#0D0C0B] focus:ring-0"
                       />
                       <span>{cat.name}</span>
                     </span>
-                    <span className="text-xs text-slate-400">
+                    <span className="text-[11px] text-[#746C63] font-mono">
                       ({products.filter((p) => p.category === cat.slug).length})
                     </span>
                   </label>
@@ -232,12 +232,12 @@ export default function ShopPage() {
             </div>
 
             {/* 2. Price Range Slider */}
-            <div className="space-y-3 pt-6 border-t border-slate-100">
+            <div className="space-y-3 pt-6 border-t border-[#E5DED4]">
               <div className="flex items-center justify-between">
-                <h3 className="text-xs font-bold uppercase tracking-wider text-[#1E293B]">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-[#0D0C0B]">
                   Max Price
                 </h3>
-                <span className="text-sm font-bold text-[#0084D4]">
+                <span className="text-xs font-semibold text-[#0D0C0B]">
                   {formatPrice(maxPrice)}
                 </span>
               </div>
@@ -248,30 +248,30 @@ export default function ShopPage() {
                 step="250"
                 value={maxPrice}
                 onChange={(e) => setMaxPrice(Number(e.target.value))}
-                className="w-full accent-[#0084D4] cursor-pointer"
+                className="w-full accent-[#0D0C0B] cursor-pointer"
               />
-              <div className="flex justify-between text-xs text-slate-400">
+              <div className="flex justify-between text-[11px] text-[#746C63] font-mono">
                 <span>৳1,000</span>
                 <span>৳6,000</span>
               </div>
             </div>
 
             {/* 3. Materials Filter */}
-            <div className="space-y-3 pt-6 border-t border-slate-100">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-[#1E293B]">
+            <div className="space-y-3 pt-6 border-t border-[#E5DED4]">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-[#0D0C0B]">
                 Material
               </h3>
               <div className="space-y-2.5">
                 {materialOptions.map((mat) => (
                   <label
                     key={mat}
-                    className="flex items-center gap-2.5 text-sm text-slate-600 hover:text-[#0084D4] cursor-pointer py-0.5"
+                    className="flex items-center gap-2.5 text-xs text-[#746C63] hover:text-[#0D0C0B] cursor-pointer py-0.5 tracking-wide"
                   >
                     <input
                       type="checkbox"
                       checked={selectedMaterials.includes(mat)}
                       onChange={() => toggleMaterial(mat)}
-                      className="rounded border-slate-300 text-[#0084D4] focus:ring-0"
+                      className="rounded border-[#E5DED4] text-[#0D0C0B] focus:ring-0"
                     />
                     <span>{mat}</span>
                   </label>
@@ -280,15 +280,15 @@ export default function ShopPage() {
             </div>
 
             {/* On Sale Filter */}
-            <div className="pt-6 border-t border-slate-100">
-              <label className="flex items-center gap-2.5 text-sm text-slate-700 hover:text-[#0084D4] cursor-pointer py-0.5">
+            <div className="pt-6 border-t border-[#E5DED4]">
+              <label className="flex items-center gap-2.5 text-xs text-[#0D0C0B] hover:text-[#C9A45C] cursor-pointer py-0.5 uppercase tracking-wider font-semibold">
                 <input
                   type="checkbox"
                   checked={onSaleOnly}
                   onChange={(e) => setOnSaleOnly(e.target.checked)}
-                  className="rounded border-slate-300 text-[#0084D4] focus:ring-0"
+                  className="rounded border-[#E5DED4] text-[#0D0C0B] focus:ring-0"
                 />
-                <span className="font-semibold">On Sale Only</span>
+                <span>Privilege Sale Only</span>
               </label>
             </div>
           </aside>
@@ -309,18 +309,18 @@ export default function ShopPage() {
               </div>
             ) : (
               <div className="py-20 text-center space-y-4 max-w-md mx-auto">
-                <div className="w-12 h-12 rounded-full bg-white border border-slate-200 text-slate-400 flex items-center justify-center mx-auto shadow-xs">
-                  <ShoppingBag className="w-5 h-5 text-[#0084D4]" />
+                <div className="w-12 h-12 rounded-full bg-[#FFFFFF] border border-[#E5DED4] text-[#C9A45C] flex items-center justify-center mx-auto shadow-xs">
+                  <ShoppingBag className="w-5 h-5 stroke-[1.5]" />
                 </div>
-                <h3 className="font-heading font-bold text-2xl text-slate-800">
-                  No matching bags found
+                <h3 className="font-heading font-normal text-2xl text-[#0D0C0B]">
+                  No matching creations found
                 </h3>
-                <p className="text-sm text-slate-500 leading-relaxed">
-                  Try adjusting your price slider or clearing filters to browse our catalog.
+                <p className="text-xs text-[#746C63] leading-relaxed font-light">
+                  Try adjusting your price filter or clearing selections to explore the complete catalog.
                 </p>
                 <button
                   onClick={resetFilters}
-                  className="px-6 py-2.5 bg-[#0084D4] hover:bg-[#0073B6] text-white rounded-lg text-xs font-bold uppercase tracking-wider transition-colors shadow-sm"
+                  className="px-6 py-3 bg-[#0D0C0B] hover:bg-[#C9A45C] text-[#F8F5EF] hover:text-[#0D0C0B] text-xs font-semibold uppercase tracking-[0.18em] transition-colors"
                 >
                   Clear All Filters
                 </button>
@@ -334,22 +334,22 @@ export default function ShopPage() {
       {isMobileFilterOpen && (
         <div className="fixed inset-0 z-[100] lg:hidden animate-in fade-in duration-200">
           <div
-            className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs"
+            className="fixed inset-0 bg-[#0D0C0B]/70 backdrop-blur-sm"
             onClick={() => setIsMobileFilterOpen(false)}
           />
 
-          <div className="fixed inset-y-0 left-0 w-4/5 max-w-sm bg-white shadow-2xl p-6 flex flex-col justify-between overflow-y-auto z-[101]">
+          <div className="fixed inset-y-0 left-0 w-4/5 max-w-sm bg-[#F8F5EF] shadow-2xl p-6 flex flex-col justify-between overflow-y-auto z-[101] border-r border-[#E5DED4]">
             <div className="space-y-6">
-              <div className="flex items-center justify-between border-b border-slate-200 pb-4">
+              <div className="flex items-center justify-between border-b border-[#E5DED4] pb-4">
                 <div className="flex items-center gap-2">
-                  <SlidersHorizontal className="w-4 h-4 text-[#0084D4]" />
-                  <h2 className="text-sm font-bold uppercase tracking-wider text-slate-800">
+                  <SlidersHorizontal className="w-4 h-4 text-[#C9A45C]" />
+                  <h2 className="text-xs font-semibold uppercase tracking-[0.18em] text-[#0D0C0B]">
                     Filter Products
                   </h2>
                 </div>
                 <button
                   onClick={() => setIsMobileFilterOpen(false)}
-                  className="p-1.5 text-slate-500 hover:text-slate-800 rounded-md"
+                  className="p-1.5 text-[#746C63] hover:text-[#0D0C0B] rounded-md"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -357,25 +357,25 @@ export default function ShopPage() {
 
               {/* Collections Filter */}
               <div className="space-y-3">
-                <h3 className="text-xs font-bold uppercase tracking-[0.15em] text-slate-800">
-                  Categories
+                <h3 className="text-xs font-semibold uppercase tracking-[0.18em] text-[#0D0C0B]">
+                  Collections
                 </h3>
                 <div className="space-y-2.5">
                   {categories.map((cat) => (
                     <label
                       key={cat.id}
-                      className="flex items-center justify-between text-sm text-slate-600 cursor-pointer"
+                      className="flex items-center justify-between text-xs text-[#746C63] cursor-pointer"
                     >
                       <span className="flex items-center gap-2.5">
                         <input
                           type="checkbox"
                           checked={selectedCategories.includes(cat.slug)}
                           onChange={() => toggleCategory(cat.slug)}
-                          className="rounded border-slate-300 text-[#0084D4] focus:ring-[#0084D4]"
+                          className="rounded border-[#E5DED4] text-[#0D0C0B] focus:ring-0"
                         />
                         <span>{cat.name}</span>
                       </span>
-                      <span className="text-xs text-slate-400">
+                      <span className="text-[11px] text-[#746C63] font-mono">
                         ({products.filter((p) => p.category === cat.slug).length})
                       </span>
                     </label>
@@ -384,12 +384,12 @@ export default function ShopPage() {
               </div>
 
               {/* Price Filter */}
-              <div className="space-y-3 pt-6 border-t border-slate-200">
+              <div className="space-y-3 pt-6 border-t border-[#E5DED4]">
                 <div className="flex items-center justify-between">
-                  <h3 className="text-xs font-bold uppercase tracking-[0.15em] text-slate-800">
+                  <h3 className="text-xs font-semibold uppercase tracking-[0.18em] text-[#0D0C0B]">
                     Max Price
                   </h3>
-                  <span className="text-sm font-bold text-[#0084D4]">
+                  <span className="text-xs font-semibold text-[#0D0C0B]">
                     {formatPrice(maxPrice)}
                   </span>
                 </div>
@@ -400,26 +400,26 @@ export default function ShopPage() {
                   step="250"
                   value={maxPrice}
                   onChange={(e) => setMaxPrice(Number(e.target.value))}
-                  className="w-full accent-[#0084D4]"
+                  className="w-full accent-[#0D0C0B]"
                 />
               </div>
 
               {/* Materials Filter */}
-              <div className="space-y-3 pt-6 border-t border-slate-200">
-                <h3 className="text-xs font-bold uppercase tracking-[0.15em] text-slate-800">
+              <div className="space-y-3 pt-6 border-t border-[#E5DED4]">
+                <h3 className="text-xs font-semibold uppercase tracking-[0.18em] text-[#0D0C0B]">
                   Material
                 </h3>
                 <div className="space-y-2.5">
                   {materialOptions.map((mat) => (
                     <label
                       key={mat}
-                      className="flex items-center gap-2.5 text-sm text-slate-600 cursor-pointer"
+                      className="flex items-center gap-2.5 text-xs text-[#746C63] cursor-pointer"
                     >
                       <input
                         type="checkbox"
                         checked={selectedMaterials.includes(mat)}
                         onChange={() => toggleMaterial(mat)}
-                        className="rounded border-slate-300 text-[#0084D4] focus:ring-[#0084D4]"
+                        className="rounded border-[#E5DED4] text-[#0D0C0B] focus:ring-0"
                       />
                       <span>{mat}</span>
                     </label>
@@ -429,17 +429,17 @@ export default function ShopPage() {
             </div>
 
             {/* Apply & Reset CTAs */}
-            <div className="pt-6 border-t border-slate-200 space-y-2 mt-8">
+            <div className="pt-6 border-t border-[#E5DED4] space-y-2 mt-8">
               <button
                 onClick={() => setIsMobileFilterOpen(false)}
-                className="w-full py-3 bg-[#0084D4] hover:bg-[#0073B6] text-white rounded-lg text-xs font-bold uppercase tracking-wider shadow-sm transition-all"
+                className="w-full py-3.5 bg-[#0D0C0B] hover:bg-[#C9A45C] text-[#F8F5EF] hover:text-[#0D0C0B] text-xs font-semibold uppercase tracking-[0.18em] transition-all"
               >
-                Apply Filters ({filteredProducts.length} items)
+                Apply Filters ({filteredProducts.length})
               </button>
               {hasActiveFilters && (
                 <button
                   onClick={resetFilters}
-                  className="w-full py-2.5 bg-white border border-slate-200 text-slate-600 hover:text-slate-900 rounded-lg text-xs font-bold uppercase tracking-wider"
+                  className="w-full py-2.5 bg-[#FFFFFF] border border-[#E5DED4] text-[#0D0C0B] text-xs font-semibold uppercase tracking-[0.18em]"
                 >
                   Reset All
                 </button>
@@ -451,3 +451,4 @@ export default function ShopPage() {
     </div>
   );
 }
+

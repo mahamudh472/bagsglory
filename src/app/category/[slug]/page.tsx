@@ -34,28 +34,31 @@ export default function CategoryDetailPage({ params }: CategoryPageProps) {
   if (!category) {
     return (
       <div className="max-w-7xl mx-auto px-4 py-24 text-center font-sans">
-        <h1 className="font-heading font-bold text-3xl text-[#1E293B] mb-4">
+        <span className="text-[10px] uppercase font-bold tracking-[0.25em] text-[#C9A45C] block mb-2">
+          Collection Unavailable
+        </span>
+        <h1 className="font-heading text-4xl text-[#0D0C0B] mb-4">
           Category Not Found
         </h1>
-        <p className="text-sm text-slate-500 mb-8 max-w-md mx-auto">
-          The requested category does not exist or has been updated.
+        <p className="text-sm text-[#746C63] mb-8 max-w-md mx-auto font-light">
+          The requested luxury collection does not exist or has been updated.
         </p>
         <Link
           href="/shop"
-          className="inline-flex items-center gap-2 px-6 py-3 bg-[#0084D4] text-white text-xs font-bold uppercase tracking-wider hover:bg-[#0073B6] transition-colors rounded-none"
+          className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#0D0C0B] text-white text-xs font-semibold uppercase tracking-[0.18em] hover:bg-[#C9A45C] hover:text-[#0D0C0B] transition-all rounded-none"
         >
           <ArrowLeft className="w-4 h-4" />
-          <span>Browse All Products</span>
+          <span>Browse All Creations</span>
         </Link>
       </div>
     );
   }
 
   return (
-    <div className="bg-white min-h-screen pb-20 font-sans">
-      {/* Category Hero Banner with Blue Tint */}
-      <div className="relative bg-[#1E6288] text-white py-14 sm:py-18 overflow-hidden">
-        <div className="absolute inset-0 opacity-30">
+    <div className="bg-[#F8F5EF] min-h-screen pb-24 font-sans">
+      {/* Category Hero Banner with Obsidian & Gold Tint */}
+      <div className="relative bg-[#0D0C0B] text-white py-16 sm:py-24 overflow-hidden border-b border-[#241B14]">
+        <div className="absolute inset-0 opacity-25">
           <Image
             src={category.image}
             alt={category.name}
@@ -63,30 +66,30 @@ export default function CategoryDetailPage({ params }: CategoryPageProps) {
             className="object-cover"
           />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-r from-[#1E6288] via-[#1E6288]/80 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0D0C0B] via-[#0D0C0B]/85 to-transparent" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           {/* Breadcrumb */}
-          <nav className="flex items-center gap-2 text-xs uppercase tracking-wider text-sky-200 mb-4">
+          <nav className="flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-[#E5C77A]/70 mb-6">
             <Link href="/" className="hover:text-white transition-colors">
               Home
             </Link>
-            <ChevronRight className="w-3.5 h-3.5 text-sky-300" />
+            <ChevronRight className="w-3 h-3 text-[#C9A45C]/50" />
             <Link href="/shop" className="hover:text-white transition-colors">
-              Shop
+              Collections
             </Link>
-            <ChevronRight className="w-3.5 h-3.5 text-sky-300" />
-            <span className="text-white font-bold">{category.name}</span>
+            <ChevronRight className="w-3 h-3 text-[#C9A45C]/50" />
+            <span className="text-[#C9A45C] font-semibold">{category.name}</span>
           </nav>
 
-          <div className="max-w-3xl space-y-2">
-            <span className="text-xs font-bold uppercase tracking-widest text-sky-300 block">
-              {categoryProducts.length} Products Available
+          <div className="max-w-3xl space-y-3">
+            <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#C9A45C] block">
+              Curated Edition ✦ {categoryProducts.length} Creations
             </span>
-            <h1 className="font-heading font-extrabold text-3xl sm:text-5xl text-white">
+            <h1 className="font-heading font-normal text-4xl sm:text-6xl text-white tracking-tight">
               {category.name}
             </h1>
-            <p className="text-xs sm:text-sm text-sky-100/90 leading-relaxed font-normal max-w-2xl">
+            <p className="text-sm sm:text-base text-[#D4CDC3] leading-relaxed font-light max-w-2xl">
               {category.description}
             </p>
           </div>
@@ -96,43 +99,44 @@ export default function CategoryDetailPage({ params }: CategoryPageProps) {
       {/* Main Grid Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
         {/* Controls Toolbar */}
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 pb-6 mb-8 border-b border-slate-100">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 pb-6 mb-10 border-b border-[#E5DED4]">
           <div className="flex items-center gap-4">
-            <span className="text-sm text-slate-500">
-              Showing <strong className="text-[#1E293B] font-bold">{categoryProducts.length}</strong> items
+            <span className="text-xs uppercase tracking-[0.14em] text-[#746C63]">
+              Showing <strong className="text-[#0D0C0B] font-semibold">{categoryProducts.length}</strong> items
             </span>
           </div>
 
           <div className="flex items-center gap-3">
-            <label htmlFor="cat-sort" className="text-sm text-slate-500 hidden sm:inline">Sort by:</label>
+            <label htmlFor="cat-sort" className="text-xs uppercase tracking-[0.14em] text-[#746C63] hidden sm:inline">Sort by:</label>
             <select
               id="cat-sort"
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as any)}
-              className="text-sm font-semibold text-[#1E293B] bg-slate-50 border border-slate-200 rounded-none px-3.5 py-2 focus:outline-none focus:border-[#0084D4]"
+              className="text-xs uppercase tracking-wider font-semibold text-[#0D0C0B] bg-white border border-[#E5DED4] rounded-none px-4 py-2.5 focus:outline-none focus:border-[#C9A45C]"
             >
-              <option value="featured">Featured</option>
+              <option value="featured">Featured Editions</option>
               <option value="price-asc">Price: Low to High</option>
               <option value="price-desc">Price: High to Low</option>
-              <option value="rating">Highest Rating</option>
+              <option value="rating">Highest Rated</option>
             </select>
           </div>
         </div>
 
         {/* Category Products Grid */}
         {categoryProducts.length === 0 ? (
-          <div className="bg-slate-50 border border-slate-200 p-12 text-center space-y-4">
-            <h3 className="font-heading font-bold text-xl text-[#1E293B]">
+          <div className="bg-white border border-[#E5DED4] p-16 text-center space-y-4">
+            <span className="text-2xl text-[#C9A45C]">✦</span>
+            <h3 className="font-heading text-2xl text-[#0D0C0B]">
               No items in this collection
             </h3>
-            <p className="text-sm text-slate-500 max-w-sm mx-auto">
-              Please check back soon or browse our full store catalog.
+            <p className="text-xs sm:text-sm text-[#746C63] font-light max-w-sm mx-auto">
+              Please check back soon or browse our full catalogue of handcrafted bags.
             </p>
             <Link
               href="/shop"
-              className="inline-block px-6 py-2.5 bg-[#0084D4] text-white rounded-none text-xs font-bold uppercase tracking-wider hover:bg-[#0073B6] transition-colors"
+              className="inline-block px-8 py-3 bg-[#0D0C0B] text-white rounded-none text-xs font-semibold uppercase tracking-[0.18em] hover:bg-[#C9A45C] hover:text-[#0D0C0B] transition-all mt-4"
             >
-              Explore All Bags
+              Explore All Collections
             </Link>
           </div>
         ) : (

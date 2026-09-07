@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import {
-  ShoppingCart,
+  ShoppingBag,
   Heart,
   Share2,
   Check,
@@ -64,40 +64,40 @@ export const VariantSelector: React.FC<VariantSelectorProps> = ({
   return (
     <div className="space-y-6 font-sans">
       {/* Price Display */}
-      <div className="space-y-1.5 border-b border-slate-100 pb-6">
+      <div className="space-y-2 border-b border-[#E5DED4] pb-6">
         <div className="flex items-baseline gap-3">
-          <span className="font-bold text-3xl sm:text-4xl text-[#1E293B]">
+          <span className="font-semibold text-3xl sm:text-4xl text-[#0D0C0B]">
             {formatPrice(currentPrice)}
           </span>
           {originalPrice && (
-            <span className="text-base sm:text-lg text-slate-400 line-through">
+            <span className="text-base sm:text-lg text-[#746C63] line-through font-light">
               {formatPrice(originalPrice)}
             </span>
           )}
           {discountPercentage > 0 && (
-            <span className="bg-[#0084D4] text-white text-xs font-bold px-2 py-0.5 rounded-none uppercase tracking-wider">
-              Save {discountPercentage}%
+            <span className="bg-[#0D0C0B] text-[#C9A45C] text-[10px] font-semibold px-2.5 py-1 uppercase tracking-[0.2em] border border-[#C9A45C]/40">
+              SAVE {discountPercentage}%
             </span>
           )}
         </div>
-        <p className="text-xs text-slate-500">
-          Price includes VAT. Cash on Delivery available across all 64 districts in Bangladesh.
+        <p className="text-xs text-[#746C63] font-light">
+          Price includes tax. Complimentary insured delivery & Nationwide Cash on Delivery available.
         </p>
       </div>
 
       {/* Color Selection Swatches */}
       <div className="space-y-3">
-        <div className="flex items-center justify-between text-sm">
-          <span className="font-bold text-[#1E293B] uppercase tracking-wider">
-            Color: <span className="text-[#0084D4]">{selectedVariant.colorName}</span>
+        <div className="flex items-center justify-between text-xs">
+          <span className="font-semibold text-[#0D0C0B] uppercase tracking-[0.18em]">
+            Leather Finish: <span className="text-[#C9A45C]">{selectedVariant.colorName}</span>
           </span>
           <span className="text-xs">
             {selectedVariant.stock > 0 ? (
-              <span className="text-emerald-600 font-bold">
-                {selectedVariant.stock} available in stock
+              <span className="text-[#0D0C0B] font-medium text-[11px] uppercase tracking-wider">
+                ● In Atelier Stock
               </span>
             ) : (
-              <span className="text-rose-500 font-bold">Out of Stock</span>
+              <span className="text-[#EF4444] font-medium text-[11px] uppercase tracking-wider">Out of Stock</span>
             )}
           </span>
         </div>
@@ -109,17 +109,17 @@ export const VariantSelector: React.FC<VariantSelectorProps> = ({
               <button
                 key={variant.sku}
                 onClick={() => onVariantChange(variant)}
-                className={`flex items-center gap-2 px-3 py-2 border transition-all ${
+                className={`flex items-center gap-2 px-3.5 py-2.5 border transition-all text-xs font-semibold uppercase tracking-wider ${
                   isSelected
-                    ? "border-[#0084D4] ring-2 ring-[#0084D4]/30 bg-sky-50/40"
-                    : "border-slate-200 hover:border-slate-400 bg-white"
+                    ? "border-[#0D0C0B] ring-1 ring-[#C9A45C] bg-[#F8F5EF]"
+                    : "border-[#E5DED4] hover:border-[#0D0C0B] bg-[#FFFFFF]"
                 }`}
               >
                 <span
-                  className="w-4 h-4 rounded-full border border-slate-300"
+                  className="w-3.5 h-3.5 rounded-full border border-[#E5DED4]"
                   style={{ backgroundColor: variant.colorHex }}
                 />
-                <span className="text-xs font-semibold text-[#1E293B]">
+                <span className="text-[#0D0C0B]">
                   {variant.colorName}
                 </span>
               </button>
@@ -132,34 +132,34 @@ export const VariantSelector: React.FC<VariantSelectorProps> = ({
       <div className="space-y-3 pt-2">
         <div className="flex items-center gap-3">
           {/* Quantity Selector */}
-          <div className="flex items-center border border-slate-200 bg-white h-12">
+          <div className="flex items-center border border-[#E5DED4] bg-[#FFFFFF] h-12">
             <button
               onClick={() => setQuantity(Math.max(1, quantity - 1))}
-              className="px-3.5 h-full text-slate-600 hover:bg-slate-100 transition-colors font-bold"
+              className="px-3.5 h-full text-[#0D0C0B] hover:bg-[#F8F5EF] transition-colors font-medium"
             >
               -
             </button>
-            <span className="w-10 text-center text-sm font-bold text-[#1E293B]">
+            <span className="w-10 text-center text-xs font-semibold text-[#0D0C0B]">
               {quantity}
             </span>
             <button
               onClick={() => setQuantity(Math.min(selectedVariant.stock || 10, quantity + 1))}
-              className="px-3.5 h-full text-slate-600 hover:bg-slate-100 transition-colors font-bold"
+              className="px-3.5 h-full text-[#0D0C0B] hover:bg-[#F8F5EF] transition-colors font-medium"
             >
               +
             </button>
           </div>
 
-          {/* Add to Cart Button */}
+          {/* Add to Bag Button */}
           <button
             onClick={handleAddToCart}
             disabled={selectedVariant.stock === 0}
-            className={`flex-1 h-12 px-4 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-md rounded-none ${
+            className={`flex-1 h-12 px-4 text-xs font-semibold uppercase tracking-[0.18em] flex items-center justify-center gap-2 transition-all duration-300 shadow-xs ${
               isAdded
-                ? "bg-emerald-600 text-white"
+                ? "bg-[#10B981] text-white"
                 : selectedVariant.stock === 0
-                ? "bg-slate-200 text-slate-400 cursor-not-allowed"
-                : "bg-[#0084D4] hover:bg-[#0073B6] text-white"
+                ? "bg-[#E5DED4] text-[#746C63] cursor-not-allowed"
+                : "bg-[#0D0C0B] hover:bg-[#C9A45C] text-[#F8F5EF] hover:text-[#0D0C0B]"
             }`}
           >
             {isAdded ? (
@@ -169,8 +169,8 @@ export const VariantSelector: React.FC<VariantSelectorProps> = ({
               </>
             ) : (
               <>
-                <ShoppingCart className="w-4 h-4" />
-                <span>Add to Cart</span>
+                <ShoppingBag className="w-4 h-4" />
+                <span>Add to Bag</span>
               </>
             )}
           </button>
@@ -178,19 +178,20 @@ export const VariantSelector: React.FC<VariantSelectorProps> = ({
           {/* Wishlist Button */}
           <button
             onClick={() => toggleWishlist(product.id)}
-            className="w-12 h-12 border border-slate-200 flex items-center justify-center text-slate-600 hover:text-rose-500 hover:border-rose-300 transition-colors bg-white shadow-xs rounded-none"
+            className="w-12 h-12 border border-[#E5DED4] flex items-center justify-center text-[#171513] hover:text-[#C9A45C] hover:border-[#C9A45C] transition-colors bg-[#FFFFFF] shadow-xs"
             aria-label="Wishlist"
           >
-            <Heart className={`w-5 h-5 ${inWishlist ? "fill-rose-500 text-rose-500" : ""}`} />
+            <Heart className={`w-4 h-4 stroke-[1.75] ${inWishlist ? "fill-[#C9A45C] text-[#C9A45C]" : ""}`} />
           </button>
 
           {/* Share Button */}
           <button
             onClick={handleShare}
-            className="w-12 h-12 border border-slate-200 flex items-center justify-center text-slate-600 hover:text-[#0084D4] hover:border-[#0084D4] transition-colors bg-white shadow-xs rounded-none"
+            className="w-12 h-12 border border-[#E5DED4] flex items-center justify-center text-[#171513] hover:text-[#C9A45C] hover:border-[#C9A45C] transition-colors bg-[#FFFFFF] shadow-xs"
             aria-label="Share"
+            title={copiedLink ? "Link Copied!" : "Share"}
           >
-            <Share2 className="w-5 h-5" />
+            {copiedLink ? <Check className="w-4 h-4 text-[#C9A45C]" /> : <Share2 className="w-4 h-4" />}
           </button>
         </div>
 
@@ -198,44 +199,45 @@ export const VariantSelector: React.FC<VariantSelectorProps> = ({
         <button
           onClick={handleBuyNow}
           disabled={selectedVariant.stock === 0}
-          className="w-full h-12 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs uppercase tracking-wider transition-colors flex items-center justify-center gap-2 shadow-md"
+          className="w-full h-12 bg-transparent hover:bg-[#0D0C0B] text-[#0D0C0B] hover:text-[#F8F5EF] border border-[#0D0C0B] font-semibold text-xs uppercase tracking-[0.18em] transition-all duration-300 flex items-center justify-center gap-2"
         >
-          <span>Buy Now — Cash on Delivery</span>
+          <span>Immediate Purchase — Cash on Delivery</span>
         </button>
       </div>
 
       {/* Trust & Guarantee Grid */}
-      <div className="pt-6 border-t border-slate-200 grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div className="pt-6 border-t border-[#E5DED4] grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-lg bg-sky-50 border border-sky-100 flex items-center justify-center shrink-0">
-            <Truck className="w-4 h-4 text-[#0084D4]" />
+          <div className="w-10 h-10 bg-[#FFFFFF] border border-[#E5DED4] flex items-center justify-center shrink-0">
+            <Truck className="w-4 h-4 text-[#C9A45C] stroke-[1.5]" />
           </div>
           <div>
-            <h4 className="text-xs font-bold text-slate-800">Doorstep COD</h4>
-            <p className="text-[11px] text-slate-500">Pay when you receive</p>
+            <h4 className="text-xs font-semibold uppercase tracking-wider text-[#0D0C0B]">Doorstep COD</h4>
+            <p className="text-[11px] text-[#746C63] font-light">Pay on parcel inspection</p>
           </div>
         </div>
 
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-lg bg-sky-50 border border-sky-100 flex items-center justify-center shrink-0">
-            <ShieldCheck className="w-4 h-4 text-[#0084D4]" />
+          <div className="w-10 h-10 bg-[#FFFFFF] border border-[#E5DED4] flex items-center justify-center shrink-0">
+            <ShieldCheck className="w-4 h-4 text-[#C9A45C] stroke-[1.5]" />
           </div>
           <div>
-            <h4 className="text-xs font-bold text-slate-800">Quality Guarantee</h4>
-            <p className="text-[11px] text-slate-500">100% Genuine materials</p>
+            <h4 className="text-xs font-semibold uppercase tracking-wider text-[#0D0C0B]">Authenticity</h4>
+            <p className="text-[11px] text-[#746C63] font-light">100% Full-grain leather</p>
           </div>
         </div>
 
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-lg bg-sky-50 border border-sky-100 flex items-center justify-center shrink-0">
-            <RotateCcw className="w-4 h-4 text-[#0084D4]" />
+          <div className="w-10 h-10 bg-[#FFFFFF] border border-[#E5DED4] flex items-center justify-center shrink-0">
+            <RotateCcw className="w-4 h-4 text-[#C9A45C] stroke-[1.5]" />
           </div>
           <div>
-            <h4 className="text-xs font-bold text-slate-800">Easy Returns</h4>
-            <p className="text-[11px] text-slate-500">Hassle-free exchanges</p>
+            <h4 className="text-xs font-semibold uppercase tracking-wider text-[#0D0C0B]">Atelier Care</h4>
+            <p className="text-[11px] text-[#746C63] font-light">Complimentary exchange</p>
           </div>
         </div>
       </div>
     </div>
   );
 };
+

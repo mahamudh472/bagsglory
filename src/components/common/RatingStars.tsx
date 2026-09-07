@@ -27,7 +27,7 @@ export const RatingStars: React.FC<RatingStarsProps> = ({
   };
 
   return (
-    <div className={`flex items-center gap-1.5 ${className}`}>
+    <div className={`flex items-center gap-1.5 font-sans ${className}`}>
       <div className="flex items-center gap-0.5">
         {Array.from({ length: maxRating }).map((_, idx) => {
           const filled = idx < Math.floor(rating);
@@ -37,21 +37,22 @@ export const RatingStars: React.FC<RatingStarsProps> = ({
               key={idx}
               className={`${sizeClasses[size]} ${
                 filled
-                  ? "fill-amber-400 text-amber-400"
+                  ? "fill-[#C9A45C] text-[#C9A45C]"
                   : half
-                  ? "fill-amber-400/50 text-amber-400"
-                  : "text-zinc-300 dark:text-zinc-700"
+                  ? "fill-[#C9A45C]/50 text-[#C9A45C]"
+                  : "fill-[#E5DED4] text-[#E5DED4]"
               }`}
             />
           );
         })}
       </div>
-      <span className="text-xs font-semibold text-zinc-700">
+      <span className="text-xs font-semibold text-[#171513]">
         {rating.toFixed(1)}
       </span>
       {showCount && count !== undefined && (
-        <span className="text-xs text-zinc-600">({count})</span>
+        <span className="text-xs text-[#746C63]">({count})</span>
       )}
     </div>
   );
 };
+

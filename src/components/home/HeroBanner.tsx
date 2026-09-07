@@ -3,58 +3,97 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { ArrowRight } from "lucide-react";
 
 export const HeroBanner: React.FC = () => {
   return (
-    <section
-      className="relative min-h-[520px] sm:min-h-[600px] lg:min-h-[640px] flex items-center bg-fixed bg-cover bg-center overflow-hidden"
-      style={{
-        backgroundImage: `url('/images/hero-banner.jpg')`,
-      }}
-    >
-      {/* Blue Gradient Parallax Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#173F5A]/90 via-[#23587D]/75 to-[#0084D4]/50 pointer-events-none" />
+    <section className="relative bg-[#F8F5EF] border-b border-[#E5DED4] overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center min-h-[580px] sm:min-h-[640px] lg:min-h-[700px] py-12 lg:py-0">
+          
+          {/* Left Column: Editorial Brand Headline & CTAs */}
+          <div className="lg:col-span-6 space-y-6 sm:space-y-8 z-10 text-left">
+            <div className="space-y-3">
+              <div className="inline-flex items-center gap-2">
+                <span className="w-8 h-[1px] bg-[#C9A45C]" />
+                <span className="text-xs sm:text-[13px] font-semibold uppercase tracking-[0.25em] text-[#C9A45C]">
+                  Signature Collection 2026
+                </span>
+              </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-16 sm:py-24 w-full">
-        <div className="max-w-xl space-y-6 text-white animate-in fade-in slide-in-from-left duration-700">
-          <div className="space-y-1">
-            <span className="text-xs sm:text-sm font-bold uppercase tracking-[0.25em] text-sky-300 block mb-2">
-              Signature Collection 2026
-            </span>
-            <h1 className="font-heading font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-[1.08] text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.4)]">
-              Carry Your Glory!
-            </h1>
-          </div>
+              <h1 className="font-heading font-normal text-5xl sm:text-6xl lg:text-7xl xl:text-8xl tracking-tight leading-[0.95] text-[#0D0C0B]">
+                Carry Your <span className="italic font-light text-[#C9A45C]">Glory</span>
+              </h1>
+            </div>
 
-          <div className="space-y-1.5">
-            <h2 className="text-xl sm:text-2xl font-bold tracking-wide text-white/95">
-              Raining Offers For Hot Summer!
-            </h2>
-            <p className="text-base sm:text-lg font-medium text-sky-100/90">
-              25% Off On All Premium Handcrafted Bags
+            <p className="font-sans text-base sm:text-lg text-[#746C63] max-w-md font-light leading-relaxed">
+              Timeless bags designed for every journey. Handcrafted with uncompromising precision from world-class full-grain leather.
             </p>
+
+            {/* Action Buttons */}
+            <div className="flex flex-wrap items-center gap-4 pt-2 sm:pt-4">
+              <Link
+                href="/shop"
+                className="px-8 sm:px-9 py-4 bg-[#0D0C0B] hover:bg-[#C9A45C] text-[#F8F5EF] hover:text-[#0D0C0B] font-sans font-semibold text-xs sm:text-[13px] uppercase tracking-[0.18em] transition-all duration-300 shadow-sm hover:shadow-md flex items-center gap-3 group"
+              >
+                <span>Shop Collection</span>
+                <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+              </Link>
+
+              <Link
+                href="/category/totes"
+                className="px-8 sm:px-9 py-4 bg-transparent hover:bg-[#0D0C0B] text-[#171513] hover:text-[#F8F5EF] font-sans font-semibold text-xs sm:text-[13px] uppercase tracking-[0.18em] border border-[#171513] transition-all duration-300"
+              >
+                Explore
+              </Link>
+            </div>
+
+            {/* Minimal Sub-features */}
+            <div className="pt-6 sm:pt-8 border-t border-[#E5DED4]/60 grid grid-cols-3 gap-4 text-left">
+              <div>
+                <span className="block font-heading text-xl sm:text-2xl text-[#0D0C0B] font-semibold">100%</span>
+                <span className="text-[11px] uppercase tracking-wider text-[#746C63]">Full-Grain</span>
+              </div>
+              <div>
+                <span className="block font-heading text-xl sm:text-2xl text-[#0D0C0B] font-semibold">Bespoke</span>
+                <span className="text-[11px] uppercase tracking-wider text-[#746C63]">Craftsmanship</span>
+              </div>
+              <div>
+                <span className="block font-heading text-xl sm:text-2xl text-[#0D0C0B] font-semibold">Lifetime</span>
+                <span className="text-[11px] uppercase tracking-wider text-[#746C63]">Quality Guarantee</span>
+              </div>
+            </div>
           </div>
 
-          {/* Action Buttons: Solid Blue "Shop Now" + Outline "Find More" */}
-          <div className="flex flex-wrap items-center gap-4 pt-3">
-            <Link
-              href="/shop"
-              className="px-8 py-4 bg-[#0084D4] hover:bg-[#0073B6] text-white font-bold text-xs sm:text-sm uppercase tracking-wider transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5 rounded-none flex items-center gap-2 group"
-            >
-              <span>Shop Now</span>
-              <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">&rarr;</span>
-            </Link>
-
-            <Link
-              href="/shop"
-              className="px-8 py-4 bg-transparent hover:bg-white hover:text-[#0084D4] text-white font-bold text-xs sm:text-sm uppercase tracking-wider border-2 border-white transition-all duration-300 hover:-translate-y-0.5 rounded-none"
-            >
-              Find More
-            </Link>
+          {/* Right Column: Premium Handbag / Editorial Photography */}
+          <div className="lg:col-span-6 relative h-[420px] sm:h-[500px] lg:h-[620px] w-full flex items-center justify-center">
+            {/* Background subtle luxury frame */}
+            <div className="absolute inset-4 border border-[#C9A45C]/30 z-0 pointer-events-none translate-x-3 translate-y-3 hidden sm:block" />
+            
+            <div className="relative w-full h-full overflow-hidden bg-[#241B14] shadow-2xl z-10">
+              <Image
+                src="/images/hero-banner.jpg"
+                alt="BAGSGLORY Signature Luxury Collection"
+                fill
+                priority
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover object-center transition-transform duration-1000 ease-out hover:scale-105"
+              />
+              {/* Refined subtle dark gradient vignette at base for editorial depth */}
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0D0C0B]/60 via-transparent to-transparent pointer-events-none" />
+              
+              {/* Floating Editorial Badge */}
+              <div className="absolute bottom-6 left-6 bg-[#0D0C0B]/90 backdrop-blur-md border border-[#C9A45C]/40 p-4 text-white max-w-xs shadow-lg">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#C9A45C]">Edition 2026</p>
+                <p className="font-heading text-lg text-[#F8F5EF] leading-snug">The Sovereign Handbag</p>
+              </div>
+            </div>
           </div>
+
         </div>
       </div>
     </section>
   );
 };
+
 

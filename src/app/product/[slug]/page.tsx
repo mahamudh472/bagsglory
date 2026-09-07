@@ -24,18 +24,18 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
   if (!product) {
     return (
       <div className="max-w-7xl mx-auto px-4 py-24 text-center font-sans">
-        <h1 className="font-heading font-bold text-3xl text-[#1E293B] mb-4">
-          Product Not Found
+        <h1 className="font-heading font-normal text-3xl sm:text-4xl text-[#0D0C0B] mb-4">
+          Piece Not Found
         </h1>
-        <p className="text-sm text-slate-500 mb-8 max-w-md mx-auto">
-          The bag model you are searching for might be discontinued or archived.
+        <p className="text-sm text-[#746C63] mb-8 max-w-md mx-auto font-light">
+          The requested handbag or accessory is currently unavailable in the atelier catalog.
         </p>
         <Link
           href="/shop"
-          className="inline-flex items-center gap-2 px-6 py-3 bg-[#0084D4] text-white text-xs font-bold uppercase tracking-wider hover:bg-[#0073B6] transition-colors rounded-none"
+          className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#0D0C0B] hover:bg-[#C9A45C] text-[#F8F5EF] hover:text-[#0D0C0B] text-xs font-semibold uppercase tracking-[0.18em] transition-all"
         >
           <ArrowLeft className="w-4 h-4" />
-          <span>Return to Catalog</span>
+          <span>Return to Collections</span>
         </Link>
       </div>
     );
@@ -44,26 +44,26 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
   const currentVariant = product.variants[selectedVariantIndex] || product.variants[0];
 
   return (
-    <div className="bg-white min-h-screen py-6 sm:py-10 font-sans">
+    <div className="bg-[#F8F5EF] min-h-screen py-8 sm:py-12 font-sans">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Breadcrumbs */}
-        <nav className="flex items-center gap-2 text-xs uppercase tracking-wider text-slate-500 mb-8 overflow-x-auto pb-1 scrollbar-none">
-          <Link href="/" className="hover:text-[#0084D4] transition-colors shrink-0">
+        <nav className="flex items-center gap-2 text-[11px] uppercase tracking-[0.18em] text-[#746C63] mb-8 overflow-x-auto pb-1 scrollbar-none">
+          <Link href="/" className="hover:text-[#0D0C0B] transition-colors shrink-0">
             Home
           </Link>
-          <ChevronRight className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-          <Link href="/shop" className="hover:text-[#0084D4] transition-colors shrink-0">
-            Shop
+          <ChevronRight className="w-3.5 h-3.5 text-[#746C63] shrink-0" />
+          <Link href="/shop" className="hover:text-[#0D0C0B] transition-colors shrink-0">
+            Collection
           </Link>
-          <ChevronRight className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+          <ChevronRight className="w-3.5 h-3.5 text-[#746C63] shrink-0" />
           <Link
             href={`/category/${product.category}`}
-            className="hover:text-[#0084D4] transition-colors shrink-0"
+            className="hover:text-[#0D0C0B] transition-colors shrink-0"
           >
             {product.categoryName}
           </Link>
-          <ChevronRight className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-          <span className="text-[#1E293B] font-bold truncate max-w-xs shrink-0">
+          <ChevronRight className="w-3.5 h-3.5 text-[#746C63] shrink-0" />
+          <span className="text-[#0D0C0B] font-semibold truncate max-w-xs shrink-0">
             {product.title}
           </span>
         </nav>
@@ -86,7 +86,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
               <div className="flex items-center justify-between">
                 <Link
                   href={`/category/${product.category}`}
-                  className="text-xs sm:text-sm font-bold text-[#0084D4] uppercase tracking-wider hover:underline"
+                  className="text-[11px] font-semibold text-[#C9A45C] uppercase tracking-[0.2em] hover:text-[#0D0C0B] transition-colors"
                 >
                   {product.categoryName}
                 </Link>
@@ -94,12 +94,12 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
               </div>
 
               {/* Product Title */}
-              <h1 className="font-heading font-extrabold text-3xl sm:text-4xl text-[#1E293B] leading-tight">
+              <h1 className="font-heading font-normal text-3xl sm:text-4xl lg:text-5xl text-[#0D0C0B] leading-[1.05]">
                 {product.title}
               </h1>
 
               {/* Short Description */}
-              <p className="text-sm text-slate-500 leading-relaxed pt-1">
+              <p className="text-sm text-[#746C63] leading-relaxed pt-1 font-light">
                 {product.shortDescription}
               </p>
             </div>
@@ -125,4 +125,5 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
     </div>
   );
 }
+
 

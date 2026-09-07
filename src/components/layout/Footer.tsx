@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Logo } from "@/components/common/Logo";
+import { ShieldCheck } from "lucide-react";
 
 export const Footer: React.FC = () => {
   const pathname = usePathname();
@@ -12,184 +13,154 @@ export const Footer: React.FC = () => {
   if (pathname.startsWith("/admin")) return null;
 
   return (
-    <footer className="bg-white border-t border-slate-200 text-slate-600 font-sans">
-      {/* 1. Top Promotional Banner (as seen in screenshot) */}
-      <div className="border-b border-slate-100 py-6 text-center bg-slate-50/60">
+    <footer className="bg-[#0D0C0B] text-[#F8F5EF] font-sans border-t border-[#241B14]">
+      {/* 1. Subtle Luxury Brand Strip */}
+      <div className="border-b border-[#241B14] py-8 text-center bg-[#171513]/40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="font-heading font-extrabold text-sm sm:text-base tracking-wide text-[#1E293B]">
-            SALE UP TO 70% OFF FOR ALL LUXURY & FASHION BAGS, ON ALL SIGNATURE LINES!
+          <p className="font-heading font-normal text-lg sm:text-xl tracking-wider text-[#C9A45C]">
+            ✦ COMPLIMENTARY WORLDWIDE DELIVERY ON ORDERS OVER ৳3,000 ✦
           </p>
         </div>
       </div>
 
-      {/* 2. Main 4-Column Footer */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
-        {/* Brand Header */}
-        <div className="mb-12 pb-8 border-b border-slate-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-          <div className="space-y-2">
-            <Logo size="lg" />
-            <p className="text-xs sm:text-sm text-slate-500 max-w-md leading-relaxed">
-              Handcrafted luxury backpacks, travel duffels, executive briefcases, and everyday bags with nationwide Cash on Delivery.
+      {/* 2. Main Luxury Footer Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-10">
+          
+          {/* Brand Column */}
+          <div className="lg:col-span-2 space-y-5">
+            <Logo size="lg" variant="light" />
+            <p className="text-[11px] font-semibold tracking-[0.25em] text-[#C9A45C] uppercase">
+              Carry Your Glory
             </p>
+            <p className="text-xs sm:text-sm text-[#746C63] max-w-sm leading-relaxed font-light">
+              Handcrafted luxury handbags, executive briefcases, structured totes, and travel companions forged with uncompromising atelier precision.
+            </p>
+            <div className="pt-2 flex items-center gap-4 text-[#C9A45C]">
+              <a
+                href="https://instagram.com"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Instagram"
+                className="w-8 h-8 rounded-full border border-[#241B14] flex items-center justify-center text-[#746C63] hover:text-[#C9A45C] hover:border-[#C9A45C] transition-colors"
+              >
+                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                </svg>
+              </a>
+              <a
+                href="https://facebook.com"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Facebook"
+                className="w-8 h-8 rounded-full border border-[#241B14] flex items-center justify-center text-[#746C63] hover:text-[#C9A45C] hover:border-[#C9A45C] transition-colors"
+              >
+                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                  <path d="M9 8H6v4h3v12h5V12h3.642L18 8h-4V6.333C14 5.374 14.5 5 15.667 5H18V0h-3.889C10.667 0 9 1.667 9 4.667V8z"/>
+                </svg>
+              </a>
+            </div>
           </div>
-        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
-          {/* Column 1: Quick Links */}
+          {/* Column 1: SHOP */}
           <div className="space-y-4">
-            <h4 className="font-heading font-bold text-base text-[#1E293B] tracking-tight">
-              Quick Links
+            <h4 className="text-xs font-semibold uppercase tracking-[0.2em] text-[#C9A45C]">
+              Shop
             </h4>
-            <ul className="space-y-2.5 text-sm">
+            <ul className="space-y-2.5 text-xs tracking-wider">
               <li>
-                <Link href="/" className="hover:text-[#0084D4] transition-colors">
-                  Home
+                <Link href="/category/totes" className="text-[#F8F5EF]/80 hover:text-[#C9A45C] transition-colors">
+                  Women
                 </Link>
               </li>
               <li>
-                <Link href="/shop" className="hover:text-[#0084D4] transition-colors">
+                <Link href="/category/briefcases" className="text-[#F8F5EF]/80 hover:text-[#C9A45C] transition-colors">
+                  Men
+                </Link>
+              </li>
+              <li>
+                <Link href="/category/slings" className="text-[#F8F5EF]/80 hover:text-[#C9A45C] transition-colors">
+                  Accessories
+                </Link>
+              </li>
+              <li>
+                <Link href="/shop" className="text-[#F8F5EF]/80 hover:text-[#C9A45C] transition-colors">
+                  New Arrivals
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 2: HELP */}
+          <div className="space-y-4">
+            <h4 className="text-xs font-semibold uppercase tracking-[0.2em] text-[#C9A45C]">
+              Help
+            </h4>
+            <ul className="space-y-2.5 text-xs tracking-wider">
+              <li>
+                <Link href="/track-order" className="text-[#F8F5EF]/80 hover:text-[#C9A45C] transition-colors">
+                  Contact
+                </Link>
+              </li>
+              <li>
+                <Link href="/track-order" className="text-[#F8F5EF]/80 hover:text-[#C9A45C] transition-colors">
+                  Shipping
+                </Link>
+              </li>
+              <li>
+                <Link href="/track-order" className="text-[#F8F5EF]/80 hover:text-[#C9A45C] transition-colors">
+                  Returns
+                </Link>
+              </li>
+              <li>
+                <Link href="/track-order" className="text-[#F8F5EF]/80 hover:text-[#C9A45C] transition-colors">
+                  FAQ
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 3: COMPANY */}
+          <div className="space-y-4">
+            <h4 className="text-xs font-semibold uppercase tracking-[0.2em] text-[#C9A45C]">
+              Company
+            </h4>
+            <ul className="space-y-2.5 text-xs tracking-wider">
+              <li>
+                <Link href="/shop" className="text-[#F8F5EF]/80 hover:text-[#C9A45C] transition-colors">
                   About
                 </Link>
               </li>
               <li>
-                <Link href="/shop" className="hover:text-[#0084D4] transition-colors">
-                  My Account
+                <Link href="/shop" className="text-[#F8F5EF]/80 hover:text-[#C9A45C] transition-colors">
+                  Our Story
                 </Link>
               </li>
               <li>
-                <Link href="/cart" className="hover:text-[#0084D4] transition-colors">
-                  Cart
-                </Link>
-              </li>
-              <li>
-                <Link href="/track-order" className="hover:text-[#0084D4] transition-colors">
-                  Contact
+                <Link href="/admin" className="text-[#F8F5EF]/80 hover:text-[#C9A45C] transition-colors flex items-center gap-1.5">
+                  <ShieldCheck className="w-3.5 h-3.5 text-[#C9A45C]" />
+                  <span>Admin Suite</span>
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Column 2: For Her */}
-          <div className="space-y-4">
-            <h4 className="font-heading font-bold text-base text-[#1E293B] tracking-tight">
-              For Her
-            </h4>
-            <ul className="space-y-2.5 text-sm">
-              <li>
-                <Link href="/category/totes" className="hover:text-[#0084D4] transition-colors">
-                  Women Luxury Totes
-                </Link>
-              </li>
-              <li>
-                <Link href="/category/slings" className="hover:text-[#0084D4] transition-colors">
-                  Everyday Shoulder Bags
-                </Link>
-              </li>
-              <li>
-                <Link href="/category/crossbody" className="hover:text-[#0084D4] transition-colors">
-                  Crossbody & Clutches
-                </Link>
-              </li>
-              <li>
-                <Link href="/category/backpacks" className="hover:text-[#0084D4] transition-colors">
-                  Mini Leather Backpacks
-                </Link>
-              </li>
-              <li>
-                <Link href="/shop" className="hover:text-[#0084D4] transition-colors">
-                  Women Accessories
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Column 3: For Him */}
-          <div className="space-y-4">
-            <h4 className="font-heading font-bold text-base text-[#1E293B] tracking-tight">
-              For Him
-            </h4>
-            <ul className="space-y-2.5 text-sm">
-              <li>
-                <Link href="/category/briefcases" className="hover:text-[#0084D4] transition-colors">
-                  Executive Briefcases
-                </Link>
-              </li>
-              <li>
-                <Link href="/category/backpacks" className="hover:text-[#0084D4] transition-colors">
-                  Urban Commute Backpacks
-                </Link>
-              </li>
-              <li>
-                <Link href="/category/duffels" className="hover:text-[#0084D4] transition-colors">
-                  Travel & Gym Duffels
-                </Link>
-              </li>
-              <li>
-                <Link href="/category/slings" className="hover:text-[#0084D4] transition-colors">
-                  Chest Slings & Pouches
-                </Link>
-              </li>
-              <li>
-                <Link href="/shop" className="hover:text-[#0084D4] transition-colors">
-                  Men Wallets & Belts
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Column 4: App Download & Brand Summary */}
-          <div className="space-y-4">
-            <h4 className="font-heading font-bold text-base text-[#1E293B] tracking-tight">
-              Get The App
-            </h4>
-            <p className="text-xs sm:text-sm text-slate-500 leading-relaxed">
-              Experience seamless ordering and exclusive flash sales directly on the BagsGlory Mobile App.
-            </p>
-
-            {/* App Badges Mock */}
-            <div className="space-y-2 pt-1">
-              <div className="inline-flex items-center gap-3 px-4 py-2 bg-black text-white rounded-md hover:bg-slate-800 transition-colors cursor-pointer shadow-sm">
-                <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24">
-                  <path d="M3.609 1.814L13.792 12 3.61 22.186a1.993 1.993 0 0 1-.61-.926V2.74c.15-.36.368-.679.61-.926zM15.207 13.414l2.586-2.586-2.586-2.586 2.05-1.184 3.75 2.164c1.026.592 1.026 1.558 0 2.15l-3.75 2.164-2.05-1.122zM4.73 23.308l9.763-9.764 2.875 2.876-11.25 6.495c-.476.275-.97.405-1.388.393zm0-22.616c.418-.012.912.118 1.388.393l11.25 6.495-2.875 2.876L4.73.692z"/>
-                </svg>
-                <div className="text-left">
-                  <div className="text-[9px] uppercase tracking-wider text-slate-300">GET IT ON</div>
-                  <div className="text-xs font-bold leading-tight">Google Play</div>
-                </div>
-              </div>
-
-              <div className="block">
-                <div className="inline-flex items-center gap-3 px-4 py-2 bg-black text-white rounded-md hover:bg-slate-800 transition-colors cursor-pointer shadow-sm">
-                  <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24">
-                    <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 4.87c.65-.8 1.09-1.92.97-3.03-.94.04-2.07.63-2.74 1.42-.59.68-1.11 1.8-0.97 2.88 1.05.08 2.12-.55 2.74-1.27z"/>
-                  </svg>
-                  <div className="text-left">
-                    <div className="text-[9px] uppercase tracking-wider text-slate-300">Download on the</div>
-                    <div className="text-xs font-bold leading-tight">App Store</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
 
         {/* 3. Bottom Sub-bar */}
-        <div className="mt-12 pt-8 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-          <p>Copyright © {new Date().getFullYear()} BagsGlory. Powered by BagsGlory.</p>
-          <div className="flex items-center gap-4">
-            <Link href="/admin" className="hover:text-[#0084D4] transition-colors">
-              Admin Portal
-            </Link>
-            <span>•</span>
-            <Link href="/track-order" className="hover:text-[#0084D4] transition-colors">
-              Order Tracking
-            </Link>
-            <span>•</span>
+        <div className="mt-16 pt-8 border-t border-[#241B14] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#746C63] font-light">
+          <p>© {new Date().getFullYear()} BAGSGLORY. Carry Your Glory. All rights reserved.</p>
+          <div className="flex items-center gap-4 text-[11px] tracking-wider uppercase">
             <span>Cash on Delivery</span>
+            <span>•</span>
+            <span>Secure Atelier Packaging</span>
+            <span>•</span>
+            <span>Handcrafted Excellence</span>
           </div>
         </div>
       </div>
     </footer>
   );
 };
+
 
