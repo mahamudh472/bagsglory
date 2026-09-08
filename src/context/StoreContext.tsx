@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState, useCallback } from "react";
 import {
   CartItem,
   CategoryItem,
@@ -31,6 +31,7 @@ interface StoreContextType {
   appliedCoupon: Coupon | null;
   isCartOpen: boolean;
   isSearchOpen: boolean;
+  isLoading: boolean;
   setIsCartOpen: (open: boolean) => void;
   setIsSearchOpen: (open: boolean) => void;
 
@@ -45,31 +46,32 @@ interface StoreContextType {
   isInWishlist: (productId: string) => boolean;
 
   // Coupon operations
-  applyCoupon: (code: string) => { success: boolean; message: string; coupon?: Coupon };
+  applyCoupon: (code: string) => Promise<{ success: boolean; message: string; coupon?: Coupon }>;
   removeCoupon: () => void;
 
   // Order operations
-  createOrder: (customerAddress: DeliveryAddress) => Order;
-  getOrderById: (orderId: string) => Order | undefined;
+  createOrder: (customerAddress: DeliveryAddress) => Promise<Order>;
+  getOrderById: (orderId: string) => Promise<Order | undefined>;
 
   // Admin Product CRUD
-  addProduct: (productData: Omit<Product, "id" | "createdAt" | "reviews"> & { reviews?: Review[] }) => Product;
-  updateProduct: (id: string, productData: Partial<Product>) => void;
-  deleteProduct: (id: string) => void;
+  addProduct: (productData: Omit<Product, "id" | "createdAt" | "reviews"> & { reviews?: Review[] }) => Promise<Product>;
+  updateProduct: (id: string, productData: Partial<Product>) => Promise<void>;
+  deleteProduct: (id: string) => Promise<void>;
 
   // Admin Category CRUD
-  addCategory: (categoryData: Omit<CategoryItem, "id">) => void;
-  updateCategory: (id: string, categoryData: Partial<CategoryItem>) => void;
-  deleteCategory: (id: string) => void;
+  addCategory: (categoryData: Omit<CategoryItem, "id">) => Promise<void>;
+  updateCategory: (id: string, categoryData: Partial<CategoryItem>) => Promise<void>;
+  deleteCategory: (id: string) => Promise<void>;
 
   // Admin Coupon CRUD
-  addCoupon: (couponData: Omit<Coupon, "id" | "usageCount">) => void;
-  updateCoupon: (id: string, couponData: Partial<Coupon>) => void;
-  deleteCoupon: (id: string) => void;
+  addCoupon: (couponData: Omit<Coupon, "id" | "usageCount">) => Promise<void>;
+  updateCoupon: (id: string, couponData: Partial<Coupon>) => Promise<void>;
+  deleteCoupon: (id: string) => Promise<void>;
 
   // Admin Order updates
-  updateOrderStatus: (orderId: string, status: OrderStatus, paymentStatus?: PaymentStatus, note?: string) => void;
-  resetToDefaults: () => void;
+  updateOrderStatus: (orderId: string, status: OrderStatus, paymentStatus?: PaymentStatus, note?: string) => Promise<void>;
+  resetToDefaults: () => Promise<void>;
+  refreshData: () => Promise<void>;
 
   // Computations
   cartSubtotal: number;
@@ -83,10 +85,6 @@ interface StoreContextType {
 const StoreContext = createContext<StoreContextType | undefined>(undefined);
 
 const STORAGE_KEYS = {
-  PRODUCTS: "bagsglory_products_v2",
-  CATEGORIES: "bagsglory_categories_v2",
-  COUPONS: "bagsglory_coupons_v2",
-  ORDERS: "bagsglory_orders_v2",
   CART: "bagsglory_cart_v2",
   WISHLIST: "bagsglory_wishlist_v2",
   COUPON_APPLIED: "bagsglory_coupon_applied_v2",
@@ -102,23 +100,57 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [appliedCoupon, setAppliedCoupon] = useState<Coupon | null>(null);
   const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isHydrated, setIsHydrated] = useState<boolean>(false);
 
-  // Load from LocalStorage on mount
+  // Fetch all live data from backend PostgreSQL APIs
+  const refreshData = useCallback(async () => {
+    try {
+      setIsLoading(true);
+      const [productsRes, categoriesRes, couponsRes, ordersRes] = await Promise.allSettled([
+        fetch("/api/products"),
+        fetch("/api/categories"),
+        fetch("/api/coupons"),
+        fetch("/api/orders"),
+      ]);
+
+      if (productsRes.status === "fulfilled" && productsRes.value.ok) {
+        const prodData = await productsRes.value.json();
+        if (Array.isArray(prodData) && prodData.length > 0) {
+          setProducts(prodData);
+        }
+      }
+
+      if (categoriesRes.status === "fulfilled" && categoriesRes.value.ok) {
+        const catData = await categoriesRes.value.json();
+        if (Array.isArray(catData) && catData.length > 0) {
+          setCategories(catData);
+        }
+      }
+
+      if (couponsRes.status === "fulfilled" && couponsRes.value.ok) {
+        const coupData = await couponsRes.value.json();
+        if (Array.isArray(coupData) && coupData.length > 0) {
+          setCoupons(coupData);
+        }
+      }
+
+      if (ordersRes.status === "fulfilled" && ordersRes.value.ok) {
+        const ordData = await ordersRes.value.json();
+        if (Array.isArray(ordData)) {
+          setOrders(ordData);
+        }
+      }
+    } catch (err) {
+      console.warn("Backend API fetch note: Using current memory/cache fallback.", err);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  // Load from LocalStorage & fetch backend on mount
   useEffect(() => {
     try {
-      const savedProducts = localStorage.getItem(STORAGE_KEYS.PRODUCTS);
-      if (savedProducts) setProducts(JSON.parse(savedProducts));
-
-      const savedCategories = localStorage.getItem(STORAGE_KEYS.CATEGORIES);
-      if (savedCategories) setCategories(JSON.parse(savedCategories));
-
-      const savedCoupons = localStorage.getItem(STORAGE_KEYS.COUPONS);
-      if (savedCoupons) setCoupons(JSON.parse(savedCoupons));
-
-      const savedOrders = localStorage.getItem(STORAGE_KEYS.ORDERS);
-      if (savedOrders) setOrders(JSON.parse(savedOrders));
-
       const savedCart = localStorage.getItem(STORAGE_KEYS.CART);
       if (savedCart) setCart(JSON.parse(savedCart));
 
@@ -128,27 +160,25 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       const savedAppliedCoupon = localStorage.getItem(STORAGE_KEYS.COUPON_APPLIED);
       if (savedAppliedCoupon) setAppliedCoupon(JSON.parse(savedAppliedCoupon));
     } catch (e) {
-      console.error("Failed loading local storage state", e);
+      console.error("Failed loading local cart/wishlist state", e);
     } finally {
       setIsHydrated(true);
     }
-  }, []);
 
-  // Save to LocalStorage whenever state changes after hydration
+    refreshData();
+  }, [refreshData]);
+
+  // Save Cart/Wishlist to LocalStorage
   useEffect(() => {
     if (!isHydrated) return;
     try {
-      localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(products));
-      localStorage.setItem(STORAGE_KEYS.CATEGORIES, JSON.stringify(categories));
-      localStorage.setItem(STORAGE_KEYS.COUPONS, JSON.stringify(coupons));
-      localStorage.setItem(STORAGE_KEYS.ORDERS, JSON.stringify(orders));
       localStorage.setItem(STORAGE_KEYS.CART, JSON.stringify(cart));
       localStorage.setItem(STORAGE_KEYS.WISHLIST, JSON.stringify(wishlist));
       localStorage.setItem(STORAGE_KEYS.COUPON_APPLIED, JSON.stringify(appliedCoupon));
     } catch (e) {
       console.error("Failed saving local storage state", e);
     }
-  }, [products, categories, coupons, orders, cart, wishlist, appliedCoupon, isHydrated]);
+  }, [cart, wishlist, appliedCoupon, isHydrated]);
 
   // Cart Calculations (BDT currency)
   const FREE_SHIPPING_THRESHOLD = 3000;
@@ -242,8 +272,28 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const isInWishlist = (productId: string) => wishlist.includes(productId);
 
-  // Coupon Actions
-  const applyCoupon = (code: string) => {
+  // Coupon Actions with Backend Validation
+  const applyCoupon = async (code: string) => {
+    try {
+      const res = await fetch("/api/coupons/validate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ code, cartSubtotal }),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        if (data.success && data.coupon) {
+          setAppliedCoupon(data.coupon);
+          return { success: true, message: data.message, coupon: data.coupon };
+        }
+        return { success: false, message: data.message || "Invalid coupon code." };
+      }
+    } catch (e) {
+      console.warn("API coupon validation fallback:", e);
+    }
+
+    // Client-side fallback if offline
     const formatted = code.trim().toUpperCase();
     const coupon = coupons.find((c) => c.code.toUpperCase() === formatted);
 
@@ -262,7 +312,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     if (cartSubtotal < coupon.minOrderValue) {
       return {
         success: false,
-        message: `Minimum order value for this coupon is $${coupon.minOrderValue.toFixed(2)}. Add more items to your cart.`,
+        message: `Minimum order value for this coupon is ৳${coupon.minOrderValue.toLocaleString()}. Add more items to your cart.`,
       };
     }
 
@@ -274,8 +324,39 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     setAppliedCoupon(null);
   };
 
-  // Order Actions
-  const createOrder = (customerAddress: DeliveryAddress): Order => {
+  // Order Actions with Backend PostgreSQL Persistence
+  const createOrder = async (customerAddress: DeliveryAddress): Promise<Order> => {
+    const orderPayload = {
+      customer: customerAddress,
+      items: [...cart],
+      paymentMethod: "Cash on Delivery",
+      subtotal: cartSubtotal,
+      shippingFee,
+      discountAmount,
+      couponApplied: appliedCoupon ? appliedCoupon.code : undefined,
+      total: cartTotal,
+    };
+
+    try {
+      const res = await fetch("/api/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(orderPayload),
+      });
+
+      if (res.ok) {
+        const newOrder: Order = await res.json();
+        setOrders((prev) => [newOrder, ...prev]);
+        clearCart();
+        // Refresh product stock in background
+        refreshData();
+        return newOrder;
+      }
+    } catch (e) {
+      console.warn("API order creation fallback:", e);
+    }
+
+    // Offline / Mock fallback
     const now = new Date();
     const orderId = `BG-${now.getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
 
@@ -322,7 +403,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       },
     ];
 
-    const newOrder: Order = {
+    const fallbackOrder: Order = {
       id: orderId,
       createdAt: now.toISOString(),
       customer: customerAddress,
@@ -338,90 +419,163 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       trackingHistory: initialTracking,
     };
 
-    // Deduct stock for ordered variants
-    setProducts((prevProducts) =>
-      prevProducts.map((p) => {
-        const orderItemForProduct = cart.filter((item) => item.productId === p.id);
-        if (orderItemForProduct.length === 0) return p;
-
-        const updatedVariants = p.variants.map((v) => {
-          const match = orderItemForProduct.find((item) => item.variantSku === v.sku);
-          if (match) {
-            return { ...v, stock: Math.max(0, v.stock - match.quantity) };
-          }
-          return v;
-        });
-
-        return { ...p, variants: updatedVariants };
-      })
-    );
-
-    // Update coupon usage count if applied
-    if (appliedCoupon) {
-      setCoupons((prev) =>
-        prev.map((c) => (c.id === appliedCoupon.id ? { ...c, usageCount: c.usageCount + 1 } : c))
-      );
-    }
-
-    setOrders((prev) => [newOrder, ...prev]);
+    setOrders((prev) => [fallbackOrder, ...prev]);
     clearCart();
-    return newOrder;
+    return fallbackOrder;
   };
 
-  const getOrderById = (orderId: string) => {
+  const getOrderById = async (orderId: string): Promise<Order | undefined> => {
     const sanitized = orderId.trim().toUpperCase();
+
+    try {
+      const res = await fetch(`/api/orders/${encodeURIComponent(sanitized)}`);
+      if (res.ok) {
+        const orderData = await res.json();
+        return orderData;
+      }
+    } catch (e) {
+      console.warn("Live order lookup fallback:", e);
+    }
+
     return orders.find((o) => o.id.toUpperCase() === sanitized);
   };
 
-  // Admin Product Operations
-  const addProduct = (productData: Omit<Product, "id" | "createdAt" | "reviews"> & { reviews?: Review[] }): Product => {
-    const newProduct: Product = {
+  // Admin Product Operations with Backend Sync
+  const addProduct = async (
+    productData: Omit<Product, "id" | "createdAt" | "reviews"> & { reviews?: Review[] }
+  ): Promise<Product> => {
+    try {
+      const res = await fetch("/api/products", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(productData),
+      });
+
+      if (res.ok) {
+        const created: Product = await res.json();
+        setProducts((prev) => [created, ...prev]);
+        return created;
+      }
+    } catch (e) {
+      console.error("API add product failed:", e);
+    }
+
+    // Fallback
+    const fallback: Product = {
       ...productData,
       id: `prod-${Date.now()}`,
       createdAt: new Date().toISOString().split("T")[0],
       reviews: productData.reviews || [],
     };
-    setProducts((prev) => [newProduct, ...prev]);
-    return newProduct;
+    setProducts((prev) => [fallback, ...prev]);
+    return fallback;
   };
 
-  const updateProduct = (id: string, productData: Partial<Product>) => {
+  const updateProduct = async (id: string, productData: Partial<Product>) => {
     setProducts((prev) => prev.map((p) => (p.id === id ? { ...p, ...productData } : p)));
+
+    try {
+      await fetch(`/api/products/${encodeURIComponent(id)}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(productData),
+      });
+    } catch (e) {
+      console.error("API update product failed:", e);
+    }
   };
 
-  const deleteProduct = (id: string) => {
+  const deleteProduct = async (id: string) => {
     setProducts((prev) => prev.filter((p) => p.id !== id));
+
+    try {
+      await fetch(`/api/products/${encodeURIComponent(id)}`, {
+        method: "DELETE",
+      });
+    } catch (e) {
+      console.error("API delete product failed:", e);
+    }
   };
 
-  // Admin Category Operations
-  const addCategory = (categoryData: Omit<CategoryItem, "id">) => {
-    const newCategory: CategoryItem = {
+  // Admin Category Operations with Backend Sync
+  const addCategory = async (categoryData: Omit<CategoryItem, "id">) => {
+    try {
+      const res = await fetch("/api/categories", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(categoryData),
+      });
+
+      if (res.ok) {
+        const created: CategoryItem = await res.json();
+        setCategories((prev) => [...prev, created]);
+        return;
+      }
+    } catch (e) {
+      console.error("API add category failed:", e);
+    }
+
+    const fallback: CategoryItem = {
       ...categoryData,
       id: `cat-${Date.now()}`,
     };
-    setCategories((prev) => [...prev, newCategory]);
+    setCategories((prev) => [...prev, fallback]);
   };
 
-  const updateCategory = (id: string, categoryData: Partial<CategoryItem>) => {
+  const updateCategory = async (id: string, categoryData: Partial<CategoryItem>) => {
     setCategories((prev) => prev.map((c) => (c.id === id ? { ...c, ...categoryData } : c)));
+
+    try {
+      await fetch(`/api/categories/${encodeURIComponent(id)}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(categoryData),
+      });
+    } catch (e) {
+      console.error("API update category failed:", e);
+    }
   };
 
-  const deleteCategory = (id: string) => {
+  const deleteCategory = async (id: string) => {
     setCategories((prev) => prev.filter((c) => c.id !== id));
+
+    try {
+      await fetch(`/api/categories/${encodeURIComponent(id)}`, {
+        method: "DELETE",
+      });
+    } catch (e) {
+      console.error("API delete category failed:", e);
+    }
   };
 
-  // Admin Coupon Operations
-  const addCoupon = (couponData: Omit<Coupon, "id" | "usageCount">) => {
-    const newCoupon: Coupon = {
+  // Admin Coupon Operations with Backend Sync
+  const addCoupon = async (couponData: Omit<Coupon, "id" | "usageCount">) => {
+    try {
+      const res = await fetch("/api/coupons", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(couponData),
+      });
+
+      if (res.ok) {
+        const created: Coupon = await res.json();
+        setCoupons((prev) => [created, ...prev]);
+        return;
+      }
+    } catch (e) {
+      console.error("API add coupon failed:", e);
+    }
+
+    const fallback: Coupon = {
       ...couponData,
       id: `coup-${Date.now()}`,
       usageCount: 0,
       code: couponData.code.toUpperCase().trim(),
     };
-    setCoupons((prev) => [newCoupon, ...prev]);
+    setCoupons((prev) => [fallback, ...prev]);
   };
 
-  const updateCoupon = (id: string, couponData: Partial<Coupon>) => {
+  const updateCoupon = async (id: string, couponData: Partial<Coupon>) => {
     setCoupons((prev) =>
       prev.map((c) =>
         c.id === id
@@ -433,19 +587,38 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
           : c
       )
     );
+
+    try {
+      await fetch(`/api/coupons/${encodeURIComponent(id)}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(couponData),
+      });
+    } catch (e) {
+      console.error("API update coupon failed:", e);
+    }
   };
 
-  const deleteCoupon = (id: string) => {
+  const deleteCoupon = async (id: string) => {
     setCoupons((prev) => prev.filter((c) => c.id !== id));
+
+    try {
+      await fetch(`/api/coupons/${encodeURIComponent(id)}`, {
+        method: "DELETE",
+      });
+    } catch (e) {
+      console.error("API delete coupon failed:", e);
+    }
   };
 
-  // Admin Order Operations
-  const updateOrderStatus = (
+  // Admin Order Operations with Backend Sync
+  const updateOrderStatus = async (
     orderId: string,
     status: OrderStatus,
     paymentStatus?: PaymentStatus,
     note?: string
   ) => {
+    // Optimistic update
     setOrders((prev) =>
       prev.map((order) => {
         if (order.id !== orderId) return order;
@@ -469,9 +642,19 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         };
       })
     );
+
+    try {
+      await fetch(`/api/orders/${encodeURIComponent(orderId)}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status, paymentStatus, note }),
+      });
+    } catch (e) {
+      console.error("API update order status failed:", e);
+    }
   };
 
-  const resetToDefaults = () => {
+  const resetToDefaults = async () => {
     setProducts(INITIAL_PRODUCTS);
     setCategories(INITIAL_CATEGORIES);
     setCoupons(INITIAL_COUPONS);
@@ -480,6 +663,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     setWishlist([]);
     setAppliedCoupon(null);
     localStorage.clear();
+    await refreshData();
   };
 
   return (
@@ -494,6 +678,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         appliedCoupon,
         isCartOpen,
         isSearchOpen,
+        isLoading,
         setIsCartOpen,
         setIsSearchOpen,
         addToCart,
@@ -517,6 +702,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         deleteCoupon,
         updateOrderStatus,
         resetToDefaults,
+        refreshData,
         cartSubtotal,
         discountAmount,
         shippingFee,

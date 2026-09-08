@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { useStore } from "@/context/StoreContext";
 import { AdminHeader } from "@/components/admin/AdminHeader";
+import { CustomSelect } from "@/components/common/CustomSelect";
 import { Coupon } from "@/types";
 import { formatPrice } from "@/utils/currency";
 
@@ -25,11 +26,11 @@ export default function AdminCouponsPage() {
   const [code, setCode] = useState("");
   const [description, setDescription] = useState("");
   const [discountType, setDiscountType] = useState<"percentage" | "fixed">("percentage");
-  const [discountValue, setDiscountValue] = useState<number>(10);
-  const [minOrderValue, setMinOrderValue] = useState<number>(1500);
-  const [maxDiscount, setMaxDiscount] = useState<number | undefined>(1000);
-  const [expiresAt, setExpiresAt] = useState("2027-12-31");
-  const [usageLimit, setUsageLimit] = useState<number>(500);
+  const [discountValue, setDiscountValue] = useState<number | "">("");
+  const [minOrderValue, setMinOrderValue] = useState<number | "">("");
+  const [maxDiscount, setMaxDiscount] = useState<number | "">("");
+  const [expiresAt, setExpiresAt] = useState("");
+  const [usageLimit, setUsageLimit] = useState<number | "">("");
   const [isActive, setIsActive] = useState(true);
 
   const openAddModal = () => {
@@ -37,11 +38,11 @@ export default function AdminCouponsPage() {
     setCode("");
     setDescription("");
     setDiscountType("percentage");
-    setDiscountValue(10);
-    setMinOrderValue(1500);
-    setMaxDiscount(1000);
-    setExpiresAt("2027-12-31");
-    setUsageLimit(500);
+    setDiscountValue("");
+    setMinOrderValue("");
+    setMaxDiscount("");
+    setExpiresAt("");
+    setUsageLimit("");
     setIsActive(true);
     setIsModalOpen(true);
   };
@@ -52,10 +53,10 @@ export default function AdminCouponsPage() {
     setDescription(coupon.description);
     setDiscountType(coupon.discountType);
     setDiscountValue(coupon.discountValue);
-    setMinOrderValue(coupon.minOrderValue);
-    setMaxDiscount(coupon.maxDiscount);
+    setMinOrderValue(coupon.minOrderValue ?? "");
+    setMaxDiscount(coupon.maxDiscount ?? "");
     setExpiresAt(coupon.expiresAt);
-    setUsageLimit(coupon.usageLimit);
+    setUsageLimit(coupon.usageLimit ?? "");
     setIsActive(coupon.isActive);
     setIsModalOpen(true);
   };
@@ -267,14 +268,15 @@ export default function AdminCouponsPage() {
                     <label className="block text-xs uppercase tracking-wider font-semibold text-[#0D0C0B] mb-1">
                       Discount Type
                     </label>
-                    <select
+                    <CustomSelect
                       value={discountType}
-                      onChange={(e) => setDiscountType(e.target.value as any)}
-                      className="w-full text-xs p-2.5 border border-[#E5DED4] bg-white text-[#0D0C0B] focus:outline-none focus:border-[#C9A45C]"
-                    >
-                      <option value="percentage">Percentage (%)</option>
-                      <option value="fixed">Fixed Amount (৳ BDT)</option>
-                    </select>
+                      onChange={(val) => setDiscountType(val as any)}
+                      options={[
+                        { value: "percentage", label: "Percentage (%)" },
+                        { value: "fixed", label: "Fixed Amount (৳ BDT)" },
+                      ]}
+                      className="w-full"
+                    />
                   </div>
 
                   <div>
@@ -286,7 +288,10 @@ export default function AdminCouponsPage() {
                       required
                       min="1"
                       value={discountValue}
-                      onChange={(e) => setDiscountValue(Number(e.target.value))}
+                      onChange={(e) =>
+                        setDiscountValue(e.target.value === "" ? "" : Number(e.target.value))
+                      }
+                      placeholder={discountType === "percentage" ? "e.g. 15" : "e.g. 500"}
                       className="w-full text-xs p-2.5 border border-[#E5DED4] bg-white text-[#0D0C0B] font-mono font-bold focus:outline-none focus:border-[#C9A45C]"
                     />
                   </div>
@@ -316,7 +321,7 @@ export default function AdminCouponsPage() {
                         min="0"
                         value={maxDiscount || ""}
                         onChange={(e) =>
-                          setMaxDiscount(e.target.value ? Number(e.target.value) : undefined)
+                          setMaxDiscount(e.target.value ? Number(e.target.value) : "")
                         }
                         className="w-full text-xs p-2.5 border border-[#E5DED4] bg-white text-[#0D0C0B] font-mono focus:outline-none focus:border-[#C9A45C]"
                       />

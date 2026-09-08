@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Plus, Edit2, Trash2, X, Check } from "lucide-react";
 import { useStore } from "@/context/StoreContext";
 import { AdminHeader } from "@/components/admin/AdminHeader";
+import { ImageUpload } from "@/components/admin/ImageUpload";
 import { BagCategory, CategoryItem } from "@/types";
 
 export default function AdminCategoriesPage() {
@@ -26,7 +27,7 @@ export default function AdminCategoriesPage() {
     setSlug("backpacks");
     setTagline("");
     setDescription("");
-    setImage("https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&q=80&w=900");
+    setImage("");
     setBadge("");
     setIsModalOpen(true);
   };
@@ -238,15 +239,12 @@ export default function AdminCategoriesPage() {
                 </div>
 
                 <div>
-                  <label className="block text-xs uppercase tracking-wider font-semibold text-[#0D0C0B] mb-1">
-                    Hero Cover Image URL
-                  </label>
-                  <input
-                    type="url"
+                  <ImageUpload
                     value={image}
-                    onChange={(e) => setImage(e.target.value)}
-                    placeholder="https://images.unsplash.com/photo-..."
-                    className="w-full text-xs p-2.5 border border-[#E5DED4] font-mono text-[#0D0C0B] focus:outline-none focus:border-[#C9A45C]"
+                    onChange={(url) => setImage(url)}
+                    folder="bagsglory/categories"
+                    label="Collection Hero Cover Image"
+                    aspectRatio="landscape"
                   />
                 </div>
 

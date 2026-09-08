@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { useStore } from "@/context/StoreContext";
 import { AdminHeader } from "@/components/admin/AdminHeader";
+import { CustomSelect } from "@/components/common/CustomSelect";
 import { Order, OrderStatus, PaymentStatus } from "@/types";
 import { formatPrice } from "@/utils/currency";
 
@@ -180,24 +181,26 @@ export default function AdminOrdersPage() {
                       </td>
                       <td className="py-4 px-6 text-right">
                         <div className="flex items-center justify-end gap-2">
-                          <select
+                          <CustomSelect
                             value={order.orderStatus}
-                            onChange={(e) =>
-                              handleStatusChange(order.id, e.target.value as OrderStatus)
+                            onChange={(val) =>
+                              handleStatusChange(order.id, val as OrderStatus)
                             }
-                            className="text-xs font-semibold bg-white border border-[#E5DED4] px-2.5 py-1.5 text-[#0D0C0B] focus:outline-none focus:border-[#C9A45C]"
-                          >
-                            <option value="Pending">Pending</option>
-                            <option value="Processing">Processing</option>
-                            <option value="Shipped">Shipped</option>
-                            <option value="Out for Delivery">Out for Delivery</option>
-                            <option value="Delivered">Delivered (Paid)</option>
-                            <option value="Cancelled">Cancelled</option>
-                          </select>
+                            options={[
+                              { value: "Pending", label: "Pending" },
+                              { value: "Processing", label: "Processing" },
+                              { value: "Shipped", label: "Shipped" },
+                              { value: "Out for Delivery", label: "Out for Delivery" },
+                              { value: "Delivered", label: "Delivered (Paid)" },
+                              { value: "Cancelled", label: "Cancelled" },
+                            ]}
+                            className="w-40 text-left"
+                            buttonClassName="py-1.5 px-2.5 text-xs"
+                          />
 
                           <button
                             onClick={() => setSelectedOrder(order)}
-                            className="p-1.5 text-[#746C63] hover:text-[#0D0C0B] hover:bg-[#F8F5EF] transition-colors"
+                            className="p-2 text-[#746C63] hover:text-[#0D0C0B] hover:bg-[#F8F5EF] transition-colors shrink-0"
                             title="View Full Order Dossier"
                           >
                             <Eye className="w-4 h-4" />
@@ -327,20 +330,21 @@ export default function AdminOrdersPage() {
                 </div>
 
                 <div className="flex flex-wrap items-center gap-3">
-                  <select
+                  <CustomSelect
                     value={selectedOrder.orderStatus}
-                    onChange={(e) =>
-                      handleStatusChange(selectedOrder.id, e.target.value as OrderStatus)
+                    onChange={(val) =>
+                      handleStatusChange(selectedOrder.id, val as OrderStatus)
                     }
-                    className="text-xs font-semibold bg-white border border-[#E5DED4] px-3 py-2 text-[#0D0C0B] focus:outline-none focus:border-[#C9A45C]"
-                  >
-                    <option value="Pending">Pending</option>
-                    <option value="Processing">Processing</option>
-                    <option value="Shipped">Shipped</option>
-                    <option value="Out for Delivery">Out for Delivery</option>
-                    <option value="Delivered">Delivered (Paid)</option>
-                    <option value="Cancelled">Cancelled</option>
-                  </select>
+                    options={[
+                      { value: "Pending", label: "Pending" },
+                      { value: "Processing", label: "Processing" },
+                      { value: "Shipped", label: "Shipped" },
+                      { value: "Out for Delivery", label: "Out for Delivery" },
+                      { value: "Delivered", label: "Delivered (Paid)" },
+                      { value: "Cancelled", label: "Cancelled" },
+                    ]}
+                    className="w-48 text-left"
+                  />
 
                   {selectedOrder.orderStatus !== "Delivered" && (
                     <button

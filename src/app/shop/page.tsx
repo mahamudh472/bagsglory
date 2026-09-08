@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { useStore } from "@/context/StoreContext";
 import { ProductCard } from "@/components/common/ProductCard";
+import { CustomSelect } from "@/components/common/CustomSelect";
 import { formatPrice } from "@/utils/currency";
 
 export default function ShopPage() {
@@ -149,19 +150,19 @@ export default function ShopPage() {
           <div className="flex items-center justify-between sm:justify-end gap-3">
             {/* Sorting Dropdown */}
             <div className="flex items-center gap-2">
-              <label htmlFor="shop-sort" className="text-xs uppercase tracking-wider text-[#746C63] hidden sm:inline">Sort by:</label>
-              <select
-                id="shop-sort"
+              <label className="text-xs uppercase tracking-wider text-[#746C63] hidden sm:inline">Sort by:</label>
+              <CustomSelect
                 value={sortBy}
-                onChange={(e) => setSortBy(e.target.value as any)}
-                className="text-xs font-semibold uppercase tracking-wider text-[#0D0C0B] bg-[#FFFFFF] border border-[#E5DED4] px-3.5 py-2.5 focus:outline-none focus:border-[#C9A45C]"
-              >
-                <option value="featured">Curated (Featured)</option>
-                <option value="newest">New Arrivals</option>
-                <option value="price-asc">Price: Low to High</option>
-                <option value="price-desc">Price: High to Low</option>
-                <option value="rating">Highest Rating</option>
-              </select>
+                onChange={(val) => setSortBy(val as any)}
+                options={[
+                  { value: "featured", label: "Curated (Featured)" },
+                  { value: "newest", label: "New Arrivals" },
+                  { value: "price-asc", label: "Price: Low to High" },
+                  { value: "price-desc", label: "Price: High to Low" },
+                  { value: "rating", label: "Highest Rating" },
+                ]}
+                className="w-48"
+              />
             </div>
 
             {/* View Mode Toggle */}

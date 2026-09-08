@@ -9,14 +9,23 @@ export const CouponBox: React.FC<{ className?: string }> = ({ className = "" }) 
   const [couponCode, setCouponCode] = useState("");
   const [message, setMessage] = useState<{ text: string; isError: boolean } | null>(null);
 
-  const handleApply = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!couponCode.trim()) return;
+  const [isApplying, setIsApplying] = useState(false);
 
-    const res = applyCoupon(couponCode);
-    setMessage({ text: res.message, isError: !res.success });
-    if (res.success) {
-      setCouponCode("");
+  const handleApply = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!couponCode.trim() || isApplying) return;
+
+    setIsApplying(true);
+    try {
+      const res = await applyCoupon(couponCode);
+      setMessage({ text: res.message, isError: !res.success });
+      if (res.success) {
+        setCouponCode("");
+      }
+    } catch {
+      setMessage({ text: "Failed to apply coupon. Please try again.", isError: true });
+    } finally {
+      setIsApplying(false);
     }
   };
 

@@ -1,17 +1,25 @@
 "use client";
 
-import React, { useState } from "react";
-import { Star, CheckCircle2, Send } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { Star, CheckCircle2, Send, AlertCircle } from "lucide-react";
 import { Product, Review } from "@/types";
 import { RatingStars } from "@/components/common/RatingStars";
+import { useStore } from "@/context/StoreContext";
 
 interface ProductTabsProps {
   product: Product;
 }
 
 export const ProductTabs: React.FC<ProductTabsProps> = ({ product }) => {
+  const { refreshData } = useStore();
   const [activeTab, setActiveTab] = useState<"details" | "materials" | "dimensions" | "care" | "warranty" | "reviews">("details");
-  const [reviewsList, setReviewsList] = useState<Review[]>(product.reviews);
+  const [reviewsList, setReviewsList] = useState<Review[]>(product.reviews || []);
+  const [isSubmittingReview, setIsSubmittingReview] = useState(false);
+
+  // Synchronize when product reviews change
+  useEffect(() => {
+    setReviewsList(product.reviews || []);
+  }, [product.reviews]);
 
   // New review state
   const [authorName, setAuthorName] = useState("");
@@ -19,26 +27,49 @@ export const ProductTabs: React.FC<ProductTabsProps> = ({ product }) => {
   const [reviewTitle, setReviewTitle] = useState("");
   const [reviewComment, setReviewComment] = useState("");
   const [submittedReview, setSubmittedReview] = useState(false);
+  const [reviewError, setReviewError] = useState<string | null>(null);
 
-  const handleReviewSubmit = (e: React.FormEvent) => {
+  const handleReviewSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!authorName.trim() || !reviewComment.trim()) return;
 
-    const newRev: Review = {
-      id: `rev-${Date.now()}`,
+    setIsSubmittingReview(true);
+    setReviewError(null);
+
+    const payload = {
+      productId: product.id,
       author: authorName.trim(),
       rating: reviewRating,
-      date: new Date().toISOString().split("T")[0],
       title: reviewTitle.trim() || "Verified Client Review",
       comment: reviewComment.trim(),
       verifiedPurchase: true,
     };
 
-    setReviewsList([newRev, ...reviewsList]);
-    setSubmittedReview(true);
-    setAuthorName("");
-    setReviewTitle("");
-    setReviewComment("");
+    try {
+      const res = await fetch("/api/reviews", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (res.ok) {
+        const createdRev = await res.json();
+        setReviewsList((prev) => [createdRev, ...prev]);
+        setSubmittedReview(true);
+        setAuthorName("");
+        setReviewTitle("");
+        setReviewComment("");
+        // Refresh product ratings & reviews in the store
+        await refreshData();
+      } else {
+        const data = await res.json();
+        setReviewError(data.error || "Failed to submit review. Please try again.");
+      }
+    } catch {
+      setReviewError("Network error submitting review. Please check connection.");
+    } finally {
+      setIsSubmittingReview(false);
+    }
   };
 
   const tabs = [
@@ -355,12 +386,29 @@ export const ProductTabs: React.FC<ProductTabsProps> = ({ product }) => {
                     />
                   </div>
 
+                  {reviewError && (
+                    <div className="p-3 bg-[#EF4444]/10 border border-[#EF4444]/30 text-[#EF4444] text-xs flex items-center gap-2">
+                      <AlertCircle className="w-4 h-4 shrink-0" />
+                      <span>{reviewError}</span>
+                    </div>
+                  )}
+
                   <button
                     type="submit"
-                    className="px-8 py-3.5 bg-[#0D0C0B] hover:bg-[#C9A45C] text-[#F8F5EF] hover:text-[#0D0C0B] font-semibold text-xs uppercase tracking-[0.18em] flex items-center gap-2 transition-all duration-300 shadow-xs"
+                    disabled={isSubmittingReview}
+                    className="px-8 py-3.5 bg-[#0D0C0B] hover:bg-[#C9A45C] text-[#F8F5EF] hover:text-[#0D0C0B] font-semibold text-xs uppercase tracking-[0.18em] flex items-center gap-2 transition-all duration-300 shadow-xs disabled:opacity-50"
                   >
-                    <span>Submit Review</span>
-                    <Send className="w-3.5 h-3.5" />
+                    {isSubmittingReview ? (
+                      <>
+                        <div className="w-3.5 h-3.5 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                        <span>Submitting...</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>Submit Review</span>
+                        <Send className="w-3.5 h-3.5" />
+                      </>
+                    )}
                   </button>
                 </form>
               )}

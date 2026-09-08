@@ -5,7 +5,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Sparkles, ShieldCheck, Award, Gem, Compass } from "lucide-react";
 
+import { useStore } from "@/context/StoreContext";
+
 export const CategoryShowcase: React.FC = () => {
+  const { categories } = useStore();
+
   const brandLogos = [
     { name: "GLORY LUXE", icon: Sparkles },
     { name: "HERITAGE CO.", icon: ShieldCheck },
@@ -14,32 +18,44 @@ export const CategoryShowcase: React.FC = () => {
     { name: "VOYAGER TRAVEL", icon: Compass },
   ];
 
-  const promoCards = [
+  // Dynamic collections from store or fallback
+  const fallbackCards = [
     {
-      subtitle: "WOMEN",
+      subtitle: "COLLECTION",
       title: "Luxury Handbags",
       tagline: "Structured silhouettes, bespoke hardware, and timeless everyday elegance.",
       image: "/images/women-fashion.jpg",
       link: "/category/totes",
-      buttonText: "DISCOVER WOMEN",
+      buttonText: "DISCOVER TOTES",
     },
     {
-      subtitle: "MEN",
+      subtitle: "EXECUTIVE",
       title: "Executive & Travel",
       tagline: "Hand-stitched briefcases, tech-ready duffels, and commanding leather daypacks.",
       image: "/images/men-fashion.jpg",
       link: "/category/briefcases",
-      buttonText: "DISCOVER MEN",
+      buttonText: "DISCOVER BRIEFCASES",
     },
     {
-      subtitle: "ACCESSORIES",
-      title: "Complete Your Look",
+      subtitle: "MINIMALIST",
+      title: "Everyday Slings",
       tagline: "Minimalist leather slings, full-grain cardholders, and fine travel companions.",
       image: "/images/footwear.jpg",
       link: "/category/slings",
-      buttonText: "SHOP ACCESSORIES",
+      buttonText: "SHOP SLINGS",
     },
   ];
+
+  const promoCards = categories.length >= 3
+    ? categories.slice(0, 3).map((cat, idx) => ({
+        subtitle: cat.badge || (idx === 0 ? "FEATURED" : idx === 1 ? "SIGNATURE" : "ATELIER"),
+        title: cat.name,
+        tagline: cat.tagline || cat.description,
+        image: cat.image || fallbackCards[idx]?.image || "/images/women-fashion.jpg",
+        link: `/category/${cat.slug}`,
+        buttonText: `EXPLORE ${cat.name.split(" ")[0].toUpperCase()}`,
+      }))
+    : fallbackCards;
 
   return (
     <section className="bg-[#F8F5EF] font-sans">

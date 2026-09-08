@@ -11,8 +11,10 @@ import {
   Tag,
   ExternalLink,
   X,
+  LogOut,
 } from "lucide-react";
 import { Logo } from "@/components/common/Logo";
+import { useAdminUI } from "./AdminLayoutClient";
 
 interface AdminSidebarProps {
   isOpen?: boolean;
@@ -24,6 +26,7 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
   onClose,
 }) => {
   const pathname = usePathname();
+  const { user, logout } = useAdminUI();
 
   // Prevent background scroll when mobile sidebar is open
   useEffect(() => {
@@ -119,12 +122,12 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
         </nav>
       </div>
 
-      {/* Footer Area with Storefront Switcher */}
+      {/* Footer Area with Storefront Switcher & User Profile */}
       <div className="p-4 border-t border-[#E5DED4] space-y-3 bg-[#F8F5EF]">
         <Link
           href="/"
           target="_blank"
-          className="flex items-center justify-between p-3 bg-white border border-[#E5DED4] text-[#0D0C0B] hover:border-[#C9A45C] text-[11px] font-semibold uppercase tracking-wider transition-colors"
+          className="flex items-center justify-between p-2.5 bg-white border border-[#E5DED4] text-[#0D0C0B] hover:border-[#C9A45C] text-[11px] font-semibold uppercase tracking-wider transition-colors"
         >
           <div className="flex items-center gap-2">
             <ExternalLink className="w-3.5 h-3.5 text-[#C9A45C]" />
@@ -133,14 +136,29 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
           <span className="text-[9px] text-[#0D0C0B] bg-[#F8F5EF] border border-[#E5DED4] px-1.5 py-0.5 font-semibold">Live</span>
         </Link>
 
-        <div className="flex items-center gap-3 px-2 pt-1">
-          <div className="w-8 h-8 bg-[#0D0C0B] text-[#C9A45C] flex items-center justify-center font-bold text-xs shrink-0">
-            BG
+        {/* Dynamic Admin Profile & Logout */}
+        <div className="pt-1 flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2.5 min-w-0">
+            <div className="w-8 h-8 bg-[#0D0C0B] text-[#C9A45C] flex items-center justify-center font-bold text-xs shrink-0 border border-[#C9A45C]/30">
+              {user?.name ? user.name.slice(0, 2).toUpperCase() : "BG"}
+            </div>
+            <div className="min-w-0 flex-1">
+              <p className="text-xs font-semibold text-[#0D0C0B] truncate">
+                {user?.name || "Administrator"}
+              </p>
+              <p className="text-[10px] text-[#746C63] font-light truncate">
+                {user?.email || "admin@bagsglory.com"}
+              </p>
+            </div>
           </div>
-          <div className="min-w-0 flex-1">
-            <p className="text-xs font-semibold text-[#0D0C0B] truncate">Executive Admin</p>
-            <p className="text-[11px] text-[#746C63] font-light truncate">concierge@bagsglory.com</p>
-          </div>
+
+          <button
+            onClick={logout}
+            title="Sign Out"
+            className="p-1.5 text-[#746C63] hover:text-[#EF4444] hover:bg-white transition-colors border border-transparent hover:border-[#E5DED4]"
+          >
+            <LogOut className="w-4 h-4" />
+          </button>
         </div>
       </div>
     </aside>

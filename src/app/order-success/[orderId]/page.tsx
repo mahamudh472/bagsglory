@@ -14,6 +14,7 @@ import {
   Banknote,
 } from "lucide-react";
 import { useStore } from "@/context/StoreContext";
+import { Order } from "@/types";
 import { formatPrice } from "@/utils/currency";
 
 export default function OrderSuccessPage({
@@ -23,9 +24,21 @@ export default function OrderSuccessPage({
 }) {
   const { orderId } = use(params);
   const { getOrderById } = useStore();
-  const order = getOrderById(orderId);
+  const [order, setOrder] = React.useState<Order | null>(null);
+  const [isLoading, setIsLoading] = React.useState(true);
 
   useEffect(() => {
+    let isMounted = true;
+    async function loadOrder() {
+      try {
+        const found = await getOrderById(orderId);
+        if (isMounted) setOrder(found || null);
+      } finally {
+        if (isMounted) setIsLoading(false);
+      }
+    }
+    loadOrder();
+
     if (typeof window !== "undefined") {
       confetti({
         particleCount: 80,
@@ -34,7 +47,24 @@ export default function OrderSuccessPage({
         colors: ["#C9A45C", "#E5C77A", "#0D0C0B", "#F8F5EF"],
       });
     }
-  }, []);
+
+    return () => {
+      isMounted = false;
+    };
+  }, [orderId, getOrderById]);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-[#F8F5EF] py-24 flex items-center justify-center font-sans">
+        <div className="text-center space-y-4">
+          <div className="w-12 h-12 border-2 border-[#C9A45C] border-t-transparent rounded-full animate-spin mx-auto" />
+          <p className="text-xs uppercase tracking-[0.2em] text-[#746C63]">
+            Confirming order with database...
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   if (!order) {
     return (
@@ -115,7 +145,7 @@ export default function OrderSuccessPage({
 
               {/* Timeline Steps */}
               <div className="space-y-6 relative before:absolute before:left-3 before:top-2 before:bottom-2 before:w-0.5 before:bg-[#E5DED4]">
-                {order.trackingHistory.map((step, idx) => (
+                {order.trackingHistory.map((step: any, idx: number) => (
                   <div key={idx} className="relative flex items-start gap-4">
                     <div
                       className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 z-10 text-[11px] font-bold ${
@@ -188,7 +218,7 @@ export default function OrderSuccessPage({
 
               {/* Items list */}
               <div className="divide-y divide-[#E5DED4]">
-                {order.items.map((item) => (
+                {order.items.map((item: any) => (
                   <div key={item.id} className="py-3.5 first:pt-0 flex items-center gap-3.5">
                     <div className="relative w-12 h-14 bg-[#F8F5EF] border border-[#E5DED4] shrink-0">
                       <Image

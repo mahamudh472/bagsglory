@@ -4,13 +4,25 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Copy, Check, ArrowRight } from "lucide-react";
+import { useStore } from "@/context/StoreContext";
 
 export const LimitedOfferBanner: React.FC = () => {
+  const { coupons } = useStore();
   const [copied, setCopied] = useState(false);
+
+  const activeCoupon = coupons.find((c) => c.isActive) || coupons[0] || {
+    code: "GLORY10",
+    discountValue: 10,
+    discountType: "percentage",
+  };
+
+  const discountText = activeCoupon.discountType === "percentage"
+    ? `Enjoy ${activeCoupon.discountValue}% Privilege:`
+    : `Enjoy ৳${activeCoupon.discountValue} Privilege:`;
 
   const handleCopy = () => {
     if (typeof window !== "undefined") {
-      navigator.clipboard.writeText("OFF20");
+      navigator.clipboard.writeText(activeCoupon.code);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     }
@@ -50,7 +62,7 @@ export const LimitedOfferBanner: React.FC = () => {
           <div className="pt-2">
             <div className="inline-flex items-center gap-3 p-3 bg-[#241B14]/80 border border-[#C9A45C]/30 mb-6">
               <span className="text-xs text-[#F8F5EF]/90 uppercase tracking-wider font-medium">
-                Enjoy 20% Privilege:
+                {discountText}
               </span>
               <button
                 onClick={handleCopy}
@@ -59,12 +71,12 @@ export const LimitedOfferBanner: React.FC = () => {
                 {copied ? (
                   <>
                     <Check className="w-3.5 h-3.5 text-[#0D0C0B]" />
-                    <span>COPIED: OFF20</span>
+                    <span>COPIED: {activeCoupon.code}</span>
                   </>
                 ) : (
                   <>
                     <Copy className="w-3.5 h-3.5" />
-                    <span>CODE: OFF20</span>
+                    <span>CODE: {activeCoupon.code}</span>
                   </>
                 )}
               </button>

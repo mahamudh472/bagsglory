@@ -15,6 +15,8 @@ import {
 } from "lucide-react";
 import { useStore } from "@/context/StoreContext";
 import { AdminHeader } from "@/components/admin/AdminHeader";
+import { ImageUpload } from "@/components/admin/ImageUpload";
+import { CustomSelect } from "@/components/common/CustomSelect";
 import { BagCategory, Product, ProductVariant } from "@/types";
 import { formatPrice } from "@/utils/currency";
 
@@ -32,40 +34,37 @@ export default function AdminProductsPage() {
   const [slug, setSlug] = useState("");
   const [category, setCategory] = useState<BagCategory>("backpacks");
   const [categoryName, setCategoryName] = useState("Heritage & Urban Backpacks");
-  const [basePrice, setBasePrice] = useState<number>(2500);
-  const [compareAtPrice, setCompareAtPrice] = useState<number | undefined>(3000);
+  const [basePrice, setBasePrice] = useState<number | "">("");
+  const [compareAtPrice, setCompareAtPrice] = useState<number | "">("");
   const [shortDesc, setShortDesc] = useState("");
   const [desc, setDesc] = useState("");
-  const [tagsInput, setTagsInput] = useState("Leather, Premium, Commute");
+  const [tagsInput, setTagsInput] = useState("");
 
   // Specs
-  const [dim, setDim] = useState("16.5\" H x 11.5\" W x 5.5\" D");
-  const [cap, setCap] = useState("20 Liters");
-  const [wt, setWt] = useState("2.2 lbs (1.0 kg)");
-  const [lap, setLap] = useState("Up to 16\" MacBook Pro");
-  const [mat, setMat] = useState("Full-Grain Italian Vachetta Leather");
-  const [water, setWater] = useState("Weatherproof wax coating");
-  const [war, setWar] = useState("Lifetime Guarantee");
+  const [dim, setDim] = useState("");
+  const [cap, setCap] = useState("");
+  const [wt, setWt] = useState("");
+  const [lap, setLap] = useState("");
+  const [mat, setMat] = useState("");
+  const [water, setWater] = useState("");
+  const [war, setWar] = useState("");
 
   // Flags
-  const [isFeatured, setIsFeatured] = useState(true);
+  const [isFeatured, setIsFeatured] = useState(false);
   const [isBestSeller, setIsBestSeller] = useState(false);
-  const [isNewArrival, setIsNewArrival] = useState(true);
+  const [isNewArrival, setIsNewArrival] = useState(false);
 
   // Variants State
   const [variants, setVariants] = useState<ProductVariant[]>([
     {
-      sku: "BG-NEW-01",
-      colorName: "Saddle Tan",
-      colorHex: "#9A3412",
-      sizeOrCapacity: "Standard (20L)",
-      materialOption: "Full-Grain Leather",
-      stock: 12,
+      sku: "",
+      colorName: "",
+      colorHex: "#0D0C0B",
+      sizeOrCapacity: "",
+      materialOption: "",
+      stock: 0,
       priceOffset: 0,
-      images: [
-        "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&q=80&w=1200",
-        "https://images.unsplash.com/photo-1546938576-6e6a64f317cc?auto=format&fit=crop&q=80&w=1200",
-      ],
+      images: [""],
     },
   ]);
 
@@ -73,36 +72,34 @@ export default function AdminProductsPage() {
     setEditingProduct(null);
     setTitle("");
     setSlug("");
-    setCategory("backpacks");
-    setCategoryName("Heritage & Urban Backpacks");
-    setBasePrice(2500);
-    setCompareAtPrice(3000);
+    const initialCat = categories[0] || { slug: "backpacks", name: "Heritage & Urban Backpacks" };
+    setCategory(initialCat.slug as BagCategory);
+    setCategoryName(initialCat.name);
+    setBasePrice("");
+    setCompareAtPrice("");
     setShortDesc("");
     setDesc("");
-    setTagsInput("Leather, Handcrafted, Work");
-    setDim("16.5\" H x 11.5\" W x 5.5\" D");
-    setCap("20 Liters");
-    setWt("2.2 lbs (1.0 kg)");
-    setLap("Up to 16\" MacBook Pro");
-    setMat("Full-Grain Italian Vachetta Leather");
-    setWater("Weatherproof wax coating");
-    setWar("Lifetime Craftsmanship Guarantee");
-    setIsFeatured(true);
+    setTagsInput("");
+    setDim("");
+    setCap("");
+    setWt("");
+    setLap("");
+    setMat("");
+    setWater("");
+    setWar("");
+    setIsFeatured(false);
     setIsBestSeller(false);
-    setIsNewArrival(true);
+    setIsNewArrival(false);
     setVariants([
       {
-        sku: `BG-${Date.now().toString().slice(-4)}-1`,
-        colorName: "Cognac Brown",
-        colorHex: "#9A3412",
-        sizeOrCapacity: "Standard (20L)",
-        materialOption: "Full-Grain Leather",
-        stock: 15,
+        sku: "",
+        colorName: "",
+        colorHex: "#0D0C0B",
+        sizeOrCapacity: "",
+        materialOption: "",
+        stock: 0,
         priceOffset: 0,
-        images: [
-          "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&q=80&w=1200",
-          "https://images.unsplash.com/photo-1546938576-6e6a64f317cc?auto=format&fit=crop&q=80&w=1200",
-        ],
+        images: [""],
       },
     ]);
     setIsModalOpen(true);
@@ -115,7 +112,7 @@ export default function AdminProductsPage() {
     setCategory(product.category);
     setCategoryName(product.categoryName);
     setBasePrice(product.basePrice);
-    setCompareAtPrice(product.compareAtPrice);
+    setCompareAtPrice(product.compareAtPrice ?? "");
     setShortDesc(product.shortDescription);
     setDesc(product.description || "");
     setTagsInput(product.tags.join(", "));
@@ -156,16 +153,14 @@ export default function AdminProductsPage() {
     setVariants([
       ...variants,
       {
-        sku: `BG-${Date.now().toString().slice(-4)}-${variants.length + 1}`,
-        colorName: "Espresso Black",
-        colorHex: "#18181B",
-        sizeOrCapacity: "Standard (20L)",
-        materialOption: "Full-Grain Leather",
-        stock: 10,
+        sku: "",
+        colorName: "",
+        colorHex: "#0D0C0B",
+        sizeOrCapacity: "",
+        materialOption: "",
+        stock: 0,
         priceOffset: 0,
-        images: [
-          "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&q=80&w=1200",
-        ],
+        images: [""],
       },
     ]);
   };
@@ -202,16 +197,16 @@ export default function AdminProductsPage() {
 
   const handleAddVariantImage = (variantIndex: number) => {
     const updated = [...variants];
-    updated[variantIndex].images.push(
-      "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&q=80&w=1200"
-    );
+    const newImages = [...updated[variantIndex].images, ""];
+    updated[variantIndex] = { ...updated[variantIndex], images: newImages };
     setVariants(updated);
   };
 
   const handleRemoveVariantImage = (variantIndex: number, imgIndex: number) => {
     const updated = [...variants];
     if (updated[variantIndex].images.length <= 1) return;
-    updated[variantIndex].images = updated[variantIndex].images.filter((_, i) => i !== imgIndex);
+    const newImages = updated[variantIndex].images.filter((_, i) => i !== imgIndex);
+    updated[variantIndex] = { ...updated[variantIndex], images: newImages };
     setVariants(updated);
   };
 
@@ -227,13 +222,24 @@ export default function AdminProductsPage() {
       .map((t) => t.trim())
       .filter(Boolean);
 
+    const sanitizedVariants = variants.map((v, idx) => ({
+      ...v,
+      sku: v.sku.trim() || `${slug}-${(v.colorName || `var-${idx + 1}`).toLowerCase().replace(/[^a-z0-9]+/g, "-")}`,
+      colorName: v.colorName.trim() || "Classic",
+      colorHex: v.colorHex || "#0D0C0B",
+      sizeOrCapacity: v.sizeOrCapacity.trim() || "Standard",
+      stock: Number(v.stock) || 0,
+      priceOffset: Number(v.priceOffset) || 0,
+      images: v.images.filter(Boolean).length > 0 ? v.images.filter(Boolean) : ["/images/hero-banner.jpg"],
+    }));
+
     const productPayload: Omit<Product, "id"> = {
       title,
       slug,
       category,
       categoryName,
-      basePrice,
-      compareAtPrice: compareAtPrice || undefined,
+      basePrice: Number(basePrice) || 0,
+      compareAtPrice: compareAtPrice ? Number(compareAtPrice) : undefined,
       shortDescription: shortDesc || title,
       description: desc || shortDesc,
       features: [
@@ -252,12 +258,12 @@ export default function AdminProductsPage() {
         warranty: war,
       },
       tags: tagsArray,
-      rating: editingProduct?.rating || 4.9,
-      reviewCount: editingProduct?.reviewCount || 12,
+      rating: editingProduct?.rating ?? 5.0,
+      reviewCount: editingProduct?.reviewCount ?? 0,
       isFeatured,
       isBestSeller,
       isNewArrival,
-      variants,
+      variants: sanitizedVariants,
       reviews: editingProduct?.reviews || [],
       createdAt: editingProduct?.createdAt || new Date().toISOString(),
     };
@@ -280,8 +286,8 @@ export default function AdminProductsPage() {
   const filteredProducts = products.filter((p) => {
     const matchesSearch =
       p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      p.slug.toLowerCase().includes(searchQuery.toLowerCase()) ||
       p.categoryName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      p.slug.toLowerCase().includes(searchQuery.toLowerCase()) ||
       p.variants.some((v) => v.sku.toLowerCase().includes(searchQuery.toLowerCase()));
 
     const matchesCategory =
@@ -294,14 +300,13 @@ export default function AdminProductsPage() {
     <div className="flex-1 flex flex-col font-sans bg-[#F8F5EF] text-[#0D0C0B] min-h-screen">
       <AdminHeader
         title="Products & Inventory"
-        subtitle="Manage handcrafted bags catalog, multi-color swatches, SKUs, and real-time stock counts"
+        subtitle="Manage luxury handbags, color swatches, dynamic pricing, and stock levels"
       />
 
-      <main className="p-4 sm:p-6 lg:p-8 space-y-6 flex-1">
-        {/* Top Control Bar */}
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
-          <div className="flex flex-1 items-center gap-3">
-            {/* Search Input */}
+      <main className="p-4 sm:p-6 lg:p-8 space-y-4 sm:space-y-6 flex-1">
+        {/* Actions Bar */}
+        <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3 p-4 bg-white border border-[#E5DED4]">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 flex-1">
             <div className="relative flex-1 max-w-md">
               <Search className="w-4 h-4 text-[#746C63] absolute left-3.5 top-3" />
               <input
@@ -309,28 +314,25 @@ export default function AdminProductsPage() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search title, collection, SKU..."
-                className="w-full text-xs pl-9 pr-4 py-2.5 border border-[#E5DED4] bg-white text-[#0D0C0B] placeholder-[#746C63] focus:outline-none focus:border-[#C9A45C]"
+                className="w-full text-xs pl-9 pr-4 py-2.5 border border-[#E5DED4] bg-white text-[#0D0C0B] placeholder-[#A8A096] focus:outline-none focus:border-[#C9A45C]"
               />
             </div>
 
             {/* Category Filter Dropdown */}
-            <select
+            <CustomSelect
               value={selectedCategoryFilter}
-              onChange={(e) => setSelectedCategoryFilter(e.target.value)}
-              className="w-full sm:w-auto text-xs font-semibold text-[#0D0C0B] bg-white border border-[#E5DED4] px-3.5 py-2.5 focus:outline-none focus:border-[#C9A45C]"
-            >
-              <option value="all">All Collections ({products.length})</option>
-              {categories.map((c) => (
-                <option key={c.id} value={c.slug}>
-                  {c.name}
-                </option>
-              ))}
-            </select>
+              onChange={(val) => setSelectedCategoryFilter(val)}
+              options={[
+                { value: "all", label: `All Collections (${products.length})` },
+                ...categories.map((c) => ({ value: c.slug, label: c.name })),
+              ]}
+              className="w-full sm:w-auto min-w-[200px]"
+            />
           </div>
 
           <button
             onClick={openAddModal}
-            className="px-5 py-2.5 bg-[#0D0C0B] hover:bg-[#C9A45C] hover:text-[#0D0C0B] text-white text-xs font-semibold uppercase tracking-[0.16em] flex items-center justify-center gap-2 transition-all"
+            className="px-5 py-2.5 bg-[#0D0C0B] hover:bg-[#C9A45C] hover:text-[#0D0C0B] text-white text-xs font-semibold uppercase tracking-[0.16em] flex items-center justify-center gap-2 transition-all cursor-pointer"
           >
             <Plus className="w-4 h-4" />
             <span>Add New Creation</span>
@@ -541,17 +543,15 @@ export default function AdminProductsPage() {
                     <label className="block text-xs uppercase tracking-wider font-semibold text-[#0D0C0B] mb-1">
                       Category Collection *
                     </label>
-                    <select
+                    <CustomSelect
                       value={category}
-                      onChange={(e) => handleCategorySelect(e.target.value)}
-                      className="w-full text-xs p-2.5 border border-[#E5DED4] bg-white text-[#0D0C0B] focus:outline-none focus:border-[#C9A45C]"
-                    >
-                      {categories.map((c) => (
-                        <option key={c.id} value={c.slug}>
-                          {c.name}
-                        </option>
-                      ))}
-                    </select>
+                      onChange={(val) => handleCategorySelect(val)}
+                      options={categories.map((c) => ({
+                        value: c.slug,
+                        label: c.name,
+                      }))}
+                      className="w-full"
+                    />
                   </div>
 
                   <div>
@@ -563,8 +563,11 @@ export default function AdminProductsPage() {
                       required
                       min={0}
                       value={basePrice}
-                      onChange={(e) => setBasePrice(Number(e.target.value))}
-                      className="w-full text-xs p-2.5 border border-[#E5DED4] bg-white text-[#0D0C0B] focus:outline-none focus:border-[#C9A45C]"
+                      onChange={(e) =>
+                        setBasePrice(e.target.value === "" ? "" : Number(e.target.value))
+                      }
+                      placeholder="e.g. 14500"
+                      className="w-full text-xs p-2.5 border border-[#E5DED4] bg-white text-[#0D0C0B] placeholder-[#A8A096] focus:outline-none focus:border-[#C9A45C]"
                     />
                   </div>
 
@@ -575,12 +578,12 @@ export default function AdminProductsPage() {
                     <input
                       type="number"
                       min={0}
-                      value={compareAtPrice || ""}
+                      value={compareAtPrice ?? ""}
                       onChange={(e) =>
-                        setCompareAtPrice(e.target.value ? Number(e.target.value) : undefined)
+                        setCompareAtPrice(e.target.value === "" ? "" : Number(e.target.value))
                       }
                       placeholder="Optional strikethrough price"
-                      className="w-full text-xs p-2.5 border border-[#E5DED4] bg-white text-[#0D0C0B] focus:outline-none focus:border-[#C9A45C]"
+                      className="w-full text-xs p-2.5 border border-[#E5DED4] bg-white text-[#0D0C0B] placeholder-[#A8A096] focus:outline-none focus:border-[#C9A45C]"
                     />
                   </div>
                 </div>
@@ -593,8 +596,8 @@ export default function AdminProductsPage() {
                     type="text"
                     value={shortDesc}
                     onChange={(e) => setShortDesc(e.target.value)}
-                    placeholder="e.g. Handcrafted from full-grain calfskin leather with 24K gold-plated hardware."
-                    className="w-full text-xs p-2.5 border border-[#E5DED4] bg-white text-[#0D0C0B] focus:outline-none focus:border-[#C9A45C]"
+                    placeholder="Brief 1-line luxury summary"
+                    className="w-full text-xs p-2.5 border border-[#E5DED4] bg-white text-[#0D0C0B] placeholder-[#A8A096] focus:outline-none focus:border-[#C9A45C]"
                   />
                 </div>
 
@@ -606,8 +609,8 @@ export default function AdminProductsPage() {
                     rows={3}
                     value={desc}
                     onChange={(e) => setDesc(e.target.value)}
-                    placeholder="Describe the materials, compartments, zippers, and usage scenarios..."
-                    className="w-full text-xs p-2.5 border border-[#E5DED4] bg-white text-[#0D0C0B] focus:outline-none focus:border-[#C9A45C]"
+                    placeholder="Describe the craftsmanship, materials, compartments, and heritage..."
+                    className="w-full text-xs p-2.5 border border-[#E5DED4] bg-white text-[#0D0C0B] placeholder-[#A8A096] focus:outline-none focus:border-[#C9A45C]"
                   />
                 </div>
               </div>
@@ -709,48 +712,65 @@ export default function AdminProductsPage() {
                             type="number"
                             required
                             min={0}
-                            value={variant.stock}
+                            value={variant.stock === 0 ? "" : variant.stock}
                             onChange={(e) =>
-                              handleVariantChange(vIdx, "stock", Number(e.target.value))
+                              handleVariantChange(
+                                vIdx,
+                                "stock",
+                                e.target.value === "" ? 0 : Number(e.target.value)
+                              )
                             }
-                            className="w-full text-xs p-2 border border-[#E5DED4] bg-white font-semibold text-[#0D0C0B] focus:outline-none focus:border-[#C9A45C]"
+                            placeholder="0"
+                            className="w-full text-xs p-2 border border-[#E5DED4] bg-white font-semibold text-[#0D0C0B] placeholder-[#A8A096] focus:outline-none focus:border-[#C9A45C]"
                           />
                         </div>
                       </div>
 
-                      {/* Image URLs for this variant */}
-                      <div className="space-y-2 pt-2 border-t border-[#E5DED4]">
+                      {/* Images for this variant */}
+                      <div className="space-y-3 pt-3 border-t border-[#E5DED4]">
                         <div className="flex items-center justify-between text-[11px] text-[#746C63]">
-                          <span className="font-semibold uppercase tracking-wider text-[10px]">Product Photos ({variant.images.length})</span>
+                          <span className="font-semibold uppercase tracking-wider text-[10px]">
+                            Variant Photos ({variant.images.length})
+                          </span>
                           <button
                             type="button"
                             onClick={() => handleAddVariantImage(vIdx)}
-                            className="text-[#0D0C0B] font-semibold hover:text-[#C9A45C]"
+                            className="text-[#0D0C0B] text-xs font-semibold hover:text-[#C9A45C] uppercase tracking-wider"
                           >
-                            + Add Image URL
+                            + Add Photo
                           </button>
                         </div>
 
-                        {variant.images.map((imgUrl, imgIdx) => (
-                          <div key={imgIdx} className="flex items-center gap-2">
-                            <input
-                              type="url"
-                              value={imgUrl}
-                              onChange={(e) =>
-                                handleVariantImageChange(vIdx, imgIdx, e.target.value)
-                              }
-                              placeholder="https://..."
-                              className="flex-1 text-xs p-2 border border-[#E5DED4] bg-white font-mono text-[#0D0C0B] focus:outline-none focus:border-[#C9A45C]"
-                            />
-                            <button
-                              type="button"
-                              onClick={() => handleRemoveVariantImage(vIdx, imgIdx)}
-                              className="p-1.5 text-rose-700 hover:bg-rose-50 transition-colors"
-                            >
-                              <X className="w-4 h-4" />
-                            </button>
-                          </div>
-                        ))}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                          {variant.images.map((imgUrl, imgIdx) => (
+                            <div key={imgIdx} className="relative bg-white p-2.5 border border-[#E5DED4] space-y-2">
+                              <div className="flex items-center justify-between">
+                                <span className="text-[10px] font-semibold text-[#746C63] uppercase">
+                                  Image #{imgIdx + 1} {imgIdx === 0 && "(Primary)"}
+                                </span>
+                                {variant.images.length > 1 && (
+                                  <button
+                                    type="button"
+                                    onClick={() => handleRemoveVariantImage(vIdx, imgIdx)}
+                                    className="p-1 text-red-600 hover:bg-red-50 transition-colors"
+                                    title="Remove photo"
+                                  >
+                                    <X className="w-3.5 h-3.5" />
+                                  </button>
+                                )}
+                              </div>
+                              <ImageUpload
+                                value={imgUrl}
+                                onChange={(newUrl) =>
+                                  handleVariantImageChange(vIdx, imgIdx, newUrl)
+                                }
+                                folder="bagsglory/products"
+                                label=""
+                                aspectRatio="square"
+                              />
+                            </div>
+                          ))}
+                        </div>
                       </div>
                     </div>
                   ))}

@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { useStore } from "@/context/StoreContext";
 import { AdminHeader } from "@/components/admin/AdminHeader";
+import { CustomSelect } from "@/components/common/CustomSelect";
 import { OrderStatus } from "@/types";
 import { formatPrice } from "@/utils/currency";
 
@@ -55,7 +56,7 @@ export default function AdminDashboardPage() {
             </div>
             <p className="text-xs text-[#C9A45C] font-semibold flex items-center gap-1">
               <TrendingUp className="w-3.5 h-3.5" />
-              <span>+18.4% this week</span>
+              <span>{orders.filter(o => o.orderStatus === "Delivered" || o.paymentStatus.includes("Paid")).length} orders fulfilled</span>
             </p>
           </div>
 
@@ -213,20 +214,22 @@ export default function AdminDashboardPage() {
                         </span>
                       </td>
                       <td className="py-3.5 text-right">
-                        <select
+                        <CustomSelect
                           value={order.orderStatus}
-                          onChange={(e) =>
-                            updateOrderStatus(order.id, e.target.value as OrderStatus)
+                          onChange={(val) =>
+                            updateOrderStatus(order.id, val as OrderStatus)
                           }
-                          className="text-xs font-semibold bg-white border border-[#E5DED4] px-2.5 py-1 text-[#0D0C0B] focus:outline-none focus:border-[#C9A45C]"
-                        >
-                          <option value="Pending">Pending</option>
-                          <option value="Processing">Processing</option>
-                          <option value="Shipped">Shipped</option>
-                          <option value="Out for Delivery">Out for Delivery</option>
-                          <option value="Delivered">Delivered (Paid)</option>
-                          <option value="Cancelled">Cancelled</option>
-                        </select>
+                          options={[
+                            { value: "Pending", label: "Pending" },
+                            { value: "Processing", label: "Processing" },
+                            { value: "Shipped", label: "Shipped" },
+                            { value: "Out for Delivery", label: "Out for Delivery" },
+                            { value: "Delivered", label: "Delivered (Paid)" },
+                            { value: "Cancelled", label: "Cancelled" },
+                          ]}
+                          className="w-36 text-left"
+                          buttonClassName="py-1 px-2.5 text-xs"
+                        />
                       </td>
                     </tr>
                   ))}

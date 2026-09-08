@@ -94,7 +94,7 @@ export default function CheckoutPage() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!validateForm()) {
@@ -105,10 +105,10 @@ export default function CheckoutPage() {
     setIsSubmitting(true);
 
     try {
-      const order = createOrder(formData);
+      const order = await createOrder(formData);
       router.push(`/order-success/${order.id}`);
     } catch (err) {
-      console.error(err);
+      console.error("Order creation failed:", err);
       setIsSubmitting(false);
     }
   };

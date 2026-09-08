@@ -16,14 +16,22 @@ export default function TrackOrderPage() {
   const [orderQuery, setOrderQuery] = useState("");
   const [trackedOrder, setTrackedOrder] = useState<Order | null>(null);
   const [hasSearched, setHasSearched] = useState(false);
+  const [isSearching, setIsSearching] = useState(false);
 
-  const handleTrackSubmit = (e: React.FormEvent) => {
+  const handleTrackSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!orderQuery.trim()) return;
 
+    setIsSearching(true);
     setHasSearched(true);
-    const found = getOrderById(orderQuery.trim());
-    setTrackedOrder(found || null);
+    try {
+      const found = await getOrderById(orderQuery.trim());
+      setTrackedOrder(found || null);
+    } catch {
+      setTrackedOrder(null);
+    } finally {
+      setIsSearching(false);
+    }
   };
 
   return (

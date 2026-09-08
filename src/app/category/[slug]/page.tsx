@@ -6,6 +6,7 @@ import Image from "next/image";
 import { ArrowLeft, ChevronRight } from "lucide-react";
 import { useStore } from "@/context/StoreContext";
 import { ProductCard } from "@/components/common/ProductCard";
+import { CustomSelect } from "@/components/common/CustomSelect";
 
 interface CategoryPageProps {
   params: Promise<{ slug: string }>;
@@ -107,18 +108,18 @@ export default function CategoryDetailPage({ params }: CategoryPageProps) {
           </div>
 
           <div className="flex items-center gap-3">
-            <label htmlFor="cat-sort" className="text-xs uppercase tracking-[0.14em] text-[#746C63] hidden sm:inline">Sort by:</label>
-            <select
-              id="cat-sort"
+            <label className="text-xs uppercase tracking-[0.14em] text-[#746C63] hidden sm:inline">Sort by:</label>
+            <CustomSelect
               value={sortBy}
-              onChange={(e) => setSortBy(e.target.value as any)}
-              className="text-xs uppercase tracking-wider font-semibold text-[#0D0C0B] bg-white border border-[#E5DED4] rounded-none px-4 py-2.5 focus:outline-none focus:border-[#C9A45C]"
-            >
-              <option value="featured">Featured Editions</option>
-              <option value="price-asc">Price: Low to High</option>
-              <option value="price-desc">Price: High to Low</option>
-              <option value="rating">Highest Rated</option>
-            </select>
+              onChange={(val) => setSortBy(val as any)}
+              options={[
+                { value: "featured", label: "Featured Editions" },
+                { value: "price-asc", label: "Price: Low to High" },
+                { value: "price-desc", label: "Price: High to Low" },
+                { value: "rating", label: "Highest Rated" },
+              ]}
+              className="w-48"
+            />
           </div>
         </div>
 
